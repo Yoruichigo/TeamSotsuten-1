@@ -18,6 +18,7 @@ public class PlayerMasterData
 
     public JobDB.JobType Job;   //職業
 
+    public bool IsHit;  //< ヒットフラグ
     
 }
 

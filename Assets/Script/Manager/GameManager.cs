@@ -17,12 +17,12 @@ public class GameManager : Singleton<GameManager>
 
     // プレイヤーデータ
     const int MAXIMUM_PLAYER_NUM = 1;   // 最大数　プレイヤー
-    PlayerMasterData PlayerDataArray = new PlayerMasterData();
+    PlayerMasterData playerData = new PlayerMasterData();
 
     // エネミーデータ
     const int MAXIMUM_ENEMY_NUM = 1;    // 最大数　エネミー
     public int MaxEnemyNum { get { return MAXIMUM_ENEMY_NUM; } }        // 外から最大数を取得したい場合、エネミー
-    EnemyMasterData[] EnemyDataArray = new EnemyMasterData[MAXIMUM_ENEMY_NUM];
+    EnemyMasterData[] enemyDataArray = new EnemyMasterData[MAXIMUM_ENEMY_NUM];
     
 
     //初回のみの初期化処理
@@ -84,17 +84,17 @@ public class GameManager : Singleton<GameManager>
            // Debugger.Log("ターゲットロスト");
             return;
         }
-        //  スマートフォンのポジションの同期
-        PlayerDataArray.Position = SequenceManager.Instance.ARCamera.transform.position ;
-    }
 
+        //  スマートフォンのポジションの同期
+        playerData.Position = SequenceManager.Instance.ARCamera.transform.position ;
+    }
 
     /// <summary>
     /// プレイヤー情報の初回初期化
     /// </summary>
     void SendPlayerDataAwake()
     {
-        PlayerDataArray = new PlayerMasterData();
+        playerData = new PlayerMasterData();
     }
 
 
@@ -105,7 +105,7 @@ public class GameManager : Singleton<GameManager>
     {
         for (int i = 0; i < MaxEnemyNum; i++)
         {
-            EnemyDataArray[i] = new EnemyMasterData();
+            enemyDataArray[i] = new EnemyMasterData();
         }
     }
 
@@ -142,7 +142,7 @@ public class GameManager : Singleton<GameManager>
     /// <returns></returns>
     public PlayerMasterData GetPlayerData()
     {
-        return PlayerDataArray;
+        return playerData;
     }
 
     /// <summary>
@@ -156,7 +156,7 @@ public class GameManager : Singleton<GameManager>
         if(CheckOutRangeArrayNumberEnemy(_arrayNumber,"GetEnemyData"))       
             return null;
         
-        return EnemyDataArray[_arrayNumber];
+        return enemyDataArray[_arrayNumber];
     }
 
     
@@ -173,7 +173,7 @@ public class GameManager : Singleton<GameManager>
         //if (CheckOutRangeArrayNumberEnemy(_arrayNumber, "SendEnemyIsActive"))
         //    return;
 
-        EnemyDataArray[_arrayNumber].IsActive = _isActive;
+        enemyDataArray[_arrayNumber].IsActive = _isActive;
     }
 
     /// <summary>
@@ -186,7 +186,7 @@ public class GameManager : Singleton<GameManager>
         if (CheckOutRangeArrayNumberEnemy(_arrayNumber, "SendEnemyHP"))
             return;
 
-        EnemyDataArray[_arrayNumber].HP = _hp;
+        enemyDataArray[_arrayNumber].HP = _hp;
     }
 
     
@@ -200,7 +200,7 @@ public class GameManager : Singleton<GameManager>
         if (CheckOutRangeArrayNumberEnemy(_arrayNumber, "SendEnemyPosition"))
             return;
 
-        EnemyDataArray[_arrayNumber].Position = _pos;
+        enemyDataArray[_arrayNumber].Position = _pos;
     }
 
 
@@ -214,10 +214,19 @@ public class GameManager : Singleton<GameManager>
         if (CheckOutRangeArrayNumberEnemy(_arrayNumber, "SendEnemyRotation"))
             return;
 
-        EnemyDataArray[_arrayNumber].Rotation = _rotation;
+        enemyDataArray[_arrayNumber].Rotation = _rotation;
 
     }
 
+    /// <summary>
+    /// プレイヤーのヒットフラグを処理する。
+    /// </summary>
+    /// <param name="isHit"></param>
+    public void SendPlayerHit(bool isHit)
+    {
+        playerData.IsHit = isHit;
+        Debugger.Log("プレイヤーヒット");
+    }
 
     /// <summary>
     /// プレイヤーの座標を変更する関数です。（同期）
@@ -226,7 +235,7 @@ public class GameManager : Singleton<GameManager>
     /// <param name="_pos"></param>
     public void SendPlayerPosition( Vector3 _pos)
     {
-        PlayerDataArray.Position = _pos;
+        playerData.Position = _pos;
     }
 
 
@@ -256,7 +265,7 @@ public class GameManager : Singleton<GameManager>
         for (int i = 0; i<MaxEnemyNum;i++)
         {
             //現在アクティブなエネミーを検索
-            if (EnemyDataArray[i].IsActive == true)
+            if (enemyDataArray[i].IsActive == true)
             {
                 enemyIndex = i;
             }
@@ -268,9 +277,9 @@ public class GameManager : Singleton<GameManager>
             //return;
         }
 
-        EnemyDataArray[enemyIndex].HP -= _damage;
-        EnemyDataArray[enemyIndex].HitAttackType = _playerAttackType;
-        EnemyDataArray[enemyIndex].IsHit = true;
+        enemyDataArray[enemyIndex].HP -= _damage;
+        enemyDataArray[enemyIndex].HitAttackType = _playerAttackType;
+        enemyDataArray[enemyIndex].IsHit = true;
     }
 
     /// <summary>
