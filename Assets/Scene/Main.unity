@@ -445,7 +445,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 444256, guid: 007d7f281ba79ab4492d9d67d0b8c450, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -4000
       objectReference: {fileID: 0}
     - target: {fileID: 444256, guid: 007d7f281ba79ab4492d9d67d0b8c450, type: 2}
       propertyPath: m_LocalRotation.x
@@ -465,7 +465,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 444256, guid: 007d7f281ba79ab4492d9d67d0b8c450, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11454208, guid: 007d7f281ba79ab4492d9d67d0b8c450, type: 2}
       propertyPath: debugText
@@ -475,6 +475,10 @@ Prefab:
       propertyPath: effectCreator
       value: 
       objectReference: {fileID: 636919923}
+    - target: {fileID: 6540866, guid: 007d7f281ba79ab4492d9d67d0b8c450, type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 007d7f281ba79ab4492d9d67d0b8c450, type: 2}
   m_IsPrefabParent: 0
@@ -757,7 +761,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 410418, guid: f07931491b09a0c48a8bc83e86e08a15, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11401124, guid: f07931491b09a0c48a8bc83e86e08a15, type: 2}
       propertyPath: player
@@ -792,6 +796,34 @@ Canvas:
   m_PrefabParentObject: {fileID: 22385334, guid: 6fa4e331534f3964dad66793d088e77a,
     type: 2}
   m_PrefabInternal: {fileID: 1792436051}
+--- !u!21 &905449228
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Enemy_scaledMaterial
+  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 463d16c0b92b406b965311656601054f, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats: {}
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: .820895553, g: .820895553, b: .820895553, a: 1}
 --- !u!1 &919192342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,6 +1189,52 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 76517d1003c89d6488836411e5358015, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1376325878
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1852603694}
+    m_Modifications:
+    - target: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 168890, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+      propertyPath: m_Name
+      value: EnemyAttackEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+  m_IsPrefabParent: 0
 --- !u!114 &1380770194 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11461402, guid: 6fa4e331534f3964dad66793d088e77a,
@@ -1207,11 +1285,7 @@ Prefab:
     - {fileID: 11465538, guid: c5b97273fbfc1f348a4f73e2d1377604, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c5b97273fbfc1f348a4f73e2d1377604, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1532468794 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 128066, guid: 6699ec6ed63eb6a45853f30fd1b177cf, type: 2}
-  m_PrefabInternal: {fileID: 428200148}
---- !u!43 &1556038881
+--- !u!43 &1527746268
 Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1339,6 +1413,10 @@ Mesh:
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshOptimized: 0
+--- !u!1 &1532468794 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 128066, guid: 6699ec6ed63eb6a45853f30fd1b177cf, type: 2}
+  m_PrefabInternal: {fileID: 428200148}
 --- !u!1001 &1591988800
 Prefab:
   m_ObjectHideFlags: 0
@@ -1385,18 +1463,14 @@ Prefab:
     - target: {fileID: 3342830, guid: 9e3e8e149a4e9e14abc19cf0b0759265, type: 2}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1556038881}
+      objectReference: {fileID: 1527746268}
     - target: {fileID: 2341564, guid: 9e3e8e149a4e9e14abc19cf0b0759265, type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1939635828}
-    - target: {fileID: 496014, guid: 9e3e8e149a4e9e14abc19cf0b0759265, type: 2}
-      propertyPath: m_LocalPosition.z
+      objectReference: {fileID: 905449228}
+    - target: {fileID: 21242596, guid: 9e3e8e149a4e9e14abc19cf0b0759265, type: 2}
+      propertyPath: m_SortingOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 496014, guid: 9e3e8e149a4e9e14abc19cf0b0759265, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: .100000001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9e3e8e149a4e9e14abc19cf0b0759265, type: 2}
@@ -1761,6 +1835,7 @@ Transform:
   - {fileID: 2115610203}
   - {fileID: 305898250}
   - {fileID: 1039281312}
+  - {fileID: 1858071465}
   - {fileID: 636919924}
   - {fileID: 1221726317}
   m_Father: {fileID: 0}
@@ -1904,6 +1979,10 @@ MonoBehaviour:
   viewIdField: 3
   instantiationId: 3
   isRuntimeInstantiated: 0
+--- !u!4 &1858071465 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 473092, guid: dbf1425e383de454aab6f6c3364aec8f, type: 2}
+  m_PrefabInternal: {fileID: 1376325878}
 --- !u!1001 &1873742799
 Prefab:
   m_ObjectHideFlags: 0
@@ -1946,34 +2025,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 91aa50a7f16284742b59b21fd395ffe2, type: 2}
   m_IsPrefabParent: 0
---- !u!21 &1939635828
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: Enemy_scaledMaterial
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  m_SavedProperties:
-    serializedVersion: 2
-    m_TexEnvs:
-      data:
-        first:
-          name: _MainTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 463d16c0b92b406b965311656601054f, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-    m_Floats: {}
-    m_Colors:
-      data:
-        first:
-          name: _Color
-        second: {r: .820895553, g: .820895553, b: .820895553, a: 1}
 --- !u!114 &1952240484 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11484018, guid: 3e7af73e0a5930d44a2b5702959ccc69,
