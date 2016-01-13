@@ -9,6 +9,7 @@ using System.Collections;
 
 public class TitleSequence : SequenceBehaviour
 {
+    PhotonView view = null;
 
     public override void Reset()
     {
@@ -23,15 +24,25 @@ public class TitleSequence : SequenceBehaviour
 	// Use this for initialization
 	void Start () 
     {
-	
+        view = GetComponent<PhotonView>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!ConnectionManager.IsSmartPhone) return;
+
+        if (MotionManager.Instance.MotionSkill == MotionManager.MotionSkillType.STRENGTH)
         {
-            SequenceManager.Instance.ChangeScene(SceneID.CHARACTER_SELECT);
+            view.RPC("ChangeScene", PhotonTargets.All);
+            SEPlayer.Instance.Play("Decision");
         }
 	}
+
+
+    [PunRPC]
+    void ChangeScene(PhotonMessageInfo info)
+    {
+        SequenceManager.Instance.ChangeScene(SceneID.GAME);
+    }
 }
