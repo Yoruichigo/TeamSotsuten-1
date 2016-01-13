@@ -20,6 +20,9 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     [SerializeField]
+    float delayTime = 2.0f;
+
+    [SerializeField]
     SpriteRenderer enemyRenderer = null;
 
     [SerializeField]
@@ -111,6 +114,9 @@ public class EnemyManager : Singleton<EnemyManager>
                     if (GetActiveEnemyData().IsHit())
                     {
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.HIT);
+
+                        SEPlayer.Instance.Play("EnemyHit");
+                       
                         Debugger.Log(">> GetActiveEnemy State HIT");
                     }
 
@@ -119,6 +125,9 @@ public class EnemyManager : Singleton<EnemyManager>
                     {
                         GetActiveEnemyData().HitRelease();
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.DEAD);
+
+                        SEPlayer.Instance.Play("EnemySiren");
+
                         Debugger.Log(">> GetActiveEnemy State DEAD");
                     }
                 }
@@ -127,22 +136,33 @@ public class EnemyManager : Singleton<EnemyManager>
                     // SV側がアクティブでないなら、登録してある次のエネミーを設定する。
                     if (!GetActiveEnemyData().IsActive())
                     {
-                        activeEnemyID++;
-
-                        if (activeEnemyID >= enemyList.Count)
-                        {
-                            SequenceManager.Instance.ChangeScene(SceneID.RESULT);
-                            return;
-                        }
-
-                        state = State.Start;
-                        Debugger.Log(">> 次のWaveに遷移する");
+                        StartCoroutine("WaitNextWave");
                     }
                 }
 
                 break;
 
         }
+
+    }
+
+
+    IEnumerator WaitNextWave()
+    {
+        yield return new WaitForSeconds(delayTime);
+
+        activeEnemyID++;
+
+        if (activeEnemyID >= enemyList.Count)
+        {
+            SequenceManager.Instance.ChangeScene(SceneID.RESULT);
+            yield return null;
+        }
+
+        SEPlayer.Instance.Play("EnemyAppearance");
+
+        state = State.Start;
+        Debugger.Log(">> 次のWaveに遷移する");
 
     }
 }
