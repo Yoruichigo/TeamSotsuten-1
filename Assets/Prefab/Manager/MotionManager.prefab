@@ -140,10 +140,10 @@ MonoBehaviour:
   motionData:
   - skillType: 0
     accMin: 1
-    accMax: 1.70000005
+    accMax: 1.60000002
     clearIndex: 0
   - skillType: 1
-    accMin: 1.79999995
+    accMin: 1.70000005
     accMax: 2
     clearIndex: 0
   attackSkill: {fileID: 0}
