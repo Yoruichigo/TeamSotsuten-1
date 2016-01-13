@@ -12,8 +12,26 @@ using System.Collections;
 
 public class GameManager : Singleton<GameManager>
 {
+
+    /// <summary>
+    /// プレイヤーを登録
+    /// </summary>
+    [SerializeField]
+    GameObject player = null;
+
+    /// <summary>
+    /// 攻撃エフェクトのターゲットを登録
+    /// </summary>
+    [SerializeField]
+    GameObject enemy = null;
+
+    public GameObject Player { get { return player; } }
+    public GameObject Enemy { get { return enemy; } }
+
+
     //フォトン用view
     PhotonView view = null;
+
 
     // プレイヤーデータ
     const int MAXIMUM_PLAYER_NUM = 1;   // 最大数　プレイヤー
