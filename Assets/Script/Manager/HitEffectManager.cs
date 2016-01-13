@@ -103,8 +103,8 @@ public class HitEffectManager : Singleton<HitEffectManager> {
     {
         view.RPC("SendWatchHit", PhotonTargets.All);
 
-        var pos = SequenceManager.Instance.ARCamera.transform.position + (Vector3.forward * 20.0f);
-        EffectPlay(playerHitEffectList, pos, ref playerPlayIndex);   
+        //var pos = SequenceManager.Instance.ARCamera.transform.position + (Vector3.forward * 20.0f);
+        //EffectPlay(playerHitEffectList, pos, ref playerPlayIndex);   
     }
 
     [PunRPC]

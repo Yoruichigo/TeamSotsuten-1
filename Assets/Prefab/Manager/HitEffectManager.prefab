@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 461358}
   - 114: {fileID: 11460638}
+  - 114: {fileID: 11431306}
   m_Layer: 0
   m_Name: HitEffectManager
   m_TagString: Untagged
@@ -28,6 +29,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &11431306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 154514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  prefixBackup: -1
+  observed: {fileID: 0}
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 11460638}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  isRuntimeInstantiated: 0
 --- !u!114 &11460638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39,8 +65,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b2ab70920e34541854a8e2185e9b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weakHitEffect: {fileID: 116926, guid: 30050e144a9d8ed488a9ef9e77b3826b, type: 2}
-  strengthHitEffect: {fileID: 140630, guid: dcd9a5630a223274d896910cc35d664b, type: 2}
+  weakHitEffect: {fileID: 171164, guid: 30050e144a9d8ed488a9ef9e77b3826b, type: 2}
+  strengthHitEffect: {fileID: 100294, guid: dcd9a5630a223274d896910cc35d664b, type: 2}
   playerHitEffect: {fileID: 102594, guid: bbebce9e790173948bd81f6fefd76729, type: 2}
   createNum: 5
 --- !u!1001 &100100000
