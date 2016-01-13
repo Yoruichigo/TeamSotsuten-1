@@ -10,19 +10,12 @@ using System.Collections;
 public class ClientEnemyOperator : MonoBehaviour 
 {
 
-    /// <summary>
-    /// 生成する攻撃
-    /// </summary>
     [SerializeField]
-    GameObject createAttack = null;
+    float attackTiming = 2.0f;
 
     [SerializeField]
     float flashTime = 0.5f;    // 点滅する時間
 
-    SpriteRenderer spriteRenderer = null;
-
-    bool isLive = false;
-    float countTime = 0;
 
     [SerializeField]
     Color defaultColor = new Color(1f, 1f, 1f, 1f);
@@ -30,11 +23,33 @@ public class ClientEnemyOperator : MonoBehaviour
     [SerializeField]
     Color flashColor = new Color(1f, 0f, 0f, 1f);
 
+    SpriteRenderer spriteRenderer = null;
+
+    bool isLive = false;
+    float countTime = 0;
+    float attackTime = 0;
 
     // Use this for initialization
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+
+    /// <summary>
+    /// 攻撃のタイミングかどうか
+    /// </summary>
+    /// <returns></returns>
+    bool IsAttackTiming()
+    {
+        attackTime -= Time.deltaTime;
+        if (attackTime <= 0)
+        {
+            attackTime = attackTiming;
+            return true;
+        }
+
+        return false;
     }
 
     // Update is called once per frame
@@ -51,6 +66,16 @@ public class ClientEnemyOperator : MonoBehaviour
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         { 
             case EnemyData.EnamyState.ACTIVE:
+
+                if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
+
+                // プレイヤーの方向に向く
+                transform.LookAt(new Vector3(GameManager.Instance.GetPlayerData().Position.x, transform.position.y, GameManager.Instance.GetPlayerData().Position.z));
+                
+                if (IsAttackTiming())
+                {
+                    EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0,0,0));
+                }
 
                 break;
 
@@ -101,6 +126,8 @@ public class ClientEnemyOperator : MonoBehaviour
         }
 
         iTween.ScaleTo (this.gameObject, hash);
+
+        attackTime = attackTiming;
     }
 
     void SpawnCompleted()
