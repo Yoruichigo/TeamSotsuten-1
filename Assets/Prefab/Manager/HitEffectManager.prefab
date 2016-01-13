@@ -65,8 +65,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b2ab70920e34541854a8e2185e9b51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weakHitEffect: {fileID: 171164, guid: 30050e144a9d8ed488a9ef9e77b3826b, type: 2}
-  strengthHitEffect: {fileID: 100294, guid: dcd9a5630a223274d896910cc35d664b, type: 2}
+  hitEffectTypeList:
+  - strength: {fileID: 100294, guid: dcd9a5630a223274d896910cc35d664b, type: 2}
+    weak: {fileID: 171164, guid: 30050e144a9d8ed488a9ef9e77b3826b, type: 2}
+    type: 0
+  - strength: {fileID: 100294, guid: dcd9a5630a223274d896910cc35d664b, type: 2}
+    weak: {fileID: 171164, guid: 30050e144a9d8ed488a9ef9e77b3826b, type: 2}
+    type: 1
   playerHitEffect: {fileID: 102594, guid: bbebce9e790173948bd81f6fefd76729, type: 2}
   createNum: 5
 --- !u!1001 &100100000

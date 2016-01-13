@@ -40,8 +40,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52129374b05f734d9c5857f8f096734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: {fileID: 178778, guid: 2f1b3eaaa9a58834eb0e9a024d4d6c0f, type: 2}
-  weak: {fileID: 195492, guid: 4fea88229052d0e45b572b54218fef37, type: 2}
+  effectTypeList:
+  - strength: {fileID: 178778, guid: 2f1b3eaaa9a58834eb0e9a024d4d6c0f, type: 2}
+    weak: {fileID: 195492, guid: 4fea88229052d0e45b572b54218fef37, type: 2}
+    type: 0
+  - strength: {fileID: 178778, guid: 2f1b3eaaa9a58834eb0e9a024d4d6c0f, type: 2}
+    weak: {fileID: 195492, guid: 4fea88229052d0e45b572b54218fef37, type: 2}
+    type: 1
   createNum: 5
 --- !u!114 &11461546
 MonoBehaviour:

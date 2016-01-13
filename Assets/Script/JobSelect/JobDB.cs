@@ -33,10 +33,10 @@ public class JobDB : MonoBehaviour {
 
     public enum JobType
     {
-        NEAT,       //  エラーコード
+        NEAT = -1,       //  エラーコード
         FENCER,     //  剣士
         MAGICIAN,   //  魔法使い
-        WANPANMAN   //  ワンパンマン
+        MAX,
     }
 
     /// <summary>
@@ -74,13 +74,7 @@ public class JobDB : MonoBehaviour {
     Text jobSelectType = null;
 
     [SerializeField]
-    CharacterSelectSequence characterSelectSequence = null; 
-
-    /// <summary>
-    /// 選択中の職業
-    /// @changed m_yamada
-    /// </summary>
-    public JobType SelectedJobType { get; private set; }
+    CharacterSelectSequence characterSelectSequence = null;
 
     /// <summary>
     /// 職業を設定する。
@@ -98,8 +92,8 @@ public class JobDB : MonoBehaviour {
             selectedNum = 0;
         }
 
-        SelectedJobType = GetJobDataFindArray(selectedNum).jobType;
-        jobSelectType.text = SelectedJobType.ToString();
+        CharacterSelectManager.Instance.SelectedJobType = GetJobDataFindArray(selectedNum).jobType;
+        jobSelectType.text = CharacterSelectManager.Instance.SelectedJobType.ToString();
     }
 
     /// <summary>
@@ -117,9 +111,9 @@ public class JobDB : MonoBehaviour {
     /// </summary>
     public void Decision(MonoBehaviour script)
     {
-        //Destroy(script);
-        //characterSelectSequence.ChangeScene();
-        jobSelectType.text = SelectedJobType.ToString() + "\n";
+        Destroy(script);
+        characterSelectSequence.ChangeScene();
+        jobSelectType.text = CharacterSelectManager.Instance.SelectedJobType.ToString() + "\n";
         jobSelectType.text += "決定！！";
     }
 

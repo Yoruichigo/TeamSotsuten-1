@@ -11,14 +11,20 @@ using System.Collections.Generic;
 
 public class EffectCreate : MonoBehaviour
 {
-    /// <summary>
-    /// 呼び出す攻撃エフェクトを登録
-    /// </summary>
-    [SerializeField]
-    GameObject strength = null;
+    [System.Serializable]
+    public struct EffectData
+    {
+        /// <summary>
+        /// 呼び出す攻撃エフェクトを登録
+        /// </summary>
+        public GameObject strength;
+        public GameObject weak ;
+
+        public JobDB.JobType type;
+    }
 
     [SerializeField]
-    GameObject weak = null;
+    EffectData[] effectTypeList = new EffectData[2];
 
     [SerializeField]
     int createNum = 5;
@@ -35,21 +41,28 @@ public class EffectCreate : MonoBehaviour
     {
         db = GetComponent<EffectDB>();
 
-        for (int i = 0; i < createNum; i++)
+        foreach(var effect in effectTypeList)
         {
-            var obj = Instantiate(strength);
-            obj.transform.SetParent(transform);
-            obj.gameObject.SetActive(false);
-            strengthEffectList.Add(obj.GetComponent<EffectMover>());
+            if(effect.type == CharacterSelectManager.Instance.SelectedJobType)
+            {
+                for (int i = 0; i < createNum; i++)
+                {
+                    var obj = Instantiate(effect.strength);
+                    obj.transform.SetParent(transform);
+                    obj.gameObject.SetActive(false);
+                    strengthEffectList.Add(obj.GetComponent<EffectMover>());
+                }
+
+                for (int i = 0; i < createNum; i++)
+                {
+                    var obj = Instantiate(effect.weak);
+                    obj.transform.SetParent(transform);
+                    obj.gameObject.SetActive(false);
+                    weakEffectList.Add(obj.GetComponent<EffectMover>());
+                }
+            }
         }
 
-        for (int i = 0; i < createNum; i++)
-        {
-            var obj = Instantiate(weak);
-            obj.transform.SetParent(transform);
-            obj.gameObject.SetActive(false);
-            weakEffectList.Add(obj.GetComponent<EffectMover>());
-        }
     }
 
     /// <summary>

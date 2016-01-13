@@ -58,21 +58,6 @@ public class JobGeneration : MonoBehaviour {
     private GameObject fixingPosition = null;
 
     /// <summary>
-    /// 2Dモードかどう？
-    /// 
-    /// 2d == true
-    /// 3d == false
-    /// </summary>
-    [SerializeField]
-    private bool is2D = true;
-
-    /// <summary>
-    /// キャンパスの情報
-    /// </summary>
-    [SerializeField]
-    private RectTransform uiCanvas = null;
-
-    /// <summary>
     /// Startより先呼ばれる奴
     /// </summary>
     /// 生成角度θの計算
@@ -118,28 +103,18 @@ public class JobGeneration : MonoBehaviour {
     {
         //  座標
         Vector3 pos = Vector3.zero;
+
         /// 角度
         float ang = 0;
 
         ang = (Mathf.PI * angle * array) / 180;     /// 角度求めて
 
-        if (!is2D)
-        {
-            pos.x = -radius * Mathf.Sin(ang);           /// 座標入れて
-            pos.y = gameObject.transform.position.y;
-            pos.z = -radius * Mathf.Cos(ang);
+        pos.x = -radius * Mathf.Sin(ang);           /// 座標入れて
+        pos.y = gameObject.transform.position.y;
+        pos.z = -radius * Mathf.Cos(ang);
 
-            return pos;
-        }
-        else
-        {
-            pos.x = -radius * Mathf.Sin(ang) + (uiCanvas.sizeDelta.x / 8 + uiCanvas.sizeDelta.x / 32);           /// 謎の位置調整
-            Debug.Log(uiCanvas.sizeDelta.x / 2);
-            pos.y = gameObject.transform.position.y;
-            pos.z = -radius * Mathf.Cos(ang);
+        return pos;
 
-            return pos;
-        }
     }
     /// <summary>
     /// 生成した時に目指すべき方向を見据える

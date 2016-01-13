@@ -99,24 +99,16 @@ public class JobRotater : MonoBehaviour {
     /// </summary>
     public void OnMotionComplated()
     {
-        //switch (MotionManager.Instance.MotionSkill)
-        //{
-        //    case MotionManager.MotionSkillType.VERTICAL_DOWN_UP:
-        //        JobData.Decision(this);
-        //        break;
+        switch (MotionManager.Instance.MotionSkill)
+        {
+            case MotionManager.MotionSkillType.WEAK:
+                Rotate(1.0f);
+                break;
 
-        //    case MotionManager.MotionSkillType.VERTICAL_UP_DOWN:
-        //        JobData.Decision(this);
-        //        break;
-
-        //    case MotionManager.MotionSkillType.HORIZONTAL_LEFT_RIGHT:
-        //        Rotate(1.0f);
-        //        break;
-
-        //    case MotionManager.MotionSkillType.HORIZONTAL_RIGHT_LEFT:
-        //        Rotate(-1.0f);
-        //        break;
-        //}
+            case MotionManager.MotionSkillType.STRENGTH:
+                JobData.Decision(this);
+                break;
+        }
     }
 
     /// <summary>

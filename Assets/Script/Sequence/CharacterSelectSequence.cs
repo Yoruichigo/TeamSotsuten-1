@@ -48,20 +48,8 @@ public class CharacterSelectSequence : SequenceBehaviour
     {
         if (ConnectionManager.IsSmartPhone)
         {
-            view.RPC("SyncDecision", ConnectionManager.GetSmartPhonePlayer());
+            view.RPC("SyncChangeScene", PhotonTargets.All);
         }
-    }
-
-    int decisionPlayerNum = 0;
-
-    /// <summary>
-    /// 同期用の決定処理
-    /// </summary>
-    /// <param name="info"></param>
-    [PunRPC]
-    void SyncDecision(PhotonMessageInfo info)
-    {
-        decisionPlayerNum++;
     }
 
     /// <summary>
@@ -76,10 +64,7 @@ public class CharacterSelectSequence : SequenceBehaviour
 	
     void Update ()
     {
-        if (ConnectionManager.IsSmartPhone && decisionPlayerNum >= 1)
-        {
-            view.RPC("SyncChangeScene", PhotonTargets.All);
-        }
+
 	}
 
 

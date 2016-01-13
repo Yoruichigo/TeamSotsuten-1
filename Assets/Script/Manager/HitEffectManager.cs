@@ -10,11 +10,20 @@ using System.Collections.Generic;
 
 public class HitEffectManager : Singleton<HitEffectManager> {
 
-    [SerializeField]
-    GameObject weakHitEffect = null;         //< 弱いヒットエフェクト
+    [System.Serializable]
+    public struct HitEffectData
+    {
+        /// <summary>
+        /// 呼び出す攻撃エフェクトを登録
+        /// </summary>
+        public GameObject strength;
+        public GameObject weak ;
+
+        public JobDB.JobType type;
+    }
 
     [SerializeField]
-    GameObject strengthHitEffect = null;    //< 強いヒットエフェクト
+    HitEffectData[] hitEffectTypeList = new HitEffectData[2];
 
     [SerializeField]
     GameObject playerHitEffect = null;    //< 強いヒットエフェクト
@@ -41,8 +50,15 @@ public class HitEffectManager : Singleton<HitEffectManager> {
             return;
         }
 
-        CreateHitEffect(weakHitEffect,weakHitEffectList);
-        CreateHitEffect(strengthHitEffect, strengthHitEffectList);
+        foreach (var hitEffectTyoe in hitEffectTypeList)
+        {
+            if (hitEffectTyoe.type == CharacterSelectManager.Instance.SelectedJobType)
+            {
+                CreateHitEffect(hitEffectTyoe.weak, weakHitEffectList);
+                CreateHitEffect(hitEffectTyoe.strength, strengthHitEffectList);
+            }
+        }
+
         CreateHitEffect(playerHitEffect, playerHitEffectList);
 
         view = GetComponent<PhotonView>();
@@ -102,9 +118,7 @@ public class HitEffectManager : Singleton<HitEffectManager> {
     public void PlayerHitEffectPlay()
     {
         view.RPC("SendWatchHit", PhotonTargets.All);
-
-        //var pos = SequenceManager.Instance.ARCamera.transform.position + (Vector3.forward * 20.0f);
-        //EffectPlay(playerHitEffectList, pos, ref playerPlayIndex);   
+  
     }
 
     [PunRPC]
