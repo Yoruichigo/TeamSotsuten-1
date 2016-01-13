@@ -63,6 +63,8 @@ public class SEPlayer : Singleton<SEPlayer>
     /// <param name="resName">Resource名</param>
     public void Play(string resName, float pitch = 1.0f, bool loop = false)
     {
+        if (SequenceManager.Instance.IsBuildWatch) return;
+
         if (!audioMap.ContainsKey(resName))
         {
             audioMap.Add(resName, new Data(resName));

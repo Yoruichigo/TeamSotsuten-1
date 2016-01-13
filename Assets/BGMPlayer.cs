@@ -92,6 +92,8 @@ public class BGMPlayer : Singleton<BGMPlayer>
     /// <param name="fadeInTime">フェードイン時間</param>
     public void Play(string resName, FadeTimeData fadeTime)
     {
+        if (SequenceManager.Instance.IsBuildWatch) return;
+
         if (!audioMap.ContainsKey(resName))
         {
             audioMap.Add(resName, new Data(resName));
