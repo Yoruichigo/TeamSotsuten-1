@@ -7,6 +7,7 @@
 ///-------------------------------------------------------------------------
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EffectCreate : MonoBehaviour
 {
@@ -14,22 +15,42 @@ public class EffectCreate : MonoBehaviour
     /// 呼び出す攻撃エフェクトを登録
     /// </summary>
     [SerializeField]
-    CheckActive strength;
+    GameObject strength = null;
 
     [SerializeField]
-    CheckActive Weak;
+    GameObject weak = null;
 
-    /// <summary>
-    /// プレイヤーを登録
-    /// </summary>
     [SerializeField]
-    GameObject player;
+    int createNum = 5;
 
-    /// <summary>
-    /// 攻撃エフェクトのターゲットを登録
-    /// </summary>
-    [SerializeField]
-    GameObject enemy;
+    List<EffectMover> weakEffectList = new List<EffectMover>();
+    List<EffectMover> strengthEffectList = new List<EffectMover>();
+
+    EffectDB db = null;
+
+    int weakPlayIndex = 0;
+    int strengthPlayIndex = 0;
+
+    void Awake()
+    {
+        db = GetComponent<EffectDB>();
+
+        for (int i = 0; i < createNum; i++)
+        {
+            var obj = Instantiate(strength);
+            obj.transform.SetParent(transform);
+            obj.gameObject.SetActive(false);
+            strengthEffectList.Add(obj.GetComponent<EffectMover>());
+        }
+
+        for (int i = 0; i < createNum; i++)
+        {
+            var obj = Instantiate(weak);
+            obj.transform.SetParent(transform);
+            obj.gameObject.SetActive(false);
+            weakEffectList.Add(obj.GetComponent<EffectMover>());
+        }
+    }
 
     /// <summary>
     /// どの攻撃タイプのエフェクトを生成するか確認
@@ -43,13 +64,41 @@ public class EffectCreate : MonoBehaviour
         switch (skillType)
         {
             case MotionManager.MotionSkillType.STRENGTH:
-                strength.Check(skillType , player , enemy);
+                EffectPlay(strengthEffectList, skillType, ref strengthPlayIndex);
                 break;
             case MotionManager.MotionSkillType.WEAK:
-                Weak.Check(skillType,player , enemy);
+                EffectPlay(weakEffectList, skillType, ref weakPlayIndex);
                 break;
             default:
                 break;
+        }
+    }
+
+
+    /// <summary>
+    /// 攻撃のエフェクトを再生
+    /// </summary>
+    /// <param name="effectList"></param>
+    /// <param name="skillType"></param>
+    /// <param name="index"></param>
+    void EffectPlay(List<EffectMover> effectList, MotionManager.MotionSkillType skillType, ref int index)
+    {
+        effectList[index].gameObject.SetActive(true);
+
+        effectList[index].OnObject(
+                    db.dataList[(int)skillType].skillType,
+                    db.dataList[(int)skillType].speed,
+                    GameManager.Instance.Enemy,
+                    GameManager.Instance.Player,
+                    db.dataList[(int)skillType].scale,
+                    db.dataList[(int)skillType].damage
+                    );
+
+        index++;
+
+        if (effectList.Count <= index)
+        {
+            index = 0;
         }
     }
 }
