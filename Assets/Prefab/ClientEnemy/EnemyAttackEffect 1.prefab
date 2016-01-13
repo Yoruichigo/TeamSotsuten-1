@@ -41,7 +41,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   createNum: 5
   attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
-  speed: 100
+  speed: 500
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

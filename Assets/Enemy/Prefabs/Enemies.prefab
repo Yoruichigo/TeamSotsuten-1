@@ -160,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdea1a9f25174546b330dd624ee2edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextWaveTime: 3
   enemyRenderer: {fileID: 0}
   enemyList:
   - {fileID: 11497832}

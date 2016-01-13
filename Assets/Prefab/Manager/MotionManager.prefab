@@ -138,12 +138,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   calcTime: .5
   motionData:
-  - skillType: 1
+  - skillType: 0
     accMin: 1
-    accMax: 1.60000002
+    accMax: 1.70000005
     clearIndex: 0
-  - skillType: 2
-    accMin: 1.70000005
+  - skillType: 1
+    accMin: 1.79999995
     accMax: 2
     clearIndex: 0
   attackSkill: {fileID: 0}
