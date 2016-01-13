@@ -19,11 +19,6 @@ public class MotionManager : Singleton<MotionManager>
 
         WEAK = 0,     //< 弱
         STRENGTH = 1, //< 強
-        
-        //VERTICAL_UP_DOWN,       //< 上から下 縦振り
-        //VERTICAL_DOWN_UP,       //< 下から上 縦振り
-        //HORIZONTAL_RIGHT_LEFT,  //< 右から左 横振り
-        //HORIZONTAL_LEFT_RIGHT,  //< 左から右 横振り 
     };
 
     /// <summary>
@@ -92,39 +87,34 @@ public class MotionManager : Singleton<MotionManager>
     /// <param name="data"></param>
     /// <param name="index"></param>
     /// <returns></returns>
-    void CalcWithSetMotion(MotionWatchData data)
+    bool CalcWithSetMotion(MotionWatchData data)
     {
-        if (isCalc)
+        bool isComplated = false;
+
+        countTime += Time.deltaTime;
+        if (countTime >= calcTime)
         {
-            countTime += Time.deltaTime;
-            if (countTime >= calcTime)
+            float x = Mathf.Abs(updateAcc.x - saveAcc.x);
+            float y = Mathf.Abs(updateAcc.y - saveAcc.y);
+            float z = Mathf.Abs(updateAcc.z - saveAcc.z);
+
+            Debug.Log("速度" + new Vector3(x, y, z));
+
+            bool isRangeX = x >= data.accMin && x <= data.accMax;
+            bool isRangeY = y >= data.accMin && y <= data.accMax;
+            bool isRangeZ = z >= data.accMin && z <= data.accMax;
+
+            if (isRangeX || isRangeY || isRangeZ)
             {
-                float x = Mathf.Abs(updateAcc.x - saveAcc.x);
-                float y = Mathf.Abs(updateAcc.y - saveAcc.y);
-                float z = Mathf.Abs(updateAcc.z - saveAcc.z);
-
-                Debug.Log("速度" + new Vector3(x, y, z));
-
-                bool isRangeX = x >= data.accMin && x <= data.accMax;
-                bool isRangeY = y >= data.accMin && y <= data.accMax;
-                bool isRangeZ = z >= data.accMin && z <= data.accMax;
-
-                if (isRangeX || isRangeY || isRangeZ)
-                {
-                    OnComplated(data.skillType);
-                }
-
-                isCalc = false;
-                countTime = 0;
+                OnComplated(data.skillType);
+                isComplated = true;
             }
-        }
-        else
-        {
-            saveAcc = updateAcc;
-            MotionSkill = MotionSkillType.NONE;
-            isCalc = true;
+
+            isCalc = false;
+            countTime = 0;
         }
 
+        return isComplated;
     }
 
     /// <summary>
@@ -160,7 +150,16 @@ public class MotionManager : Singleton<MotionManager>
 
         for (int i = 0; i < motionData.Length; i++)
         {
-            CalcWithSetMotion(motionData[i]);
+            if (isCalc)
+            {
+                if (CalcWithSetMotion(motionData[i])) return;
+            }
+            else
+            {
+                saveAcc = updateAcc;
+                MotionSkill = MotionSkillType.NONE;
+                isCalc = true;
+            }
         }
     }
 }
