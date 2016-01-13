@@ -67,4 +67,5 @@ MonoBehaviour:
   - SyncCreateEffect
   - SyncStrengthHitEffectPlay
   - SyncWeakHitEffectPlay
+  - SendWatchHit
   DisableAutoOpenWizard: 1

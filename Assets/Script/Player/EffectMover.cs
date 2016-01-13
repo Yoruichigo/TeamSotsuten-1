@@ -75,6 +75,7 @@ public class EffectMover : MonoBehaviour
         // オブジェクトの非アクティブ化
         gameObject.SetActive(false);
 
+        // 死んでいたら処理しないようにする。
         if (EnemyManager.Instance.GetActiveEnemyData().State == EnemyData.EnamyState.DEAD) return;
 
         // マネージャーへターゲットへのダメージを渡す
@@ -101,12 +102,6 @@ public class EffectMover : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // プレイヤーの位置までいったん移動
-       // gameObject.transform.position = player.transform.position;
-
-        // オブジェクトの非アクティブ化
-        gameObject.SetActive(false);
-
         // ITween用のフラグ初期化
         itweenCheck = false;
 
