@@ -80,7 +80,7 @@ public class EffectDB : MonoBehaviour {
     /// <summary>
     /// ダメージ配列
     /// </summary>
-    private int[] damageArray = new int[] { 50, 10 };
+    private int[] damageArray = new int[] { 5, 10 };
 
     /// <summary>
     /// ゲーム中に参照するエフェクトデータのリスト

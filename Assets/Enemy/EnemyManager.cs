@@ -20,7 +20,7 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     [SerializeField]
-    float delayTime = 2.0f;
+    float nextWaveTime = 2.0f;
 
     [SerializeField]
     SpriteRenderer enemyRenderer = null;
@@ -32,10 +32,12 @@ public class EnemyManager : Singleton<EnemyManager>
 
     State state = State.None;    //< 制御する状態
 
+    float delayTime = 0;
+
     void Awake()
     {
         base.Awake();
-        
+        delayTime = nextWaveTime;
     }
 
     // Use this for initialization
@@ -136,7 +138,8 @@ public class EnemyManager : Singleton<EnemyManager>
                     // SV側がアクティブでないなら、登録してある次のエネミーを設定する。
                     if (!GetActiveEnemyData().IsActive())
                     {
-                        StartCoroutine("WaitNextWave");
+                        GetActiveEnemyData().HitRelease();
+                        NextWave();
                     }
                 }
 
@@ -147,16 +150,19 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
 
-    IEnumerator WaitNextWave()
+    void NextWave()
     {
-        yield return new WaitForSeconds(delayTime);
+        delayTime -= Time.deltaTime;
+        if (delayTime > 0) return;
+
+        delayTime = nextWaveTime;
 
         activeEnemyID++;
 
         if (activeEnemyID >= enemyList.Count)
         {
             SequenceManager.Instance.ChangeScene(SceneID.RESULT);
-            yield return null;
+            return;
         }
 
         SEPlayer.Instance.Play("EnemyAppearance");
