@@ -162,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextWaveTime: 3
   enemyRenderer: {fileID: 0}
+  appearanceEffectRoot: {fileID: 0}
   enemyList:
   - {fileID: 11497832}
   - {fileID: 11441748}
