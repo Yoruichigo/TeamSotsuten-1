@@ -26,12 +26,14 @@ public class EnemyManager : Singleton<EnemyManager>
     SpriteRenderer enemyRenderer = null;
 
     [SerializeField]
+    Transform appearanceEffectRoot = null;
+
+    [SerializeField]
     List<EnemyData> enemyList = new List<EnemyData>();  //< 登録エネミー
 
-    int activeEnemyID = 0;  //< 出現するエネミーID
-
+    ParticleSystem appearanceEffect = null; //< 登場するエフェクト
     State state = State.None;    //< 制御する状態
-
+    int activeEnemyID = 0;  //< 出現するエネミーID
     float delayTime = 0;
 
     void Awake()
@@ -46,6 +48,8 @@ public class EnemyManager : Singleton<EnemyManager>
         base.Start();
 
         state = State.Start;
+
+        appearanceEffect = appearanceEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
 
     }
 
@@ -84,6 +88,8 @@ public class EnemyManager : Singleton<EnemyManager>
         switch (state)
         {
             case State.Start:    //< 待機前処理
+
+                appearanceEffect.Play();
 
                 // サバ―にエネミーを登録,初期化を行う
                 GetActiveEnemyData().SetMyDate();
