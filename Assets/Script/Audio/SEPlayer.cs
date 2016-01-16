@@ -169,4 +169,5 @@ public class SEPlayer : Singleton<SEPlayer>
  * Decision         : 決定
  * PlayerWeakAttack     : プレイヤー攻撃
  * PlayerStrengthAttack : プレイヤー攻撃
+ * Damage           : ダメージ
 */
