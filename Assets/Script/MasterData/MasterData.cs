@@ -12,6 +12,7 @@ using System.Collections;
 /// <summary>
 /// プレイヤーマスターデータ(一人一人)
 /// </summary>
+[System.Serializable] 
 public class PlayerMasterData 
 {
     public Vector3 Position; //座標

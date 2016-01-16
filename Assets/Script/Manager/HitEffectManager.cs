@@ -38,12 +38,19 @@ public class HitEffectManager : Singleton<HitEffectManager> {
 
     int weakPlayIndex = 0;
     int strengthPlayIndex = 0;
-    int playerPlayIndex = 0;
 
     PhotonView view = null;
 
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
+
+    }
+
+    public override void Start()
+    {
+        base.Update();
+
         if (!ConnectionManager.IsSmartPhone)
         {
             Destroy(gameObject);
@@ -52,7 +59,7 @@ public class HitEffectManager : Singleton<HitEffectManager> {
 
         foreach (var hitEffectTyoe in hitEffectTypeList)
         {
-            if (hitEffectTyoe.type == CharacterSelectManager.Instance.SelectedJobType)
+            if (hitEffectTyoe.type == PlayerManager.Instance.Data.Job)
             {
                 CreateHitEffect(hitEffectTyoe.weak, weakHitEffectList);
                 CreateHitEffect(hitEffectTyoe.strength, strengthHitEffectList);
@@ -128,8 +135,10 @@ public class HitEffectManager : Singleton<HitEffectManager> {
         Handheld.Vibrate();
     }
 
-    void Update()
+    public override void Update()
     {
+        base.Update();
+
         Stop(strengthHitEffectList);
         Stop(weakHitEffectList);
         Stop(playerHitEffectList);

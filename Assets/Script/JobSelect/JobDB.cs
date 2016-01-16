@@ -92,8 +92,8 @@ public class JobDB : MonoBehaviour {
             selectedNum = 0;
         }
 
-        CharacterSelectManager.Instance.SelectedJobType = GetJobDataFindArray(selectedNum).jobType;
-        jobSelectType.text = CharacterSelectManager.Instance.SelectedJobType.ToString();
+        PlayerManager.Instance.Data.Job = GetJobDataFindArray(selectedNum).jobType;
+        jobSelectType.text = PlayerManager.Instance.Data.Job.ToString();
     }
 
     /// <summary>
@@ -113,7 +113,7 @@ public class JobDB : MonoBehaviour {
     {
         Destroy(script);
         characterSelectSequence.ChangeScene();
-        jobSelectType.text = CharacterSelectManager.Instance.SelectedJobType.ToString() + "\n";
+        jobSelectType.text = PlayerManager.Instance.Data.Job.ToString() + "\n";
         jobSelectType.text += "決定！！";
     }
 
