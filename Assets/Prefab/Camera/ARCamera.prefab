@@ -13,7 +13,6 @@ GameObject:
   - 92: {fileID: 9206398}
   - 124: {fileID: 12423732}
   - 114: {fileID: 11459284}
-  - 114: {fileID: 11465538}
   m_Layer: 0
   m_Name: StereoCameraRight
   m_TagString: MainCamera
@@ -57,7 +56,6 @@ GameObject:
   - 92: {fileID: 9247902}
   - 124: {fileID: 12465424}
   - 114: {fileID: 11432816}
-  - 114: {fileID: 11471566}
   m_Layer: 0
   m_Name: StereoCameraLeft
   m_TagString: MainCamera
@@ -89,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -10}
+  m_LocalPosition: {x: 0, y: 2, z: -4000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 498686}
@@ -338,9 +336,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mDataSetsToLoad:
-  - Enemy
+  - STMarker
   mDataSetsToActivate:
-  - Enemy
+  - STMarker
   mExternalDatasetRoots: []
 --- !u!114 &11456636
 MonoBehaviour:
@@ -385,28 +383,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matteShader: {fileID: 4800000, guid: 1ce7eb78425fb1540838bc9d5d95857a, type: 3}
   disableMattes: 0
---- !u!114 &11465538
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 146504}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 464b5eddb4b642f46a148f0ea8807484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &11471566
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 148342}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 464b5eddb4b642f46a148f0ea8807484, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11478396
 MonoBehaviour:
   m_ObjectHideFlags: 1
