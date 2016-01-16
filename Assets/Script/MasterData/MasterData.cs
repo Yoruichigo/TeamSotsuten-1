@@ -17,7 +17,7 @@ public class PlayerMasterData
 {
     public Vector3 Position; //座標
 
-    public JobDB.JobType Job;   //職業
+    public CharacterSelectManager.JobType Job;   //職業
 
     public int HelthPoint;
 

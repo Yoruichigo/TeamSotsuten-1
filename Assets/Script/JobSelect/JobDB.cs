@@ -31,164 +31,151 @@ using UnityEngine.UI;
 public class JobDB : MonoBehaviour {
 
 
-    public enum JobType
-    {
-        NEAT = -1,       //  エラーコード
-        FENCER,     //  剣士
-        MAGICIAN,   //  魔法使い
-        MAX,
-    }
+    //public enum JobType
+    //{
+    //    NEAT = -1,       //  エラーコード
+    //    FENCER,     //  剣士
+    //    MAGICIAN,   //  魔法使い
+    //    MAX,
+    //}
 
-    /// <summary>
-    /// 職業データの登録
-    /// </summary>
-    /// データ内に追加したい要素(職業の説明など)がありましたら追加してください。
-    /// インスペクター上でデータを適応させてください。
-    [System.Serializable]
-    public struct JobData
-    {
-        /// <summary>
-        /// 職業データ
-        /// </summary>
-        /// <param name="job">職業</param>
-        /// 職業のデータが増えるのであれば以下に追加してください
-        /// 例)職業の説明など
-        public JobData(GameObject job, JobType jobType)
-        {
-            this.job = job;
-            this.jobType = jobType;
+    ///// <summary>
+    ///// 職業データの登録
+    ///// </summary>
+    ///// データ内に追加したい要素(職業の説明など)がありましたら追加してください。
+    ///// インスペクター上でデータを適応させてください。
+    //[System.Serializable]
+    //public struct JobData
+    //{
+    //    /// <summary>
+    //    /// 職業データ
+    //    /// </summary>
+    //    /// <param name="job">職業</param>
+    //    /// 職業のデータが増えるのであれば以下に追加してください
+    //    /// 例)職業の説明など
+    //    public JobData(GameObject job, JobType jobType)
+    //    {
+    //        this.job = job;
+    //        this.jobType = jobType;
 
-        }
+    //    }
 
-        public GameObject job;
-        public JobType jobType;
-    }
+    //    public GameObject job;
+    //    public JobType jobType;
+    //}
 
-    /// <summary>
-    /// 職業データ
-    /// </summary>
-    [SerializeField]
-    private List<JobData> JobDataBase = new List<JobData>();
+    ///// <summary>
+    ///// 職業データ
+    ///// </summary>
+    //[SerializeField]
+    //private List<JobData> JobDataBase = new List<JobData>();
 
-    [SerializeField]
-    Text jobSelectType = null;
+    //[SerializeField]
+    //Text jobSelectType = null;
 
-    [SerializeField]
-    CharacterSelectSequence characterSelectSequence = null;
+    ///// <summary>
+    ///// 職業を設定する。
+    ///// @changed m_yamada
+    ///// </summary>
+    ///// <param name="nextIndex"></param>
+    //public void SetSelectJobType(ref int selectedNum)
+    //{
+    //    if (selectedNum < 0)
+    //    {
+    //        selectedNum = JobTypeCount - 1;
+    //    }
+    //    else if (selectedNum >= JobTypeCount)
+    //    {
+    //        selectedNum = 0;
+    //    }
 
-    /// <summary>
-    /// 職業を設定する。
-    /// @changed m_yamada
-    /// </summary>
-    /// <param name="nextIndex"></param>
-    public void SetSelectJobType(ref int selectedNum)
-    {
-        if (selectedNum < 0)
-        {
-            selectedNum = JobTypeCount - 1;
-        }
-        else if (selectedNum >= JobTypeCount)
-        {
-            selectedNum = 0;
-        }
+    //    PlayerManager.Instance.Data.Job = GetJobDataFindArray(selectedNum).jobType;
+    //    jobSelectType.text = PlayerManager.Instance.Data.Job.ToString();
+    //}
 
-        PlayerManager.Instance.Data.Job = GetJobDataFindArray(selectedNum).jobType;
-        jobSelectType.text = PlayerManager.Instance.Data.Job.ToString();
-    }
+    ///// <summary>
+    ///// 職業を設定する。
+    ///// @changed m_yamada
+    ///// </summary>
+    ///// <param name="nextIndex"></param>
+    //public void SetSelectJobType(int selectedNum)
+    //{
+    //    SetSelectJobType(ref selectedNum);
+    //}
 
-    /// <summary>
-    /// 職業を設定する。
-    /// @changed m_yamada
-    /// </summary>
-    /// <param name="nextIndex"></param>
-    public void SetSelectJobType(int selectedNum)
-    {
-        SetSelectJobType(ref selectedNum);
-    }
 
-    /// <summary>
-    /// 決定処理
-    /// </summary>
-    public void Decision(MonoBehaviour script)
-    {
-        Destroy(script);
-        characterSelectSequence.ChangeScene();
-        jobSelectType.text = PlayerManager.Instance.Data.Job.ToString() + "\n";
-        jobSelectType.text += "決定！！";
-    }
+    //// Use this for initialization
+    //void Start()
+    //{
+    //    JobOffer();
 
-    // Use this for initialization
-    void Start()
-    {
-        JobOffer();
+    //    IsNEAT();
 
-        IsNEAT();
+    //}
 
-    }
+    ///// <summary>
+    ///// 職業
+    ///// </summary>
+    //private void JobOffer()
+    //{
+    //    if(JobDataBase.Count < 1)
+    //    {
+    //        Debug.LogError("そもそも職業情報が適応されていません。\n職業情報を登録してください。");
+    //    }
+    //}
 
-    /// <summary>
-    /// 職業
-    /// </summary>
-    private void JobOffer()
-    {
-        if(JobDataBase.Count < 1)
-        {
-            Debug.LogError("そもそも職業情報が適応されていません。\n職業情報を登録してください。");
-        }
-    }
+    ///// <summary>
+    ///// 職業がNEATかどうか
+    ///// </summary>
+    ///// NEATかどうかを判断する
+    ///// はじめはNEATなのでNEATならば職業を決めてください
+    //private void IsNEAT()
+    //{
+    //    foreach (var jobData in JobDataBase)
+    //    {
+    //        if (jobData.jobType == JobType.NEAT)
+    //        {
+    //            Debug.LogError(jobData.job.name + "くんはNEATです。\nインスペクター上から職業を選択してください。");
+    //        }
 
-    /// <summary>
-    /// 職業がNEATかどうか
-    /// </summary>
-    /// NEATかどうかを判断する
-    /// はじめはNEATなのでNEATならば職業を決めてください
-    private void IsNEAT()
-    {
-        foreach (var jobData in JobDataBase)
-        {
-            if (jobData.jobType == JobType.NEAT)
-            {
-                Debug.LogError(jobData.job.name + "くんはNEATです。\nインスペクター上から職業を選択してください。");
-            }
+    //    }
+    //}
 
-        }
-    }
+    ///// <summary>
+    ///// 職業データID検索編
+    ///// </summary>
+    ///// <param name="jobID">職業のID</param>
+    ///// <returns>職業データ</returns>
+    //public JobData GetJobDataFindJobId(JobType jobType)
+    //{
+    //    return JobDataBase.Find(job => job.jobType == jobType);
+    //}
+    ///// <summary>
+    ///// 職業データint検索編
+    ///// </summary>
+    ///// <param name="num">検索したい数字</param>
+    ///// <returns></returns>
+    //public JobData GetJobDataFindArray(int num)
+    //{
+    //    return JobDataBase[num];
+    //}
 
-    /// <summary>
-    /// 職業データID検索編
-    /// </summary>
-    /// <param name="jobID">職業のID</param>
-    /// <returns>職業データ</returns>
-    public JobData GetJobDataFindJobId(JobType jobType)
-    {
-        return JobDataBase.Find(job => job.jobType == jobType);
-    }
-    /// <summary>
-    /// 職業データint検索編
-    /// </summary>
-    /// <param name="num">検索したい数字</param>
-    /// <returns></returns>
-    public JobData GetJobDataFindArray(int num)
-    {
-        return JobDataBase[num];
-    }
-
-    /// <summary>
-    /// 職業の数を返す
-    /// </summary>
-    /// <returns>職業の数</returns>
-    public int JobTypeCount
-    {
-        get
-        {
-            /// 職業情報があるかどうか
-            if (JobDataBase.Count >= 1)
-            {
-                return JobDataBase.Count;
-            }else
-            {
-                return -1;  /// エラー処理
-            }
-        }
-    }
+    ///// <summary>
+    ///// 職業の数を返す
+    ///// </summary>
+    ///// <returns>職業の数</returns>
+    //public int JobTypeCount
+    //{
+    //    get
+    //    {
+    //        /// 職業情報があるかどうか
+    //        if (JobDataBase.Count >= 1)
+    //        {
+    //            return JobDataBase.Count;
+    //        }else
+    //        {
+    //            return -1;  /// エラー処理
+    //        }
+    //    }
+    //}
 }

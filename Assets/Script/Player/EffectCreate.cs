@@ -20,7 +20,7 @@ public class EffectCreate : MonoBehaviour
         public GameObject strength;
         public GameObject weak ;
 
-        public JobDB.JobType type;
+        public CharacterSelectManager.JobType type;
     }
 
     [SerializeField]

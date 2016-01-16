@@ -14,12 +14,12 @@ public class PlayerManager : Singleton<PlayerManager>
     /// <summary>
     /// 剣士かどうか
     /// </summary>
-    public bool IsFencer { get { return Data.Job == JobDB.JobType.FENCER; } }
+    public bool IsFencer { get { return Data.Job == CharacterSelectManager.JobType.FENCER; } }
 
     /// <summary>
     /// 魔法使いかどうか
     /// </summary>
-    public bool IsMagician { get { return Data.Job == JobDB.JobType.MAGICIAN; } }
+    public bool IsMagician { get { return Data.Job == CharacterSelectManager.JobType.MAGICIAN; } }
 
 
     public override void Awake()
