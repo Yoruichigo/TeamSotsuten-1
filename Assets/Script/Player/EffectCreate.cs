@@ -43,7 +43,7 @@ public class EffectCreate : MonoBehaviour
 
         foreach(var effect in effectTypeList)
         {
-            if(effect.type == CharacterSelectManager.Instance.SelectedJobType)
+            if(effect.type == PlayerManager.Instance.Data.Job)
             {
                 for (int i = 0; i < createNum; i++)
                 {
