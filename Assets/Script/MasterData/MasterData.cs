@@ -19,6 +19,8 @@ public class PlayerMasterData
 
     public JobDB.JobType Job;   //職業
 
+    public int HelthPoint;
+
     public bool IsHit;  //< ヒットフラグ
     
 }
