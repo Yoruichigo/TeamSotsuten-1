@@ -46,9 +46,6 @@ public class MotionManager : Singleton<MotionManager>
     [SerializeField]
     AttackSkillCreator attackSkill = null;
 
-    [SerializeField]
-    JobRotater jobRotater = null;
-
     float countTime = 0;
     bool isCalc = false;
 
@@ -125,11 +122,6 @@ public class MotionManager : Singleton<MotionManager>
         if (type == MotionSkillType.NONE) return;
 
         MotionSkill = type;
-
-        if (SequenceManager.Instance.IsNowCharacterSelectScene)
-        {
-            jobRotater.OnMotionComplated();
-        }
 
         if (SequenceManager.Instance.IsNowGameScene)
         {

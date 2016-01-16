@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4bccfeaa8e9db642a1b90dcbab431a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneID: 1
+  nextSceneID: 2
   roomName: Room
   smartPhoneButton: {fileID: 0}
   watchButton: {fileID: 0}

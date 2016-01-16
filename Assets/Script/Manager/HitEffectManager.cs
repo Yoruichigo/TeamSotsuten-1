@@ -19,7 +19,7 @@ public class HitEffectManager : Singleton<HitEffectManager> {
         public GameObject strength;
         public GameObject weak ;
 
-        public JobDB.JobType type;
+        public CharacterSelectManager.JobType type;
     }
 
     [SerializeField]

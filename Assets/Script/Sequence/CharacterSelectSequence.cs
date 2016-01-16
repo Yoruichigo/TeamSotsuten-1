@@ -59,7 +59,7 @@ public class CharacterSelectSequence : SequenceBehaviour
     [PunRPC]
     void SyncChangeScene(PhotonMessageInfo info)
     {
-        SequenceManager.Instance.ChangeScene(SceneID.GAME);
+        SequenceManager.Instance.ChangeScene(SceneID.TITLE);
     }
 	
     void Update ()

@@ -42,7 +42,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hidenGameObject:
   - {fileID: 0}
-  - {fileID: 0}
   hidenBehaviour: []
 --- !u!114 &11489172
 MonoBehaviour:
@@ -55,6 +54,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 082cd468f6410094f9371d5946c5fe74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jobSelectType: {fileID: 0}
+  characterSelectSequence: {fileID: 0}
+  decisionButton: {fileID: 0}
+  jobData:
+  - button: {fileID: 0}
+    type: 0
+  - button: {fileID: 0}
+    type: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
