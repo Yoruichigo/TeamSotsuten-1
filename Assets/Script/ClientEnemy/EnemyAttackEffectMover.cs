@@ -28,7 +28,7 @@ public class EnemyAttackEffectMover : MonoBehaviour {
         {
             gameObject.SetActive(false);
             HitEffectManager.Instance.PlayerHitEffectPlay();
-            GameManager.Instance.SendPlayerHit(true);
+            GameManager.Instance.SendPlayerHit(true,2);
         }
 	}
 

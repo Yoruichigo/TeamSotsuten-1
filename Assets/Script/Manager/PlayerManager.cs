@@ -40,8 +40,9 @@ public class PlayerManager : Singleton<PlayerManager>
 
 
         if (!SequenceManager.Instance.IsNowGameScene) return;
-
         Data.Position = GameManager.Instance.GetPlayerData().Position;
         Data.IsHit = GameManager.Instance.GetPlayerData().IsHit;
+        GameManager.Instance.GetPlayerData().IsHit = false;
+
     }
 }

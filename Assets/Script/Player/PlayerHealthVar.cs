@@ -21,7 +21,9 @@ public class PlayerHealthVar : MonoBehaviour
         if (Vuforia.VuforiaBehaviour.IsMarkerLookAt)
         {
             HelthVar.enabled = true;
-            HelthVar.value = GameManager.Instance.GetPlayerData().HelthPoint / lifeMax;
+            HelthVar.value = (float)GameManager.Instance.GetPlayerData().HelthPoint / (float)lifeMax;
+
+            Debugger.Log("割合 = " + HelthVar.value);
         }
         else
         {
