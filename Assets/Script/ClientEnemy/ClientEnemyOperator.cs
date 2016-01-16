@@ -66,6 +66,7 @@ public class ClientEnemyOperator : MonoBehaviour
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         { 
             case EnemyData.EnamyState.ACTIVE:
+                spriteRenderer.color = defaultColor;
 
                 if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
 
@@ -86,6 +87,7 @@ public class ClientEnemyOperator : MonoBehaviour
                 if (countTime <= 0)
                 {
                     HitEffectCompleted();
+                    countTime = 100;
                 }
 
                 break;
@@ -201,7 +203,6 @@ public class ClientEnemyOperator : MonoBehaviour
         Debugger.Log(">> HitEffectCompleted()");
 
         EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
-        spriteRenderer.color = defaultColor;
     }
 
     /// <summary>
