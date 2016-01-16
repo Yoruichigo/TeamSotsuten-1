@@ -32,6 +32,9 @@ public class GameManager : Singleton<GameManager>
     //フォトン用view
     PhotonView view = null;
 
+    // プレイヤーの体力の初期値
+    [SerializeField]
+    int PLAYER_INIT_HP = 100;
 
     // プレイヤーデータ
     const int MAXIMUM_PLAYER_NUM = 1;   // 最大数　プレイヤー
@@ -76,6 +79,7 @@ public class GameManager : Singleton<GameManager>
         base.Update();
 
         UpdateClient();
+        
     }
 
     //クライアントのみ行うアップデートです。
@@ -113,6 +117,7 @@ public class GameManager : Singleton<GameManager>
     void SendPlayerDataAwake()
     {
         playerData = new PlayerMasterData();
+        playerData.HelthPoint = PLAYER_INIT_HP;
     }
 
 
@@ -240,9 +245,17 @@ public class GameManager : Singleton<GameManager>
     /// プレイヤーのヒットフラグを処理する。
     /// </summary>
     /// <param name="isHit"></param>
-    public void SendPlayerHit(bool isHit)
+    public void SendPlayerHit(bool isHit,int damage)
     {
         playerData.IsHit = isHit;
+        playerData.HelthPoint -= damage;
+        if (playerData.HelthPoint <= 0){
+            //死んだ処理の記述予定
+        }
+        else{
+            Debugger.Log("Player HP = " + playerData.HelthPoint);
+        }
+
         Debugger.Log("プレイヤーヒット");
     }
 
