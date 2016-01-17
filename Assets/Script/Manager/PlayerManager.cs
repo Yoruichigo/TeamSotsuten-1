@@ -11,6 +11,9 @@ public class PlayerManager : Singleton<PlayerManager>
 {
     public PlayerMasterData Data = null;
 
+    [SerializeField]
+    CameraShaker cameraShaker = null;
+
     /// <summary>
     /// 剣士かどうか
     /// </summary>
@@ -38,10 +41,19 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         base.Update();
 
-
+        if (!ConnectionManager.IsSmartPhone) return;
         if (!SequenceManager.Instance.IsNowGameScene) return;
+
         Data.Position = GameManager.Instance.GetPlayerData().Position;
         Data.IsHit = GameManager.Instance.GetPlayerData().IsHit;
+
+        if (Data.IsHit)
+        {
+            cameraShaker.Shake();
+            Handheld.Vibrate(); // バイブ
+            SEPlayer.Instance.Play("Damage");
+        }
+        
         GameManager.Instance.GetPlayerData().IsHit = false;
 
     }

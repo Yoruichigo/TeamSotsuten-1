@@ -42,7 +42,9 @@ MonoBehaviour:
   Data:
     Position: {x: 0, y: 0, z: 0}
     Job: 1
+    HelthPoint: 0
     IsHit: 0
+  cameraShaker: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
