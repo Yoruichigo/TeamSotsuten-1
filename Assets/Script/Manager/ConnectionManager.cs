@@ -7,6 +7,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class ConnectionManager : Singleton<ConnectionManager>
 {
@@ -23,24 +24,6 @@ public class ConnectionManager : Singleton<ConnectionManager>
     [SerializeField]
     string roomName = "Room";
 
-    [SerializeField]
-    Button smartPhoneButton = null;
-
-    [SerializeField]
-    Button watchButton = null;
-
-    /// <summary>
-    /// 退出ボタン
-    /// </summary>
-    [SerializeField]
-    Button eegressButton = null;
-
-    /// <summary>
-    /// コネクション状態のテキスト
-    /// </summary>
-    [SerializeField]
-    Text connectionStateText = null;
-
     /// <summary>
     /// 接続最大人数
     /// </summary>
@@ -48,6 +31,9 @@ public class ConnectionManager : Singleton<ConnectionManager>
     byte roomMaxPlayerNum = 5;
 
     PhotonView view = null;
+
+    List<Button> buttonList = new List<Button>();
+    List<Text> textList = new List<Text>();
 
     /// <summary>
     /// 接続ID
@@ -108,15 +94,80 @@ public class ConnectionManager : Singleton<ConnectionManager>
         HitEffectManager.Instance.gameObject.SetActive(false);
     }
 
+
+    /// <summary>
+    /// 名前でテキストを取得
+    /// </summary>
+    /// <param name="findName"></param>
+    /// <returns></returns>
+    Text[] GetTextsByName(string findName)
+    {
+        return textList.FindAll(i => i.name == findName).ToArray();
+    }
+
+    /// <summary>
+    /// 名前でボタンを取得
+    /// </summary>
+    /// <param name="findName"></param>
+    /// <returns></returns>
+    Button[] GetButtonsByName(string findName)
+    {
+        return buttonList.FindAll(i => i.name == findName).ToArray();
+    }
+
+
     public override void Start()
     {
         base.Start();
 
-        eegressButton.gameObject.SetActive(false);
+        var canvasRoot = transform.parent.GetComponentsInChildren<Canvas>();
 
-        eegressButton.onClick.AddListener(OnEegress);
-        smartPhoneButton.onClick.AddListener(OnPhoneConnection);
-        watchButton.onClick.AddListener(OnWatchConnection);
+        foreach (var canvas in canvasRoot)
+        {
+            var buttons = canvas.GetComponentsInChildren<Button>();
+
+            foreach (var button in buttons)
+            {
+                buttonList.Add(button);
+            }
+
+            var texts = canvas.GetComponentsInChildren<Text>();
+
+            foreach (var text in texts)
+            {
+                textList.Add(text);
+            }
+        }
+
+        foreach (var button in buttonList)
+        {
+            var temp = button;
+            button.onClick.AddListener(() => {
+                OnButtonListener(temp);
+            });
+        }
+
+        var getItems = GetButtonsByName("EegressButton");
+        for(int i = 0 ;i<getItems.Length;i++)
+        {
+            getItems[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void OnButtonListener(Button clickButton)
+    {
+        if (clickButton.name == "EegressButton")
+        {
+            OnEegress();
+        }
+        if (clickButton.name == "SmartPhoneButton")
+        {
+            OnPhoneConnection();
+        }
+        if (clickButton.name == "WatchButton")
+        {
+            OnWatchConnection();
+        }
 
     }
 
@@ -152,7 +203,11 @@ public class ConnectionManager : Singleton<ConnectionManager>
     [PunRPC]
     void AllCompletion(PhotonMessageInfo info)
     {
-        connectionStateText.text = "接続完了";
+        var getItems = GetTextsByName("ConnectionStateText");
+        for (int i = 0; i < getItems.Length; i++)
+        {
+            getItems[i].text = "接続完了";
+        }
     }
 
     /// <summary>
@@ -160,8 +215,17 @@ public class ConnectionManager : Singleton<ConnectionManager>
     /// </summary>
     void AllConnectionButtonDisable()
     {
-        smartPhoneButton.enabled = false;
-        watchButton.enabled = false;
+        var getItems = GetButtonsByName("SmartPhoneButton");
+        for (int i = 0; i < getItems.Length; i++)
+        {
+            getItems[i].enabled = false;
+        }
+
+        getItems = GetButtonsByName("WatchButton");
+        for (int i = 0; i < getItems.Length; i++)
+        {
+            getItems[i].enabled = false;
+        }
     }
 
     /// <summary>
@@ -186,7 +250,12 @@ public class ConnectionManager : Singleton<ConnectionManager>
 
         StartCoroutine("OnConnection");
         type = TerminalType.Watch;
-        watchButton.enabled = false;
+
+        var getItems = GetButtonsByName("WatchButton");
+        for (int i = 0; i < getItems.Length; i++)
+        {
+            getItems[i].enabled = false;
+        }
 
         AllConnectionButtonDisable();
 
@@ -262,8 +331,12 @@ public class ConnectionManager : Singleton<ConnectionManager>
     [PunRPC]
     public void ActiveRoomState(PhotonMessageInfo info)
     {
-        connectionStateText.enabled = true;
-        connectionStateText.text = "接続中";
+        var getItems = GetTextsByName("ConnectionStateText");
+        for (int i = 0; i < getItems.Length; i++)
+        {
+            getItems[i].enabled = true;
+            getItems[i].text = "接続中";
+        }
     }
 
     /// <summary>
@@ -318,8 +391,12 @@ public class ConnectionManager : Singleton<ConnectionManager>
             Debugger.Log("ID : " + ID);
         }
 
-        connectionStateText.enabled = true;
-        connectionStateText.text = "接続待ち";
+        var getItem = GetTextsByName("ConnectionStateText");
+        for (int i = 0; i < getItem.Length; i++)
+        {
+            getItem[i].enabled = true;
+            getItem[i].text = "接続待ち";
+        }
 
         switch (type)
         {
@@ -339,7 +416,11 @@ public class ConnectionManager : Singleton<ConnectionManager>
                 break;
         }
 
-        eegressButton.gameObject.SetActive(true);
+        var getItems = GetButtonsByName("EegressButton");
+        for (int i = 0; i < getItems.Length; i++)
+        {
+            getItems[i].gameObject.SetActive(true);
+        }
     }
 
     /// <summary>

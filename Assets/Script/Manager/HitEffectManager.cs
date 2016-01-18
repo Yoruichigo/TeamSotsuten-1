@@ -26,15 +26,11 @@ public class HitEffectManager : Singleton<HitEffectManager> {
     HitEffectData[] hitEffectTypeList = new HitEffectData[2];
 
     [SerializeField]
-    GameObject playerHitEffect = null;    //< 強いヒットエフェクト
-
-    [SerializeField]
     int createNum = 5;
 
 
     List<ParticleSystem> weakHitEffectList = new List<ParticleSystem>();
     List<ParticleSystem> strengthHitEffectList = new List<ParticleSystem>();
-    List<ParticleSystem> playerHitEffectList = new List<ParticleSystem>();
 
     int weakPlayIndex = 0;
     int strengthPlayIndex = 0;
@@ -66,8 +62,7 @@ public class HitEffectManager : Singleton<HitEffectManager> {
             }
         }
 
-        CreateHitEffect(playerHitEffect, playerHitEffectList);
-
+        
         view = GetComponent<PhotonView>();
     }
 
@@ -119,21 +114,6 @@ public class HitEffectManager : Singleton<HitEffectManager> {
 
     }
 
-    /// <summary>
-    /// プレイヤーのヒットエフェクトを再生
-    /// </summary>
-    public void PlayerHitEffectPlay()
-    {
-        view.RPC("SendWatchHit", PhotonTargets.All);
-  
-    }
-
-    [PunRPC]
-    void SendWatchHit(PhotonMessageInfo info)
-    {
-        // バイブ
-        Handheld.Vibrate();
-    }
 
     public override void Update()
     {
@@ -141,7 +121,6 @@ public class HitEffectManager : Singleton<HitEffectManager> {
 
         Stop(strengthHitEffectList);
         Stop(weakHitEffectList);
-        Stop(playerHitEffectList);
     }
 
     void Stop(List<ParticleSystem> hitEffectList)

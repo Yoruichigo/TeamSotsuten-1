@@ -88,19 +88,6 @@ public class CameraShaker : MonoBehaviour
 
     void Update()
     {
-        if (!SequenceManager.Instance.IsNowGameScene) return;
-
-        if (GameManager.Instance.GetPlayerData().IsHit)
-        {//この文に入っているのは確認
-            Shake();
-        }
-
-        DoShaking();
-    }
-
-
-    void DoShaking()
-    {
         for (int index = 0; index < cameraCount; ++index)
         {
             if (shakeIntensity > 0)
@@ -120,14 +107,12 @@ public class CameraShaker : MonoBehaviour
 
             }
         }
-
     }
-
 
     /// <summary>
     /// 振動させる
     /// </summary>
-    private void Shake()
+    public void Shake()
     {
         originPosition[(int)CameraID.LEFT] = childrenCameras[(int)CameraID.LEFT].position;
         originPosition[(int)CameraID.RIGHT] = childrenCameras[(int)CameraID.RIGHT].position;

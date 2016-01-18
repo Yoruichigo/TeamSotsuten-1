@@ -27,7 +27,6 @@ public class EnemyAttackEffectMover : MonoBehaviour {
         if (Vector3.Distance(transform.position,SequenceManager.Instance.ARCamera.transform.position) <= 100)
         {
             gameObject.SetActive(false);
-            HitEffectManager.Instance.PlayerHitEffectPlay();
             GameManager.Instance.SendPlayerHit(true,2);
         }
 	}
