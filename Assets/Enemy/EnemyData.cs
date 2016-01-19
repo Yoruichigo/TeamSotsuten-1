@@ -22,7 +22,6 @@ public class EnemyData: MonoBehaviour
     [SerializeField]
     Vector3 Rotation;    //方向
 
-
     public int Life
     {
         get { return life; }
@@ -48,6 +47,12 @@ public class EnemyData: MonoBehaviour
 
     [SerializeField]
     Sprite sprite = null;
+
+    [SerializeField]
+    GameObject attackEffect = null;
+
+    [SerializeField]
+    float attackSpeed = 1000.0f;
 
     public EnamyState State{  get { return state; }}
 
@@ -76,6 +81,8 @@ public class EnemyData: MonoBehaviour
         GameManager.Instance.SendEnemyIsActive(id, true);
 
         EnemyManager.Instance.SetEnemySprite(sprite);
+
+        EnemyAttackManager.Instance.Create(attackEffect, attackSpeed);
     }
 
 

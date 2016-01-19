@@ -3,6 +3,9 @@ using System.Collections;
 
 public class EnemyAttackEffectMover : MonoBehaviour {
 
+    // ヒット範囲
+    const float HIT_RANGE = 300;
+
     Rigidbody cashRigidBody = null;
 
     // Use this for initialization
@@ -24,7 +27,7 @@ public class EnemyAttackEffectMover : MonoBehaviour {
 	void Update () 
     {
         // 距離以内なら当たったとみなす。
-        if (Vector3.Distance(transform.position,SequenceManager.Instance.ARCamera.transform.position) <= 100)
+        if (Vector3.Distance(transform.position, SequenceManager.Instance.ARCamera.transform.position) <= HIT_RANGE)
         {
             gameObject.SetActive(false);
             GameManager.Instance.SendPlayerHit(true,2);

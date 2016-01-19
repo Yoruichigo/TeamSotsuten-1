@@ -30,6 +30,21 @@ public class TutorialScript : MonoBehaviour {
     [SerializeField]
     const int GAMERULE_INFO_END_TIME = 3;
 
+    enum State
+    { 
+        NONE,
+        ATTACK,     //< 攻撃説明
+        GAME_RULE   //< ゲームルール
+    }
+
+    static State state = State.ATTACK;
+
+    // チュートリアルかどうか
+    static public bool IsTutorial { get { return state != State.NONE; } }
+
+    static public bool IsTutorialGameRule { get { return state == State.GAME_RULE; } }
+
+    static public bool IsTutorialAttack { get { return state == State.ATTACK; } }
     
 	/// <summary>
     /// 初期化
@@ -55,10 +70,18 @@ public class TutorialScript : MonoBehaviour {
 	void Update () {
 
         //現在入っている関数を回す（スイッチ文とか面倒だった）
-        if (NowFunc != null) {
+        if (IsTutorial)
+        {
             NowFunc();
         }
-        
+        else
+        {
+            AttackInfo.SetActive(false);
+            GameRuleInfo.SetActive(false);
+            NowFunc = null;
+            Destroy(gameObject);
+        }
+
     }
 
 
@@ -67,6 +90,7 @@ public class TutorialScript : MonoBehaviour {
     /// </summary>
     void AttackInfoUpdate()
     {
+        state = State.ATTACK;
 
         //？の条件で次の状態へ
         if (GetNowMinute() > (StartTime + ATTACK_INFO_END_TIME))
@@ -86,11 +110,14 @@ public class TutorialScript : MonoBehaviour {
     /// </summary>
     void GameRuleInfoUpdate()
     {
+        state = State.GAME_RULE;
+
         //？の条件で終了
         if (GetNowMinute() > (StartTime + GAMERULE_INFO_END_TIME))
         {
             GameRuleInfo.SetActive(false);
             NowFunc = null;
+            state = State.NONE;
         }
 
     }

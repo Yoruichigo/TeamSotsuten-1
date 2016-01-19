@@ -7,29 +7,42 @@ public class EnemyAttackManager : Singleton<EnemyAttackManager> {
     [SerializeField]
     int createNum = 5;
 
-    [SerializeField]
-    GameObject attackEffect = null;
 
-    [SerializeField]
-    float speed = 5.0f;
+    class AttackData
+    {
+        public List<EnemyAttackEffectMover> attackObjList = new List<EnemyAttackEffectMover>();
+        public float speed = 5.0f;
+    }
 
-    List<EnemyAttackEffectMover> attackObjList = new List<EnemyAttackEffectMover>();
+    AttackData data = new AttackData();
+
     int createIndex = 0;
 
     public override void Awake()
     {
         base.Awake();
+    }
 
-        // TODO 弾のレイヤをエネミーより手前にする。
+    public void Create(GameObject attackEffect,float speed)
+    {
+        for (int i = 0; i < data.attackObjList.Count; i++)
+        {
+            Destroy(data.attackObjList[i].gameObject);
+        }
+
 
         for (int i = 0; i < createNum; i++)
         {
             var obj = Instantiate(attackEffect);
             obj.transform.SetParent(transform);
             obj.SetActive(false);
-            attackObjList.Add(obj.GetComponent<EnemyAttackEffectMover>());
+            obj.transform.position = new Vector3(0, 0, -100000);    // どこか果てしなく飛ばす.
+            data.attackObjList.Add(obj.GetComponent<EnemyAttackEffectMover>());
         }
+
+        data.speed = speed;
     }
+
 
     public override void Start()
     {
@@ -49,12 +62,12 @@ public class EnemyAttackManager : Singleton<EnemyAttackManager> {
     /// <param name="position"></param>
     public void CreateAttack(Vector3 position)
     {
-        attackObjList[createIndex].gameObject.SetActive(true);
-        attackObjList[createIndex].transform.position = position;
-        attackObjList[createIndex].Init(speed);
+        data.attackObjList[createIndex].gameObject.SetActive(true);
+        data.attackObjList[createIndex].transform.position = position;
+        data.attackObjList[createIndex].Init(data.speed);
         createIndex++;
 
-        if (attackObjList.Count <= createIndex)
+        if (data.attackObjList.Count <= createIndex)
         {
             createIndex = 0;
         }

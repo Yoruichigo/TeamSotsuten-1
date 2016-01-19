@@ -63,12 +63,13 @@ public class ClientEnemyOperator : MonoBehaviour
         }
 #endif
 
+        if (TutorialScript.IsTutorial) return;
+        if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
+
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         { 
             case EnemyData.EnamyState.ACTIVE:
                 spriteRenderer.color = defaultColor;
-
-                if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
 
                 // プレイヤーの方向に向く
                 transform.LookAt(new Vector3(GameManager.Instance.GetPlayerData().Position.x, transform.position.y, GameManager.Instance.GetPlayerData().Position.z));
@@ -114,6 +115,9 @@ public class ClientEnemyOperator : MonoBehaviour
         if (isLive) return;
 
         isLive = true;
+
+        spriteRenderer.color = defaultColor;
+        iTween.Stop(gameObject);
 
         ChangeActive();
 
