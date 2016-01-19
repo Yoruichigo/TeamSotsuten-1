@@ -62,7 +62,9 @@ public class WatchManager : Singleton<WatchManager>
                 ConnectionManager.GetSmartPhonePlayer(), 
                 new object[] { acc, gyroAngle });
             
+#if UNITY_EDITOR
             DebugTextShow(acc, gyroAngle);
+#endif
         }
     }
 
@@ -72,7 +74,9 @@ public class WatchManager : Singleton<WatchManager>
         Acc = acc;
         GyroAngle = gyroAngle;
 
+#if UNITY_EDITOR
         DebugTextShow(Acc, GyroAngle);
+#endif
     }
 
     void DebugTextShow(Vector3 acc, Vector3 gyroAngle)

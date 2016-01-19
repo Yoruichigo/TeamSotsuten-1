@@ -11,6 +11,7 @@ using System.Collections.Generic;
 
 public class Debugger : MonoBehaviour 
 {
+
     static Text debugText = null;
     static int messageNum = 0;
 
@@ -23,6 +24,7 @@ public class Debugger : MonoBehaviour
         Reset();
     }
 
+
     /// <summary>
     /// デバッグ用のテキストをリセットする。
     /// </summary>
@@ -30,7 +32,6 @@ public class Debugger : MonoBehaviour
     {
         debugText.text = "";
     }
-
 
     /// <summary>
     /// ログにメッセージを表示させる。
@@ -46,6 +47,8 @@ public class Debugger : MonoBehaviour
         debugText.text += message + "\n";
 
         messageNum++;
+
+
     }
 
     /// <summary>

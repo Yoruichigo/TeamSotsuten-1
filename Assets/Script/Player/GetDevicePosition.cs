@@ -38,6 +38,8 @@ public class GetDevicePosition : MonoBehaviour
             transform.position = SequenceManager.Instance.ARCamera.transform.position;
         }
 
+#if UNITY_EDITOR
         debugText.text = "プレイヤー座標 : " + transform.position;
+#endif
     }
 }

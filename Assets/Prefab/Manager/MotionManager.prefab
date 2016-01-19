@@ -124,7 +124,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Textaaaa
+  m_Text: 
 --- !u!114 &11447594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,7 +147,6 @@ MonoBehaviour:
     accMax: 2
     clearIndex: 0
   attackSkill: {fileID: 0}
-  jobRotater: {fileID: 0}
 --- !u!114 &11454408
 MonoBehaviour:
   m_ObjectHideFlags: 1

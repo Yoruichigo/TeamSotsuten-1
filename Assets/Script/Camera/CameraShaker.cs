@@ -14,19 +14,6 @@ public class CameraShaker : MonoBehaviour
     /// </summary>
     [SerializeField]
     private float shakeDecay = 0.001f;
-
-    enum CameraID
-    {
-        LEFT = 0,
-        RIGHT
-    }
-
-    const int cameraCount = 2;
-
-    /// <summary>
-    /// 左右のカメラ
-    /// </summary>
-    Transform[] childrenCameras = new Transform[cameraCount];
     
     /// <summary>
     /// 振動開始時の振動の大きさ
@@ -37,17 +24,14 @@ public class CameraShaker : MonoBehaviour
     /// <summary>
     /// カメラの初期位置
     /// </summary>
-    private Vector3[] originPosition = new Vector3[cameraCount];
+    private Vector3 originPosition = Vector3.zero;
 
-    /// <summary>
-    /// カメラの初期傾き
-    /// </summary>
-    private Quaternion[] originRotation = new Quaternion[cameraCount];
+//    private Vector3 originScale = Vector3.one;
 
     /// <summary>
     /// 現在の振動の大きさ
     /// </summary>
-    private float shakeIntensity;
+    private float shakeIntensity = 0f;
 
     void Start()
     {
@@ -56,56 +40,35 @@ public class CameraShaker : MonoBehaviour
 
     void Initialize()
     {
-        RegisterCamera();
 
         ///座標の初期値保存
-        originPosition[(int)CameraID.LEFT] = childrenCameras[(int)CameraID.LEFT].position;
-        originPosition[(int)CameraID.RIGHT] = childrenCameras[(int)CameraID.RIGHT].position;
+        originPosition = transform.localPosition;
 
         ///回転の初期値保存
-        originRotation[(int)CameraID.LEFT] = childrenCameras[(int)CameraID.LEFT].rotation;
-        originRotation[(int)CameraID.RIGHT] = childrenCameras[(int)CameraID.RIGHT].rotation;
+//        originScale = transform.localScale;
 
     }
-
-    void RegisterCamera()
-    {
-        for (int index = 0; index < cameraCount; ++index) 
-        {
-            childrenCameras[index] = transform.GetChild(cameraCount);
-        }
-
-        foreach (var camera in childrenCameras)
-        {
-            if (camera == null)
-            {
-                Debug.LogError("左右のどちらかのカメラが登録されていません");
-            }
-        }
-    }
-
-
 
     void Update()
     {
-        for (int index = 0; index < cameraCount; ++index)
-        {
-            if (shakeIntensity > 0)
-            {
-                childrenCameras[index].position = originPosition[index] + Random.insideUnitSphere * shakeIntensity;
-                childrenCameras[index].rotation = new Quaternion(
-                                                 originRotation[index].x + Random.Range(-shakeIntensity, shakeIntensity) * 2f,
-                                                 originRotation[index].y + Random.Range(-shakeIntensity, shakeIntensity) * 2f,
-                                                 originRotation[index].z + Random.Range(-shakeIntensity, shakeIntensity) * 2f,
-                                                 originRotation[index].w + Random.Range(-shakeIntensity, shakeIntensity) * 2f);
-                shakeIntensity -= shakeDecay;
-            }
-            else
-            {
-                childrenCameras[index].rotation = originRotation[index];
-                childrenCameras[index].position = originPosition[index];
+        
 
-            }
+        if (shakeIntensity > 0)
+        {
+            transform.localPosition = originPosition + Random.insideUnitSphere * shakeIntensity;
+            //childrenCameras[index].rotation = new Quaternion(
+            //                                 originRotation[index].x + Random.Range(-shakeIntensity, shakeIntensity) * 2f,
+            //                                 originRotation[index].y + Random.Range(-shakeIntensity, shakeIntensity) * 2f,
+            //                                 originRotation[index].z + Random.Range(-shakeIntensity, shakeIntensity) * 2f,
+            //                                 originRotation[index].w + Random.Range(-shakeIntensity, shakeIntensity) * 2f);
+            shakeIntensity -= shakeDecay;
+        }
+        else
+        {
+//                childrenCameras[index].rotation = originRotation[index];
+            //transform.localPosition = originPosition;
+            shakeIntensity = 0f;
+
         }
     }
 
@@ -114,8 +77,7 @@ public class CameraShaker : MonoBehaviour
     /// </summary>
     public void Shake()
     {
-        originPosition[(int)CameraID.LEFT] = childrenCameras[(int)CameraID.LEFT].position;
-        originPosition[(int)CameraID.RIGHT] = childrenCameras[(int)CameraID.RIGHT].position;
+        originPosition = transform.localPosition;
 
         shakeIntensity = coefShakeIntensity;
     }
