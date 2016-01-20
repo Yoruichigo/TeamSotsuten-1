@@ -13,10 +13,13 @@ using System;
 public class TutorialScript : MonoBehaviour {
 
     [SerializeField]
-    GameObject AttackInfo;
+    GameObject AttackInfoObj;
 
     [SerializeField]
-    GameObject GameRuleInfo;
+    GameObject GameRuleInfoObj;
+
+    [SerializeField]
+    GameObject CenterPositionObj;
 
     //アップデート用
     private Action NowFunc = null;
@@ -24,11 +27,36 @@ public class TutorialScript : MonoBehaviour {
     //時間制御用
     int StartTime;
 
+
+    //終了時間
     [SerializeField]
-    const int ATTACK_INFO_END_TIME = 3;
+    int ATTACK_INFO_END_TIME = 3;
 
     [SerializeField]
-    const int GAMERULE_INFO_END_TIME = 3;
+    int GAMERULE_INFO_END_TIME = 3;
+
+    //Ease時間（速度）
+    [SerializeField]
+    float ATTACK_INFO_EASE_TIME_MINUTE = 1.0f;
+
+    [SerializeField]
+    float GAMERULE_INFO_EASE_TIME_MINUTE = 1.0f;
+
+
+    //Easeタイプ
+    [SerializeField]
+    iTween.EaseType ATTACK_INFO_EASE_TYPE = iTween.EaseType.easeOutCubic;
+
+    [SerializeField]
+    iTween.EaseType GAMERULE_INFO_EASE_TYPE = iTween.EaseType.easeOutCubic;
+
+    //tweenフラグ
+    bool IsTweenEnd_Attack = false;
+    bool IsTweenEnd_GameRule = false;
+
+    bool IsiTweenMoving = false;
+    
+
 
     enum State
     { 
@@ -45,29 +73,46 @@ public class TutorialScript : MonoBehaviour {
     static public bool IsTutorialGameRule { get { return state == State.GAME_RULE; } }
 
     static public bool IsTutorialAttack { get { return state == State.ATTACK; } }
-    
+
+
+    //アップデートを遅延させて行わせるためだけの変数、他人は弄らないでね
+    int UpdateDelay_NowTime = 0;
+    const int UPDATE_DELAY_TIME = 5;
+
 	/// <summary>
     /// 初期化
     /// </summary>
     void Start () {
+        //AttackInfoObj.SetActive(true);
+        //GameRuleInfoObj.SetActive(false);
         
-        AttackInfo.SetActive(true);
-        GameRuleInfo.SetActive(false);
-
         //NowFuncに関数を突っ込む
-        NowFunc = AttackInfoUpdate;
-
-        //enableの使い方サンプル
-        //GetComponent<ClientEnemyAttack>().enabled = false;
+        NowFunc = DelayFunc;
 
         TimeUpdate();
     }
 	
 
     /// <summary>
+    /// UIルートの座標が頭おかしいんで遅延して通常のアップデートを行う
+    /// </summary>
+    void DelayFunc()
+    {
+        if (UPDATE_DELAY_TIME < UpdateDelay_NowTime)
+        {
+            NowFunc = AttackInfoUpdate;
+        }
+        else
+        {
+            UpdateDelay_NowTime += 1;
+        }
+    }
+
+    /// <summary>
     /// アプデ
     /// </summary>
 	void Update () {
+        
 
         //現在入っている関数を回す（スイッチ文とか面倒だった）
         if (IsTutorial)
@@ -76,14 +121,14 @@ public class TutorialScript : MonoBehaviour {
         }
         else
         {
-            AttackInfo.SetActive(false);
-            GameRuleInfo.SetActive(false);
+            AttackInfoObj.SetActive(false);
+            GameRuleInfoObj.SetActive(false);
             NowFunc = null;
             Destroy(gameObject);
         }
 
     }
-
+    
 
     /// <summary>
     /// 攻撃の仕方説明(1枚目)の制御
@@ -92,13 +137,26 @@ public class TutorialScript : MonoBehaviour {
     {
         state = State.ATTACK;
 
-        //？の条件で次の状態へ
-        if (GetNowMinute() > (StartTime + ATTACK_INFO_END_TIME))
-        {
-            AttackInfo.SetActive(false);
-            GameRuleInfo.SetActive(true);
+        //いーじんぐする
+        if (IsTweenEnd_Attack == false) {
+            IsTweenEnd_Attack = true;
+            MoveObject(
+                AttackInfoObj,
+                CenterPositionObj.transform.position,
+                ATTACK_INFO_EASE_TIME_MINUTE,
+                ATTACK_INFO_EASE_TYPE);
+        }
 
-            //関数を突っ込む
+        //イージング後、イージングが終了したら
+        if (IsTweenEnd_Attack && !IsiTweenMoving)
+        {
+        }
+
+
+        //？の条件で次の状態へ
+        if (GetNowMinute() > (StartTime + ATTACK_INFO_END_TIME) && !IsiTweenMoving)
+        {
+            //次のアプデ関数を突っ込む
             NowFunc = GameRuleInfoUpdate;
 
             TimeUpdate();
@@ -112,23 +170,65 @@ public class TutorialScript : MonoBehaviour {
     {
         state = State.GAME_RULE;
 
-        //？の条件で終了
-        if (GetNowMinute() > (StartTime + GAMERULE_INFO_END_TIME))
+        //いーじんぐする
+        if (IsTweenEnd_GameRule == false && !IsiTweenMoving)
         {
-            GameRuleInfo.SetActive(false);
+            IsTweenEnd_GameRule = true;
+            MoveObject(
+                GameRuleInfoObj,
+                CenterPositionObj.transform.position,
+                GAMERULE_INFO_EASE_TIME_MINUTE,
+                GAMERULE_INFO_EASE_TYPE);
+        }
+
+        //イージング後、イージングが終了したら
+        if (IsTweenEnd_GameRule && !IsiTweenMoving)
+        {
+            AttackInfoObj.SetActive(false);
+        }
+
+        //？の条件で終了
+        if (GetNowMinute() > (StartTime + GAMERULE_INFO_END_TIME) && !IsiTweenMoving)
+        {
+            GameRuleInfoObj.SetActive(false);
             NowFunc = null;
             state = State.NONE;
         }
 
     }
 
+    /// <summary>
+    /// moveObjectをITweenで動かす
+    /// </summary>
+    void MoveObject(GameObject moveObject, Vector3 targetPosition, float endMinuteTime, iTween.EaseType easeType)
+    {
+        //　targetPositionに向かって等速で移動
+        Debug.Log(moveObject.transform.position);
+        iTween.MoveTo(moveObject,
+            iTween.Hash(
+            "position", targetPosition,
+            "time", endMinuteTime,
+            "easetype", easeType,
+            "oncomplete", "OnCompleteiTween",
+            "oncompletetarget", this.gameObject
+            ));
+    }
 
+
+
+    /// <summary>
+    /// 制御用の変数を更新するだけ
+    /// </summary>
     void TimeUpdate()
     {
         StartTime = GetNowMinute();
     }
-    
-    // 現在時刻を秒で取得
+
+
+    /// <summary>
+    /// 現在時刻を秒で取得
+    /// </summary>
+    /// <returns>MinuteTime</returns>
     int GetNowMinute()
     {
         int retdata = DateTime.Now.Second;
@@ -136,5 +236,15 @@ public class TutorialScript : MonoBehaviour {
         retdata += DateTime.Now.Hour * 60 * 60;
         return retdata;
     }
+
+
+    /// <summary>
+    /// iTweenの処理が終わったら来てもらう
+    /// </summary>
+    void OnCompleteiTween()
+    {
+        IsiTweenMoving = false;
+    }
+
 
 }
