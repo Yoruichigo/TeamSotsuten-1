@@ -54,6 +54,9 @@ public class EnemyData: MonoBehaviour
     float attackSpeed = 1000.0f;
 
     [SerializeField]
+    Color color = Color.white;
+
+    [SerializeField]
     Sprite[] standingSpriteList = new Sprite[1];
 
     [SerializeField]
@@ -86,7 +89,7 @@ public class EnemyData: MonoBehaviour
         GameManager.Instance.SendEnemyRotation(id, transform.rotation.eulerAngles);
         GameManager.Instance.SendEnemyIsActive(id, true);
 
-        EnemyManager.Instance.SetEnemySprite(ref standingSpriteList,ref attackSpriteList);
+        EnemyManager.Instance.SetEnemySprite(ref standingSpriteList,ref attackSpriteList,ref color);
 
         EnemyAttackManager.Instance.Create(attackEffect, attackSpeed);
     }

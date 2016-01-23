@@ -100,13 +100,10 @@ public class EffectCreate : MonoBehaviour
     {
         effectList[index].gameObject.SetActive(true);
 
-        effectList[index].OnObject(
+        effectList[index].Init(
                     db.dataList[(int)skillType].skillType,
-                    db.dataList[(int)skillType].speed,
-                    GameManager.Instance.Enemy,
-                    GameManager.Instance.Player,
-                    db.dataList[(int)skillType].scale,
-                    db.dataList[(int)skillType].damage
+                    db.dataList[(int)skillType].damage,
+                    db.dataList[(int)skillType].speed
                     );
 
         index++;

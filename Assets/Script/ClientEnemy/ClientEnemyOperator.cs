@@ -16,9 +16,6 @@ public class ClientEnemyOperator : MonoBehaviour
     float flashTime = 0.5f;    // 点滅する時間
 
     [SerializeField]
-    Color defaultColor = new Color(1f, 1f, 1f, 1f);
-
-    [SerializeField]
     Color flashColor = new Color(1f, 0f, 0f, 1f);
 
     SpriteRenderer spriteRenderer = null;
@@ -66,7 +63,7 @@ public class ClientEnemyOperator : MonoBehaviour
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         { 
             case EnemyData.EnamyState.ACTIVE:
-                spriteRenderer.color = defaultColor;
+                spriteRenderer.color = EnemyManager.Instance.SpriteColor;
                 spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
 
                 if (IsAttackTiming())
@@ -74,6 +71,7 @@ public class ClientEnemyOperator : MonoBehaviour
                     EnemyManager.Instance.AttackSpriteAnimPlay();
                     EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ATTACK);
                 }
+
                 break;
             case EnemyData.EnamyState.ATTACK:
                 spriteRenderer.sprite = EnemyManager.Instance.GetAttackSpriteAutoAnim();
@@ -121,8 +119,13 @@ public class ClientEnemyOperator : MonoBehaviour
 
         isLive = true;
 
+        countTime = 0;
+        attackTime = 0;
+
+        EnemyManager.Instance.StandingSpriteAnimPlay();
+
         spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
-        spriteRenderer.color = defaultColor;
+        spriteRenderer.color = EnemyManager.Instance.SpriteColor;
 
         iTween.Stop(gameObject);
 
@@ -182,7 +185,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
         var hash = new Hashtable();
         {
-            hash.Add("from", defaultColor); // 設定するサイズ
+            hash.Add("from", EnemyManager.Instance.SpriteColor); // 設定するサイズ
             hash.Add("to", flashColor); // 設定するサイズ
             hash.Add("time", flashTime);                       // 1秒で行う
             hash.Add("easetype", iTween.EaseType.easeOutQuad);        // イージングタイプを設定
