@@ -22,6 +22,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
     Vector3 scale = Vector3.one;
     bool isLive = false;
+    bool isHit = false;
     float countTime = 0;
     float attackTime = 0;
 
@@ -119,6 +120,8 @@ public class ClientEnemyOperator : MonoBehaviour
 
         isLive = true;
 
+        // 初期化
+        isHit = false;
         countTime = 0;
         attackTime = 0;
 
@@ -159,16 +162,8 @@ public class ClientEnemyOperator : MonoBehaviour
         if (!isLive) return;
 
         isLive = false;
-
-        var hash = new Hashtable();
-        {
-            hash.Add("scale", new Vector3(0f, 0f, 0f)); // 設定するサイズ
-            hash.Add("time", 1f);                       // 1秒で行う
-            hash.Add("easetype", iTween.EaseType.easeOutQuad);        // イージングタイプを設定
-            hash.Add("oncomplete", "ChangeActive");     // 最後にメソッドを呼ぶ
-        }
-
-        iTween.ScaleTo(this.gameObject, hash);
+        ChangeActive();
+        transform.localScale = Vector3.zero;
     }
 
     /// <summary>
@@ -176,8 +171,10 @@ public class ClientEnemyOperator : MonoBehaviour
     /// </summary>
     void Hit()
     {
-        if (!EnemyManager.Instance.GetActiveEnemyData().IsHit()) return;
-        
+        if (isHit) return;
+
+        isHit = true;
+
         // 光らせる数
         const float flashNum = 3;
 
@@ -200,7 +197,6 @@ public class ClientEnemyOperator : MonoBehaviour
             EnemyManager.Instance.GetActiveEnemyData().HitSkillType(), 
             transform.position - new Vector3(0,0,30));
 
-        EnemyManager.Instance.GetActiveEnemyData().HitRelease();
     }
 
     void ColorUpdateHandler(Color color)
@@ -210,8 +206,8 @@ public class ClientEnemyOperator : MonoBehaviour
     
     void HitEffectCompleted()
     {
+        isHit = false;
         iTween.Stop(gameObject);
-
         EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
     }
 

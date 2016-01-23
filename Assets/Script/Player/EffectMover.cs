@@ -52,6 +52,8 @@ public class EffectMover : MonoBehaviour
 
     void Update()
     {
+        if (EnemyManager.Instance.GetActiveEnemyData().State == EnemyData.EnamyState.DEAD) return;
+
         // 距離以内なら当たったとみなす。
         if (Vector3.Distance(transform.position, GameManager.Instance.Enemy.transform.position) <= HIT_RANGE)
         {
