@@ -1,12 +1,11 @@
 ﻿//-------------------------------------------------------------
-// データのやり取りを管理するクラス
+// データのやり取りして、エネミーを操作するクラス
 //
 // code by m_yamada featuring Gai
 //-------------------------------------------------------------
 using UnityEngine;
 using System.Collections;
 
-// サーバーとの通信を行う
 public class ClientEnemyOperator : MonoBehaviour 
 {
 
@@ -15,7 +14,6 @@ public class ClientEnemyOperator : MonoBehaviour
 
     [SerializeField]
     float flashTime = 0.5f;    // 点滅する時間
-
 
     [SerializeField]
     Color defaultColor = new Color(1f, 1f, 1f, 1f);
@@ -28,6 +26,7 @@ public class ClientEnemyOperator : MonoBehaviour
     bool isLive = false;
     float countTime = 0;
     float attackTime = 0;
+
 
     // Use this for initialization
     void Start()
@@ -55,33 +54,40 @@ public class ClientEnemyOperator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-#if UNITY_EDITOR
-        // 確認用
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Hit();
-        }
-#endif
 
-        if (TutorialScript.IsTutorial) return;
-        if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
+        //if (TutorialScript.IsTutorial) return;
+        //if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
+        
+        // プレイヤーの方向に向く
+        transform.LookAt(new Vector3(GameManager.Instance.GetPlayerData().Position.x, 
+            transform.position.y, GameManager.Instance.GetPlayerData().Position.z));
 
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         { 
             case EnemyData.EnamyState.ACTIVE:
                 spriteRenderer.color = defaultColor;
+                spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
 
-                // プレイヤーの方向に向く
-                transform.LookAt(new Vector3(GameManager.Instance.GetPlayerData().Position.x, transform.position.y, GameManager.Instance.GetPlayerData().Position.z));
-                
                 if (IsAttackTiming())
                 {
-                    EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0,0,0));
+                    EnemyManager.Instance.AttackSpriteAnimPlay();
+                    EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ATTACK);
                 }
+                break;
+            case EnemyData.EnamyState.ATTACK:
+                spriteRenderer.sprite = EnemyManager.Instance.GetAttackSpriteAutoAnim();
 
+                if (!EnemyManager.Instance.IsAttackAnimPlay())
+                {
+                    EnemyManager.Instance.StandingSpriteAnimPlay();
+                    EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 0, 0));
+                    EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
+                }
                 break;
 
             case EnemyData.EnamyState.HIT:
+                if (EnemyManager.Instance.GetActiveEnemyData().State == EnemyData.EnamyState.ATTACK) break;
+
                 Hit();
 
                 countTime -= Time.deltaTime;
@@ -138,8 +144,6 @@ public class ClientEnemyOperator : MonoBehaviour
 
     void SpawnCompleted()
     {
-        Debugger.Log(">> SpawnCompleted()");
-
         EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
     }
 
@@ -168,8 +172,6 @@ public class ClientEnemyOperator : MonoBehaviour
     /// </summary>
     void Hit()
     {
-        if (!EnemyManager.Instance.GetActiveEnemyData().IsHit()) return;
-
         // 光らせる数
         const float flashNum = 3;
 
@@ -203,8 +205,6 @@ public class ClientEnemyOperator : MonoBehaviour
     void HitEffectCompleted()
     {
         iTween.Stop(gameObject);
-
-        Debugger.Log(">> HitEffectCompleted()");
 
         EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
     }

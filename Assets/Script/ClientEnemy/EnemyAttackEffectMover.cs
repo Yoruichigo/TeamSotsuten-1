@@ -9,7 +9,7 @@ public class EnemyAttackEffectMover : MonoBehaviour {
     Rigidbody cashRigidBody = null;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         cashRigidBody = GetComponent<Rigidbody>();
     }

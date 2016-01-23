@@ -6,6 +6,7 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyData: MonoBehaviour 
 {
@@ -40,19 +41,24 @@ public class EnemyData: MonoBehaviour
         ACTIVE,
         HIT,
         DEAD,
+        ATTACK
     }
 
     [SerializeField]
     EnamyState state = EnamyState.NONE;
 
     [SerializeField]
-    Sprite sprite = null;
-
-    [SerializeField]
     GameObject attackEffect = null;
 
     [SerializeField]
     float attackSpeed = 1000.0f;
+
+    [SerializeField]
+    Sprite[] standingSpriteList = new Sprite[1];
+
+    [SerializeField]
+    Sprite[] attackSpriteList = new Sprite[1];
+
 
     public EnamyState State{  get { return state; }}
 
@@ -80,7 +86,7 @@ public class EnemyData: MonoBehaviour
         GameManager.Instance.SendEnemyRotation(id, transform.rotation.eulerAngles);
         GameManager.Instance.SendEnemyIsActive(id, true);
 
-        EnemyManager.Instance.SetEnemySprite(sprite);
+        EnemyManager.Instance.SetEnemySprite(ref standingSpriteList,ref attackSpriteList);
 
         EnemyAttackManager.Instance.Create(attackEffect, attackSpeed);
     }

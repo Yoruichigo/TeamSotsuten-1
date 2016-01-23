@@ -20,6 +20,9 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
     [SerializeField]
+    float changeSpriteAnimTime = 1.0f;
+
+    [SerializeField]
     float nextWaveTime = 2.0f;
 
     [SerializeField]
@@ -29,12 +32,28 @@ public class EnemyManager : Singleton<EnemyManager>
     Transform appearanceEffectRoot = null;
 
     [SerializeField]
+    Transform destroyEffectRoot = null;
+
+    [SerializeField]
     List<EnemyData> enemyList = new List<EnemyData>();  //< 登録エネミー
 
+    Sprite[] standingSpriteList = null;
+    Sprite[] attackSpriteList = null;
+
     ParticleSystem appearanceEffect = null; //< 登場するエフェクト
+    ParticleSystem destroyEffect = null;    //< 死亡するエフェクト
     State state = State.None;    //< 制御する状態
+
+    bool isStandingAnimPlay = false;
+    bool isAttackAnimPlay = false;
+
     int activeEnemyID = 0;  //< 出現するエネミーID
+    int standingSpriteIndex = 0;
+    int attackSpriteIndex = 0;
+
     float delayTime = 0;
+    float animTime = 0;
+
 
     void Awake()
     {
@@ -50,16 +69,17 @@ public class EnemyManager : Singleton<EnemyManager>
         state = State.Start;
 
         appearanceEffect = appearanceEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
-
+        destroyEffect = destroyEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
     }
 
     /// <summary>
     /// 敵の画像情報を設定する。
     /// </summary>
     /// <param name="sprite"></param>
-    public void SetEnemySprite(Sprite sprite)
+    public void SetEnemySprite(ref Sprite[] standingSpriteArray,ref Sprite[] attackSpriteArray)
     {
-        enemyRenderer.sprite = sprite;
+        standingSpriteList = standingSpriteArray;
+        attackSpriteList = attackSpriteArray;
     }
 
     /// <summary>
@@ -77,19 +97,18 @@ public class EnemyManager : Singleton<EnemyManager>
         return enemyList[activeEnemyID];
     }
 
-
     // Update is called once per frame
     void Update()
     {
         base.Update();
 
-        if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
+        //if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
         
         switch (state)
         {
             case State.Start:    //< 待機前処理
 
-                appearanceEffect.Play();
+                //appearanceEffect.Play();
 
                 // サバ―にエネミーを登録,初期化を行う
                 GetActiveEnemyData().SetMyDate();
@@ -105,6 +124,8 @@ public class EnemyManager : Singleton<EnemyManager>
 
             case State.Standby:  //< 待機　出現するかを制御
                 GetActiveEnemyData().StateChange(EnemyData.EnamyState.SPAWN);
+
+                StandingSpriteAnimPlay();
 
                 Debugger.Log(">> GetActiveEnemy State SPAWN");
 
@@ -133,6 +154,8 @@ public class EnemyManager : Singleton<EnemyManager>
                     {
                         GetActiveEnemyData().HitRelease();
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.DEAD);
+
+                        destroyEffect.Play();
 
                         SEPlayer.Instance.Play("EnemySiren");
 
@@ -176,5 +199,91 @@ public class EnemyManager : Singleton<EnemyManager>
         state = State.Start;
         Debugger.Log(">> 次のWaveに遷移する");
 
+    }
+
+    // --------------------------------------------------------------------
+    // アニメーション系
+    // ---------------------------------------------------------------------
+
+    // 立ちアニメーション再生中かどうか
+    public bool IsStandingAnimPlay()
+    {
+        return isStandingAnimPlay;
+    }
+
+    // 攻撃アニメーション再生中かどうか
+    public bool IsAttackAnimPlay()
+    {
+        return isAttackAnimPlay;
+    }
+
+    // 立ちアニメーションを再生
+    public void StandingSpriteAnimPlay()
+    {
+        animTime = 0;
+        standingSpriteIndex = 0;
+        isStandingAnimPlay = true;
+    }
+
+    // 攻撃アニメーションを再生
+    public void AttackSpriteAnimPlay()
+    {
+        animTime = 0;
+        attackSpriteIndex = 0;
+        isAttackAnimPlay = true;
+    }
+
+    // 立っている状態の画像を取得
+    public Sprite GetStandingSpriteAutoAnim()
+    {
+        if (!isStandingAnimPlay) return standingSpriteList[0];
+
+        animTime += Time.deltaTime;
+        if (animTime >= changeSpriteAnimTime)
+        {
+            animTime = 0;
+
+            standingSpriteIndex++;
+            if (standingSpriteIndex >= GetStandingSpriteLength())
+            {
+                // loopなので、コメントにする
+                //isStandingAnimPlay = false;
+                standingSpriteIndex = 0;
+            }
+        }
+        return standingSpriteList[standingSpriteIndex];
+    }
+
+    // 攻撃状態の画像を取得
+    public Sprite GetAttackSpriteAutoAnim()
+    {
+        if (!isAttackAnimPlay) return attackSpriteList[0];
+
+        animTime += Time.deltaTime;
+        if (animTime >= changeSpriteAnimTime)
+        {
+            animTime = 0;
+
+            attackSpriteIndex++;
+            if (attackSpriteIndex >= GetAttackSpriteLength())
+            {
+                isAttackAnimPlay = false;
+                attackSpriteIndex = 0;
+            }
+        }
+
+        return attackSpriteList[attackSpriteIndex];
+    }
+
+    // 立っている状態の画像の長さを取得
+    public int GetStandingSpriteLength()
+    {
+        return standingSpriteList.Length;
+    }
+
+    // 攻撃状態の画像の長さを取得
+    public int GetAttackSpriteLength()
+    {
+        return attackSpriteList.Length;
     }
 }
