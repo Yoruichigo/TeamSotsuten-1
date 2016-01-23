@@ -102,13 +102,13 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         base.Update();
 
-        //if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
+        if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
         
         switch (state)
         {
             case State.Start:    //< 待機前処理
 
-                //appearanceEffect.Play();
+                appearanceEffect.Play();
 
                 // サバ―にエネミーを登録,初期化を行う
                 GetActiveEnemyData().SetMyDate();
@@ -142,6 +142,8 @@ public class EnemyManager : Singleton<EnemyManager>
                     // SV側がHitフラグだ立ったら、CL状態を変更する。
                     if (GetActiveEnemyData().IsHit())
                     {
+                        if (GetActiveEnemyData().State == EnemyData.EnamyState.ATTACK) break;
+
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.HIT);
 
                         SEPlayer.Instance.Play("EnemyHit");
@@ -198,7 +200,6 @@ public class EnemyManager : Singleton<EnemyManager>
 
         state = State.Start;
         Debugger.Log(">> 次のWaveに遷移する");
-
     }
 
     // --------------------------------------------------------------------
@@ -223,6 +224,7 @@ public class EnemyManager : Singleton<EnemyManager>
         animTime = 0;
         standingSpriteIndex = 0;
         isStandingAnimPlay = true;
+        isAttackAnimPlay = false;
     }
 
     // 攻撃アニメーションを再生
@@ -231,6 +233,7 @@ public class EnemyManager : Singleton<EnemyManager>
         animTime = 0;
         attackSpriteIndex = 0;
         isAttackAnimPlay = true;
+        isStandingAnimPlay = false;
     }
 
     // 立っている状態の画像を取得
@@ -251,6 +254,7 @@ public class EnemyManager : Singleton<EnemyManager>
                 standingSpriteIndex = 0;
             }
         }
+
         return standingSpriteList[standingSpriteIndex];
     }
 

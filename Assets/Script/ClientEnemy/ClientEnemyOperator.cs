@@ -23,6 +23,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
     SpriteRenderer spriteRenderer = null;
 
+    Vector3 scale = Vector3.one;
     bool isLive = false;
     float countTime = 0;
     float attackTime = 0;
@@ -32,6 +33,7 @@ public class ClientEnemyOperator : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        scale = transform.localScale;
     }
 
 
@@ -54,9 +56,8 @@ public class ClientEnemyOperator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //if (TutorialScript.IsTutorial) return;
-        //if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
+        if (TutorialScript.IsTutorial) return;
+        if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
         
         // プレイヤーの方向に向く
         transform.LookAt(new Vector3(GameManager.Instance.GetPlayerData().Position.x, 
@@ -80,14 +81,12 @@ public class ClientEnemyOperator : MonoBehaviour
                 if (!EnemyManager.Instance.IsAttackAnimPlay())
                 {
                     EnemyManager.Instance.StandingSpriteAnimPlay();
-                    EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 0, 0));
+                    EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 200, 0));
                     EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
                 }
                 break;
 
             case EnemyData.EnamyState.HIT:
-                if (EnemyManager.Instance.GetActiveEnemyData().State == EnemyData.EnamyState.ATTACK) break;
-
                 Hit();
 
                 countTime -= Time.deltaTime;
@@ -122,7 +121,9 @@ public class ClientEnemyOperator : MonoBehaviour
 
         isLive = true;
 
+        spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
         spriteRenderer.color = defaultColor;
+
         iTween.Stop(gameObject);
 
         ChangeActive();
@@ -131,7 +132,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
         var hash = new Hashtable();
         {
-            hash.Add("scale", new Vector3(0.1f, 0.1f, 0.1f)); // 設定するサイズ
+            hash.Add("scale", scale); // 設定するサイズ
             hash.Add("time", 1f);                       // 1秒で行う
             hash.Add("easetype", iTween.EaseType.easeOutQuad);        // イージングタイプを設定
             hash.Add("oncomplete", "SpawnCompleted");     // 最後にメソッドを呼ぶ
@@ -172,6 +173,8 @@ public class ClientEnemyOperator : MonoBehaviour
     /// </summary>
     void Hit()
     {
+        if (!EnemyManager.Instance.GetActiveEnemyData().IsHit()) return;
+        
         // 光らせる数
         const float flashNum = 3;
 
