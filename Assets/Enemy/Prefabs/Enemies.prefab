@@ -131,9 +131,12 @@ MonoBehaviour:
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
   state: 0
-  sprite: {fileID: 21300000, guid: 051309abf97b00d40a10d42f39666dba, type: 3}
   attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
   attackSpeed: 1000
+  standingSpriteList:
+  - {fileID: 21300000, guid: 051309abf97b00d40a10d42f39666dba, type: 3}
+  attackSpriteList:
+  - {fileID: 21300000, guid: 051309abf97b00d40a10d42f39666dba, type: 3}
 --- !u!114 &11441748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,9 +153,12 @@ MonoBehaviour:
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
   state: 0
-  sprite: {fileID: 21300000, guid: befb7ccc9fb532b4987589d1fd6e2bc8, type: 3}
   attackEffect: {fileID: 178778, guid: 2f1b3eaaa9a58834eb0e9a024d4d6c0f, type: 2}
   attackSpeed: 1000
+  standingSpriteList:
+  - {fileID: 21300000, guid: befb7ccc9fb532b4987589d1fd6e2bc8, type: 3}
+  attackSpriteList:
+  - {fileID: 21300000, guid: befb7ccc9fb532b4987589d1fd6e2bc8, type: 3}
 --- !u!114 &11453150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,9 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdea1a9f25174546b330dd624ee2edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeSpriteAnimTime: .5
   nextWaveTime: 3
   enemyRenderer: {fileID: 0}
   appearanceEffectRoot: {fileID: 0}
+  destroyEffectRoot: {fileID: 0}
   enemyList:
   - {fileID: 11497832}
   - {fileID: 11441748}
@@ -187,9 +195,16 @@ MonoBehaviour:
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
   state: 0
-  sprite: {fileID: 21300000, guid: 8b0c59649b0e8e7438cbf830ed2267ca, type: 3}
   attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
   attackSpeed: 1000
+  standingSpriteList:
+  - {fileID: 21300000, guid: 8b0c59649b0e8e7438cbf830ed2267ca, type: 3}
+  - {fileID: 21300000, guid: 1865c7b53db6e6747bb153b1aaa1441c, type: 3}
+  - {fileID: 21300000, guid: 9f5648975de20f440ae19db1040725e9, type: 3}
+  attackSpriteList:
+  - {fileID: 21300000, guid: c221a8c7888be69469b4a8fc3144048d, type: 3}
+  - {fileID: 21300000, guid: e27160ce6ab5ce841a4353ca43c1289f, type: 3}
+  - {fileID: 21300000, guid: 4db34474121a9e649adeca2ef71bdaef, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
