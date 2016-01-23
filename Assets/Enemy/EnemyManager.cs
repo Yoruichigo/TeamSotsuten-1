@@ -152,6 +152,8 @@ public class EnemyManager : Singleton<EnemyManager>
                         SEPlayer.Instance.Play("EnemyHit");
                        
                         Debugger.Log(">> GetActiveEnemy State HIT");
+
+                        GetActiveEnemyData().HitRelease();
                     }
 
                     // SV側のライフが0なら、CL状態を変更する。
