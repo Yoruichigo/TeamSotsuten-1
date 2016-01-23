@@ -30,6 +30,7 @@ public class EnemyAttackManager : Singleton<EnemyAttackManager> {
             Destroy(data.attackObjList[i].gameObject);
         }
 
+        data.attackObjList.Clear();
 
         for (int i = 0; i < createNum; i++)
         {

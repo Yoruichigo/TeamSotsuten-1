@@ -29,11 +29,6 @@ public class EffectDB : MonoBehaviour {
         public float speed;
 
         /// <summary>
-        /// エフェクトのサイズ
-        /// </summary>
-        public Vector3 scale;
-        
-        /// <summary>
         /// ダメージ量
         /// </summary>
         public int damage;
@@ -48,13 +43,11 @@ public class EffectDB : MonoBehaviour {
         public EffectData(
             MotionManager.MotionSkillType _type , 
             float _speed,
-            Vector3 _scale,
             int _damage
             )
         {
             skillType = _type;
             speed = _speed;
-            scale = _scale;
             damage = _damage;
         }
     }
@@ -65,16 +58,7 @@ public class EffectDB : MonoBehaviour {
     /// </summary>
     private float[] speedArray = new float[] 
     {
-        1.0f,1.0f
-    };
-
-    /// <summary>
-    /// エフェクトのサイズ配列
-    /// </summary>
-    private Vector3[] scaleArray = new Vector3[] 
-    {
-        new Vector3(20.0f,20.0f,20.0f),
-        new Vector3(5.0f,5.0f,5.0f),
+        1000.0f,1500.0f
     };
 
     /// <summary>
@@ -103,7 +87,6 @@ public class EffectDB : MonoBehaviour {
             EffectData data = new EffectData(
                 motionType,
                 speedArray[i],
-                scaleArray[i],
                 damageArray[i]);
 
             dataList.Add(data);

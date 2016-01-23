@@ -54,6 +54,8 @@ public class EnemyManager : Singleton<EnemyManager>
     float delayTime = 0;
     float animTime = 0;
 
+    [HideInInspector]
+    public Color SpriteColor = Color.white;
 
     void Awake()
     {
@@ -76,10 +78,11 @@ public class EnemyManager : Singleton<EnemyManager>
     /// 敵の画像情報を設定する。
     /// </summary>
     /// <param name="sprite"></param>
-    public void SetEnemySprite(ref Sprite[] standingSpriteArray,ref Sprite[] attackSpriteArray)
+    public void SetEnemySprite(ref Sprite[] standingSpriteArray,ref Sprite[] attackSpriteArray,ref Color color)
     {
         standingSpriteList = standingSpriteArray;
         attackSpriteList = attackSpriteArray;
+        SpriteColor = color;
     }
 
     /// <summary>
