@@ -182,7 +182,17 @@ public class GameManager : Singleton<GameManager>
         return enemyDataArray[_arrayNumber];
     }
 
-    
+
+
+    /// <summary>
+    /// エネミーのタイプを変更します。
+    /// </summary>
+    /// <param name="_id"></param>
+    /// <param name="_isActive"></param>
+    public void SendEnemyType(int _arrayNumber, EnemyMasterData.ENEMY_TYPE _type)
+    {
+        enemyDataArray[_arrayNumber].EnemyType = _type;
+    }
 
 
 

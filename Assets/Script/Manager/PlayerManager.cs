@@ -51,7 +51,7 @@ public class PlayerManager : Singleton<PlayerManager>
         {
             cameraShaker.Shake();
             Handheld.Vibrate(); // バイブ
-            SEPlayer.Instance.Play("Damage");
+            SEPlayer.Instance.Play(Audio.SEID.DAMAGE);
             GameManager.Instance.GetPlayerData().IsHit = false;
         }
 

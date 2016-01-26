@@ -113,6 +113,7 @@ GameObject:
   - 4: {fileID: 496014}
   - 212: {fileID: 21242596}
   - 114: {fileID: 11444146}
+  - 111: {fileID: 11199796}
   m_Layer: 0
   m_Name: ClientEnemySprite
   m_TagString: Untagged
@@ -232,7 +233,7 @@ Transform:
   m_Children:
   - {fileID: 498956}
   m_Father: {fileID: 431382}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &417024
 Transform:
   m_ObjectHideFlags: 1
@@ -292,8 +293,8 @@ Transform:
   m_LocalScale: {x: 1280, y: 1280, z: 1280}
   m_Children:
   - {fileID: 496014}
-  - {fileID: 479566}
   - {fileID: 411540}
+  - {fileID: 479566}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &451592
@@ -347,7 +348,7 @@ Transform:
   m_Children:
   - {fileID: 477856}
   m_Father: {fileID: 431382}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &492568
 Transform:
   m_ObjectHideFlags: 1
@@ -368,7 +369,7 @@ Transform:
   m_GameObject: {fileID: 144042}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
   m_LocalPosition: {x: 0, y: .100000001, z: 0}
-  m_LocalScale: {x: .170000002, y: .150000006, z: .100000001}
+  m_LocalScale: {x: .150000006, y: .150000006, z: .100000001}
   m_Children: []
   m_Father: {fileID: 431382}
   m_RootOrder: 0
@@ -419,6 +420,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117150}
   m_Mesh: {fileID: 0}
+--- !u!111 &11199796
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144042}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 7cb4dd341b99a5b42b2a79912ed330af, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 7cb4dd341b99a5b42b2a79912ed330af, type: 2}
+  - {fileID: 7400000, guid: bb3bff07503b5f74780739b9335cdd2c, type: 2}
+  - {fileID: 7400000, guid: 4da0f898023625d4d9cbdede64161b2f, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!114 &11416132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,7 +461,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTiming: 3
   flashTime: .200000003
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &11456348
 MonoBehaviour:

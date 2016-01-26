@@ -26,12 +26,19 @@ public class ClientEnemyOperator : MonoBehaviour
     float countTime = 0;
     float attackTime = 0;
 
+    Animation animationAI = null;
+    AnimationState animationState = null;
+    float animationTime = 0;
+    float pauseAnimationTime = 0;
+
 
     // Use this for initialization
     void Start()
     {
+        animationAI = GetComponent<Animation>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         scale = transform.localScale;
+
     }
 
 
@@ -64,6 +71,7 @@ public class ClientEnemyOperator : MonoBehaviour
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         { 
             case EnemyData.EnamyState.ACTIVE:
+
                 spriteRenderer.color = EnemyManager.Instance.SpriteColor;
                 spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
 
@@ -71,6 +79,8 @@ public class ClientEnemyOperator : MonoBehaviour
                 {
                     EnemyManager.Instance.AttackSpriteAnimPlay();
                     EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ATTACK);
+
+                    AIAnimationPause();
                 }
 
                 break;
@@ -82,6 +92,8 @@ public class ClientEnemyOperator : MonoBehaviour
                     EnemyManager.Instance.StandingSpriteAnimPlay();
                     EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 200, 0));
                     EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
+
+                    AIAnimationPlay();
                 }
                 break;
 
@@ -109,7 +121,9 @@ public class ClientEnemyOperator : MonoBehaviour
                 break;
         }
 
+        animationTime = animationState.normalizedTime;
     }
+
 
     /// <summary>
     /// 発生
@@ -152,6 +166,8 @@ public class ClientEnemyOperator : MonoBehaviour
     void SpawnCompleted()
     {
         EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
+
+        AIAnimationPlay();
     }
 
     /// <summary>
@@ -160,6 +176,8 @@ public class ClientEnemyOperator : MonoBehaviour
     void Dead()
     {
         if (!isLive) return;
+
+        AIAnimationStop();
 
         isLive = false;
         ChangeActive();
@@ -197,6 +215,7 @@ public class ClientEnemyOperator : MonoBehaviour
             EnemyManager.Instance.GetActiveEnemyData().HitSkillType(), 
             transform.position - new Vector3(0,0,30));
 
+        AIAnimationPause();
     }
 
     void ColorUpdateHandler(Color color)
@@ -206,6 +225,8 @@ public class ClientEnemyOperator : MonoBehaviour
     
     void HitEffectCompleted()
     {
+        AIAnimationPlay();
+
         isHit = false;
         iTween.Stop(gameObject);
         EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
@@ -217,5 +238,42 @@ public class ClientEnemyOperator : MonoBehaviour
     void ChangeActive()
     {
         GameManager.Instance.SendEnemyIsActive(EnemyManager.Instance.GetActiveEnemyData().Id, isLive);
+    }
+
+    // ---------------------------------------------------------
+    //  アニメーション系
+    // --------------------------------------------------------
+
+    void AIAnimationStop()
+    {
+        animationTime = 0;
+        pauseAnimationTime = 0;
+        animationState = null;
+        animationAI.Stop();
+    }
+
+    void AIAnimationPause()
+    {
+        pauseAnimationTime = animationTime;
+        animationAI.Stop();
+    }
+
+    void AIAnimationPlay()
+    {
+        switch (EnemyManager.Instance.GetActiveEnemyData().EnemyType)
+        {
+            case EnemyMasterData.ENEMY_TYPE.GOREMU:
+                animationState = animationAI.PlayQueued("anim_goremu");
+                break;
+            case EnemyMasterData.ENEMY_TYPE.SMALL_DORAGON:
+                animationState = animationAI.PlayQueued("anim_small_dragon");
+                break;
+            case EnemyMasterData.ENEMY_TYPE.BIG_DORAGON:
+                animationState = animationAI.PlayQueued("anim_big_dragon");
+                break;
+        }
+
+        animationState.normalizedTime = pauseAnimationTime;
+
     }
 }

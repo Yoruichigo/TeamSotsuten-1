@@ -10,20 +10,19 @@ using System.Collections.Generic;
 
 public class SEPlayer : Singleton<SEPlayer>
 {
-    public struct Data
+    public class Data
     {
-        public Data(string resName)
-            : this()
+        public Data(SEAudioData data)
         {
-            this.resName = resName;
-            clip = Resources.Load("SE/" + resName) as AudioClip;
+            this.data = data;
+            clip = Resources.Load("SE/" + data.label) as AudioClip;
         }
-        public string resName;
+        public SEAudioData data;
         public AudioClip clip;
     }
 
     List<AudioSource> sources = new List<AudioSource>();
-    Dictionary<string, Data> audioMap = new Dictionary<string, Data>();
+    Dictionary<Audio.SEID, Data> audioMap = new Dictionary<Audio.SEID, Data>();
 
     public const float maxVolume = 1.0f;
 
@@ -31,6 +30,11 @@ public class SEPlayer : Singleton<SEPlayer>
     void Awake()
     {
         base.Awake();
+
+        foreach (var data in AudioManager.SEData)
+        {
+            audioMap.Add(data.id, new Data(data));
+        }
 
     }
 
@@ -61,18 +65,13 @@ public class SEPlayer : Singleton<SEPlayer>
     /// 再生
     /// </summary>
     /// <param name="resName">Resource名</param>
-    public void Play(string resName, float pitch = 1.0f, bool loop = false)
+    public void Play(Audio.SEID id, float pitch = 1.0f, bool loop = false)
     {
         if (SequenceManager.Instance.IsBuildWatch) return;
-
-        if (!audioMap.ContainsKey(resName))
-        {
-            audioMap.Add(resName, new Data(resName));
-        }
-
+        
         sources.Add(gameObject.AddComponent<AudioSource>());
         var index = sources.Count - 1;
-        sources[index].clip = audioMap[resName].clip;
+        sources[index].clip = audioMap[id].clip;
         sources[index].pitch = pitch;
         sources[index].loop = loop;
         sources[index].volume = maxVolume;
@@ -84,11 +83,11 @@ public class SEPlayer : Singleton<SEPlayer>
     /// </summary>
     /// <param name="resName"></param>
     /// <param name="volume"></param>
-    public void ChangeVolume(string resName, float volume)
+    public void ChangeVolume(Audio.SEID id, float volume)
     {
         foreach (var source in sources)
         {
-            if (source.clip.name == resName)
+            if (source.clip.name == audioMap[id].clip.name)
             {
                 source.volume = volume;
                 break;
@@ -101,22 +100,22 @@ public class SEPlayer : Singleton<SEPlayer>
     /// 停止
     /// </summary>
     /// <param name="resName">Resource名</param>
-    public void Stop(string resName, float time = 0.0f)
+    public void Stop(Audio.SEID id, float time = 0.0f)
     {
-        StartCoroutine(WaitStop(resName, time));
+        StartCoroutine(WaitStop(id, time));
     }
 
     /// <summary>
     /// 停止
     /// </summary>
     /// <param name="resName">Resource名</param>
-    IEnumerator WaitStop(string resName, float time)
+    IEnumerator WaitStop(Audio.SEID id, float time)
     {
         yield return new WaitForSeconds(time);
-
+        
         foreach (var source in sources)
         {
-            if (source.clip.name == resName)
+            if (source.clip.name == audioMap[id].clip.name)
             {
                 source.Stop();
                 break;
@@ -143,11 +142,11 @@ public class SEPlayer : Singleton<SEPlayer>
     /// </summary>
     /// <param name="resName">Resource名</param>
     /// <returns></returns>
-    public bool IsPlaying(string resName)
+    public bool IsPlaying(Audio.SEID id)
     {
         foreach (var source in sources)
         {
-            if (source.isPlaying && source.clip.name == resName)
+            if (source.isPlaying && source.clip.name == audioMap[id].clip.name)
             {
                 return true;
             }

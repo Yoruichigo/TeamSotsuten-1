@@ -78,11 +78,11 @@ public class EffectCreate : MonoBehaviour
         {
             case MotionManager.MotionSkillType.STRENGTH:
                 EffectPlay(strengthEffectList, skillType, ref strengthPlayIndex);
-                SEPlayer.Instance.Play("PlayerStrengthAttack");
+                SEPlayer.Instance.Play(Audio.SEID.PLAYERSTRENGTHATTACK);
                 break;
             case MotionManager.MotionSkillType.WEAK:
                 EffectPlay(weakEffectList, skillType, ref weakPlayIndex);
-                SEPlayer.Instance.Play("PlayerWeakAttack");
+                SEPlayer.Instance.Play(Audio.SEID.PLAYERWEAKATTACK);
                 break;
             default:
                 break;

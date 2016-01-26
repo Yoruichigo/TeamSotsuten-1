@@ -35,7 +35,7 @@ public class TitleSequence : SequenceBehaviour
         if (MotionManager.Instance.MotionSkill == MotionManager.MotionSkillType.STRENGTH)
         {
             view.RPC("ChangeScene", PhotonTargets.All);
-            SEPlayer.Instance.Play("Decision");
+            SEPlayer.Instance.Play(Audio.SEID.DECISION);
         }
 	}
 

@@ -22,7 +22,7 @@ public class ConnnectionSequence : SequenceBehaviour
 
     void Start()
     {
-        BGMPlayer.Instance.Play("GameBGM", new FadeTimeData(1, 1));
+        BGMPlayer.Instance.Play(Audio.BGMID.GAMEBGM, new FadeTimeData(1, 1));
     }
 
     void Update()

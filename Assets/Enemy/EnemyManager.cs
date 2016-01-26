@@ -149,7 +149,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.HIT);
 
-                        SEPlayer.Instance.Play("EnemyHit");
+                        SEPlayer.Instance.Play(Audio.SEID.ENEMYHIT);
                        
                         Debugger.Log(">> GetActiveEnemy State HIT");
 
@@ -162,9 +162,10 @@ public class EnemyManager : Singleton<EnemyManager>
                         GetActiveEnemyData().HitRelease();
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.DEAD);
 
+                        destroyEffect.transform.position = GetActiveEnemyData().transform.position;
                         destroyEffect.Play();
 
-                        SEPlayer.Instance.Play("EnemySiren");
+                        SEPlayer.Instance.Play(Audio.SEID.ENEMYSIREN);
 
                         Debugger.Log(">> GetActiveEnemy State DEAD");
                     }
@@ -201,7 +202,7 @@ public class EnemyManager : Singleton<EnemyManager>
             return;
         }
 
-        SEPlayer.Instance.Play("EnemyAppearance");
+        SEPlayer.Instance.Play(Audio.SEID.ENEMYAPPEARANCE);
 
         state = State.Start;
         Debugger.Log(">> 次のWaveに遷移する");
