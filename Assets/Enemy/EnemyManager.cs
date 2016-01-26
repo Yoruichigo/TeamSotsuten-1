@@ -149,8 +149,6 @@ public class EnemyManager : Singleton<EnemyManager>
 
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.HIT);
 
-                        SEPlayer.Instance.Play(Audio.SEID.ENEMYHIT);
-                       
                         Debugger.Log(">> GetActiveEnemy State HIT");
 
                         GetActiveEnemyData().HitRelease();
@@ -164,8 +162,6 @@ public class EnemyManager : Singleton<EnemyManager>
 
                         destroyEffect.transform.position = GetActiveEnemyData().transform.position;
                         destroyEffect.Play();
-
-                        SEPlayer.Instance.Play(Audio.SEID.ENEMYSIREN);
 
                         Debugger.Log(">> GetActiveEnemy State DEAD");
                     }

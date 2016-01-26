@@ -93,6 +93,7 @@ public class ClientEnemyOperator : MonoBehaviour
                     EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 200, 0));
                     EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
 
+                    AttackSoundPlay();
                     AIAnimationPlay();
                 }
                 break;
@@ -123,7 +124,6 @@ public class ClientEnemyOperator : MonoBehaviour
 
         animationTime = animationState.normalizedTime;
     }
-
 
     /// <summary>
     /// 発生
@@ -182,6 +182,8 @@ public class ClientEnemyOperator : MonoBehaviour
         isLive = false;
         ChangeActive();
         transform.localScale = Vector3.zero;
+
+        SEPlayer.Instance.Play(Audio.SEID.ENEMYSIREN);
     }
 
     /// <summary>
@@ -216,6 +218,8 @@ public class ClientEnemyOperator : MonoBehaviour
             transform.position - new Vector3(0,0,30));
 
         AIAnimationPause();
+
+        SEPlayer.Instance.Play(Audio.SEID.ENEMYHIT);
     }
 
     void ColorUpdateHandler(Color color)
@@ -239,6 +243,31 @@ public class ClientEnemyOperator : MonoBehaviour
     {
         GameManager.Instance.SendEnemyIsActive(EnemyManager.Instance.GetActiveEnemyData().Id, isLive);
     }
+
+
+    // ---------------------------------------------
+    // サウンド系
+    // ---------------------------------------------
+
+    /// <summary>
+    /// 種類別に攻撃のサウンドを再生する。
+    /// </summary>
+    void AttackSoundPlay()
+    {
+        switch (EnemyManager.Instance.GetActiveEnemyData().EnemyType)
+        {
+            case EnemyMasterData.ENEMY_TYPE.GOREMU:
+                SEPlayer.Instance.Play(Audio.SEID.GOLEMATTACK);
+                break;
+            case EnemyMasterData.ENEMY_TYPE.SMALL_DORAGON:
+                SEPlayer.Instance.Play(Audio.SEID.GOLEMATTACK);
+                break;
+            case EnemyMasterData.ENEMY_TYPE.BIG_DORAGON:
+                SEPlayer.Instance.Play(Audio.SEID.GOLEMATTACK);
+                break;
+        }
+    }
+
 
     // ---------------------------------------------------------
     //  アニメーション系
