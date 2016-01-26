@@ -28,16 +28,15 @@ public struct FadeTimeData
 public class BGMPlayer : Singleton<BGMPlayer>
 {
 
-    public struct Data
+    public class Data
     {
-        public Data(string resName)
-            : this()
+        public Data(BGMAudioData data)
         {
-            this.resName = resName;
-            clip = Resources.Load("BGM/" + resName) as AudioClip;
+            this.data = data;
+            clip = Resources.Load("BGM/" + data.label) as AudioClip;
         }
 
-        public string resName;
+        public BGMAudioData data;
         public AudioClip clip;
     }
 
@@ -46,25 +45,31 @@ public class BGMPlayer : Singleton<BGMPlayer>
     const float startFadeInVolume = 0.005f;
 
     AudioSource source = null;
-
-    Dictionary<string, Data> audioMap = new Dictionary<string, Data>();
+    Dictionary<Audio.BGMID, Data> audioMap = new Dictionary<Audio.BGMID, Data>();
     FadeTimeData FadeTime;
 
     public bool IsPlaying { get { return source.isPlaying; } }
 
-    void Awake()
+    public override void Awake() 
     {
         base.Awake();
         source = GetComponent<AudioSource>();
+
+        foreach (var data in AudioManager.BGMData)
+        {
+            audioMap.Add(data.id, new Data(data));
+        }
+
     }
 
-	void Start () {
+    public override void Start()
+    {
         base.Start();
 
 	}
 	
-	// Update is called once per frame
-	void Update () {
+    public override void Update()
+    {
         base.Update();
 
 	}
@@ -74,11 +79,11 @@ public class BGMPlayer : Singleton<BGMPlayer>
     /// </summary>
     /// <param name="resName"></param>
     /// <returns></returns>
-    public bool IsPlayingToName(string resName)
+    public bool IsPlayingToName(Audio.BGMID id)
     {
         if (source.clip == null) return false;
 
-        if (source.clip.name == resName && source.isPlaying)
+        if (source.clip.name == audioMap[id].clip.name && source.isPlaying)
         {
             return true;
         }
@@ -88,19 +93,14 @@ public class BGMPlayer : Singleton<BGMPlayer>
     /// <summary>
     /// 再生
     /// </summary>
-    /// <param name="resName">Resources/BGM/の中にあるオーディオ名</param>
+    /// <param name="id">Resources/BGM/の中にあるオーディオ名</param>
     /// <param name="fadeInTime">フェードイン時間</param>
-    public void Play(string resName, FadeTimeData fadeTime)
+    public void Play(Audio.BGMID id, FadeTimeData fadeTime)
     {
         if (SequenceManager.Instance.IsBuildWatch) return;
-
-        if (!audioMap.ContainsKey(resName))
-        {
-            audioMap.Add(resName, new Data(resName));
-        }
-
+        
         FadeTime = fadeTime;
-        source.clip = audioMap[resName].clip;
+        source.clip = audioMap[id].clip;
         source.Play();
         source.volume = startFadeInVolume;
         StartFadeIn(FadeTime.inTime);

@@ -156,6 +156,8 @@ public class ConnectionManager : Singleton<ConnectionManager>
 
     public void OnButtonListener(Button clickButton)
     {
+        SEPlayer.Instance.Play(Audio.SEID.DECISION);
+
         if (clickButton.name == "EegressButton")
         {
             OnEegress();

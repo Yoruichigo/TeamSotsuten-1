@@ -26,11 +26,20 @@ public class PlayerMasterData
 }
 
 
+
 /// <summary>
 /// エネミーマスターデータ(１体１体)
 /// </summary>
 public class EnemyMasterData
 {
+    public enum ENEMY_TYPE
+    {
+        NULL,
+        GOREMU,
+        SMALL_DORAGON,
+        BIG_DORAGON,
+    }
+
     public int HP;      //体力
 
     public Vector3 Position;    // 座標
@@ -45,6 +54,7 @@ public class EnemyMasterData
 
     public MotionManager.MotionSkillType HitAttackType; // どの攻撃が当たったか
 
+    public ENEMY_TYPE EnemyType;
 }
 
 

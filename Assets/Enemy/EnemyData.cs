@@ -32,7 +32,6 @@ public class EnemyData: MonoBehaviour
     {
         get { return id; }
     }
-
     public enum EnamyState
     {
         NONE,
@@ -62,6 +61,10 @@ public class EnemyData: MonoBehaviour
     [SerializeField]
     Sprite[] attackSpriteList = new Sprite[1];
 
+    [SerializeField]
+    EnemyMasterData.ENEMY_TYPE enemyType = EnemyMasterData.ENEMY_TYPE.NULL;
+
+    public EnemyMasterData.ENEMY_TYPE EnemyType { get { return enemyType; } }
 
     public EnamyState State{  get { return state; }}
 
@@ -88,6 +91,7 @@ public class EnemyData: MonoBehaviour
         GameManager.Instance.SendEnemyPosition(id, transform.position);
         GameManager.Instance.SendEnemyRotation(id, transform.rotation.eulerAngles);
         GameManager.Instance.SendEnemyIsActive(id, true);
+        GameManager.Instance.SendEnemyType(id, enemyType);
 
         EnemyManager.Instance.SetEnemySprite(ref standingSpriteList,ref attackSpriteList,ref color);
 

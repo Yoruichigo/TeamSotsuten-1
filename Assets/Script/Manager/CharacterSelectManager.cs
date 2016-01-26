@@ -84,6 +84,6 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager> {
         PlayerManager.Instance.Data.Job = selectedJob;
         characterSelectSequence.ChangeScene();
         jobSelectType.text = PlayerManager.Instance.Data.Job.ToString() ;
-        SEPlayer.Instance.Play("Decision");
+        SEPlayer.Instance.Play(Audio.SEID.DECISION);
     }
 }
