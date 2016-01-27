@@ -12,18 +12,10 @@ public class ClientEnemyOperator : MonoBehaviour
     [SerializeField]
     float attackTiming = 2.0f;
 
-    [SerializeField]
-    float flashTime = 0.5f;    // 点滅する時間
-
-    [SerializeField]
-    Color flashColor = new Color(1f, 0f, 0f, 1f);
-
     SpriteRenderer spriteRenderer = null;
 
-    Vector3 scale = Vector3.one;
     bool isLive = false;
     bool isHit = false;
-    float countTime = 0;
     float attackTime = 0;
 
     Animation animationAI = null;
@@ -37,8 +29,6 @@ public class ClientEnemyOperator : MonoBehaviour
     {
         animationAI = GetComponent<Animation>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        scale = transform.localScale;
-
     }
 
 
@@ -69,8 +59,9 @@ public class ClientEnemyOperator : MonoBehaviour
             transform.position.y, GameManager.Instance.GetPlayerData().Position.z));
 
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
-        { 
+        {
             case EnemyData.EnamyState.ACTIVE:
+                animationTime = animationState.normalizedTime;
 
                 spriteRenderer.color = EnemyManager.Instance.SpriteColor;
                 spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
@@ -100,18 +91,21 @@ public class ClientEnemyOperator : MonoBehaviour
 
             case EnemyData.EnamyState.HIT:
                 Hit();
-
-                countTime -= Time.deltaTime;
-                if (countTime <= 0)
+                if (!animationAI.isPlaying)
                 {
+                    animationAI.Stop();
                     HitEffectCompleted();
-                    countTime = 100;
                 }
 
                 break;
 
             case EnemyData.EnamyState.SPAWN:
                 Spawn();
+                if (!animationAI.isPlaying)
+                {
+                    animationAI.Stop();
+                    SpawnCompleted();
+                }
                 break;
 
             case EnemyData.EnamyState.STAY:
@@ -122,7 +116,6 @@ public class ClientEnemyOperator : MonoBehaviour
                 break;
         }
 
-        animationTime = animationState.normalizedTime;
     }
 
     /// <summary>
@@ -136,7 +129,6 @@ public class ClientEnemyOperator : MonoBehaviour
 
         // 初期化
         isHit = false;
-        countTime = 0;
         attackTime = 0;
 
         EnemyManager.Instance.StandingSpriteAnimPlay();
@@ -144,21 +136,11 @@ public class ClientEnemyOperator : MonoBehaviour
         spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
         spriteRenderer.color = EnemyManager.Instance.SpriteColor;
 
-        iTween.Stop(gameObject);
-
         ChangeActive();
 
         Debugger.Log(">> Spawn()");
 
-        var hash = new Hashtable();
-        {
-            hash.Add("scale", scale); // 設定するサイズ
-            hash.Add("time", 1f);                       // 1秒で行う
-            hash.Add("easetype", iTween.EaseType.easeOutQuad);        // イージングタイプを設定
-            hash.Add("oncomplete", "SpawnCompleted");     // 最後にメソッドを呼ぶ
-        }
-
-        iTween.ScaleTo (this.gameObject, hash);
+        animationAI.PlayQueued("anim_enemy_spawn");
 
         attackTime = attackTiming;
     }
@@ -194,39 +176,19 @@ public class ClientEnemyOperator : MonoBehaviour
         if (isHit) return;
 
         isHit = true;
+        AIAnimationPause();
 
-        // 光らせる数
-        const float flashNum = 3;
-
-        countTime = flashTime * flashNum;
-
-        var hash = new Hashtable();
-        {
-            hash.Add("from", EnemyManager.Instance.SpriteColor); // 設定するサイズ
-            hash.Add("to", flashColor); // 設定するサイズ
-            hash.Add("time", flashTime);                       // 1秒で行う
-            hash.Add("easetype", iTween.EaseType.easeOutQuad);        // イージングタイプを設定
-            hash.Add("looptype", iTween.LoopType.pingPong);        // イージングタイプを設定
-            hash.Add("onupdate", "ColorUpdateHandler");        // イージングタイプを設定
-        }
-
-        iTween.ValueTo(gameObject, hash);
+        animationAI.PlayQueued("anim_goremu");
 
         // HitEffect再生 座標の-30は、敵の手前に出す数値
         HitEffectManager.Instance.EffectPlay(
             EnemyManager.Instance.GetActiveEnemyData().HitSkillType(), 
             transform.position - new Vector3(0,0,30));
 
-        AIAnimationPause();
-
         SEPlayer.Instance.Play(Audio.SEID.ENEMYHIT);
     }
 
-    void ColorUpdateHandler(Color color)
-    {
-        spriteRenderer.color = color;
-    }
-    
+
     void HitEffectCompleted()
     {
         AIAnimationPlay();
