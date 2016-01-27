@@ -22,7 +22,8 @@ public class EnemyHelthVar : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (Vuforia.VuforiaBehaviour.IsMarkerLookAt)
+
+        if (TargetEnamy.IsActive())
         {
             HelthVar.enabled = true;
             HelthVar.fillAmount = TargetEnamy.Life / lifeMaX;
