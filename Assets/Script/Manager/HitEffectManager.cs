@@ -114,16 +114,33 @@ public class HitEffectManager : Singleton<HitEffectManager> {
 
     }
 
+    /// <summary>
+    /// エフェクトをすべて隠す
+    /// </summary>
+    public void EffectAllHide()
+    {
+        EffectHide(strengthHitEffectList);
+        EffectHide(weakHitEffectList);
+    }
+
 
     public override void Update()
     {
         base.Update();
 
-        Stop(strengthHitEffectList);
-        Stop(weakHitEffectList);
+        EffectEndStop(strengthHitEffectList);
+        EffectEndStop(weakHitEffectList);
     }
 
-    void Stop(List<ParticleSystem> hitEffectList)
+    void EffectHide(List<ParticleSystem> hitEffectList)
+    {
+        for (int i = 0; i < hitEffectList.Count; i++)
+        {
+            hitEffectList[i].gameObject.SetActive(false);
+        }
+    }
+
+    void EffectEndStop(List<ParticleSystem> hitEffectList)
     {
         for (int i = 0; i < hitEffectList.Count; i++)
         {
