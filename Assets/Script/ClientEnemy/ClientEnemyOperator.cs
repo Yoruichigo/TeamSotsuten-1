@@ -63,7 +63,6 @@ public class ClientEnemyOperator : MonoBehaviour
                 if (TutorialScript.IsTutorial) break;
 
                 animationTime = animationState.normalizedTime;
-
                 spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
 
                 if (IsAttackTiming())
@@ -87,6 +86,7 @@ public class ClientEnemyOperator : MonoBehaviour
                     AttackSoundPlay();
                     AIAnimationPlay();
                 }
+
                 break;
 
             case EnemyData.EnamyState.HIT:
