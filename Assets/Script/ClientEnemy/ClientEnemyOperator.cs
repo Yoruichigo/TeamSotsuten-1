@@ -64,7 +64,6 @@ public class ClientEnemyOperator : MonoBehaviour
 
                 animationTime = animationState.normalizedTime;
 
-                spriteRenderer.color = EnemyManager.Instance.SpriteColor;
                 spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
 
                 if (IsAttackTiming())
