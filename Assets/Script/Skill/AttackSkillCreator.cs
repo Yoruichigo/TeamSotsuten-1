@@ -22,7 +22,7 @@ public class AttackSkillCreator : MonoBehaviour
     /// </summary>
     public void OnMotionComplated()
     {
-        if (TutorialScript.IsTutorialGameRule) return;
+        if (TutorialScript.IsTutorial) return;
 
         if (MotionManager.Instance.MotionSkill != MotionManager.MotionSkillType.NONE)
         {
