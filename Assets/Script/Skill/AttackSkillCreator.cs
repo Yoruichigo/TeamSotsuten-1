@@ -9,14 +9,6 @@ using System.Collections;
 
 public class AttackSkillCreator : MonoBehaviour
 {
-    [SerializeField]
-    GameObject effectCreator;
-
-
-    // Use this for initialization
-    void Start()
-    {
-    }
 
     /// <summary>
     /// スキルを生成
@@ -34,7 +26,7 @@ public class AttackSkillCreator : MonoBehaviour
 
         if (MotionManager.Instance.MotionSkill != MotionManager.MotionSkillType.NONE)
         {
-            effectCreator.SendMessage("CheckType", MotionManager.Instance.MotionSkill);
+            PlayerAttackEffectManager.Instance.CheckType(MotionManager.Instance.MotionSkill);
         }
     }
 }

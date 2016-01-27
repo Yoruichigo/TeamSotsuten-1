@@ -1,15 +1,14 @@
 ﻿///-------------------------------------------------------------------------
-///
-/// code by miyake yuji
-///
 /// エフェクトの作成管理スクリプト
+///
+/// code by m_yamada
 /// 
 ///-------------------------------------------------------------------------
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EffectCreate : MonoBehaviour
+public class PlayerAttackEffectManager : Singleton<PlayerAttackEffectManager>
 {
     [System.Serializable]
     public struct EffectData
@@ -37,8 +36,10 @@ public class EffectCreate : MonoBehaviour
     int weakPlayIndex = 0;
     int strengthPlayIndex = 0;
 
-    void Awake()
+    public override void Awake()
     {
+        base.Awake();
+
         db = GetComponent<EffectDB>();
 
         foreach(var effect in effectTypeList)
@@ -62,14 +63,13 @@ public class EffectCreate : MonoBehaviour
                 }
             }
         }
-
     }
 
     /// <summary>
     /// どの攻撃タイプのエフェクトを生成するか確認
     /// </summary>
     /// <param name="skillType"></param>
-    void CheckType(MotionManager.MotionSkillType skillType)
+    public void CheckType(MotionManager.MotionSkillType skillType)
     {
         /// <summary>
         /// 攻撃タイプを判別
@@ -112,5 +112,23 @@ public class EffectCreate : MonoBehaviour
         {
             index = 0;
         }
+    }
+
+    /// <summary>
+    /// 攻撃エフェクトをすべて隠す
+    /// </summary>
+    public void AttackEffectAllHide()
+    {
+        for (int i = 0; i < strengthEffectList.Count; i++)
+        {
+            strengthEffectList[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < weakEffectList.Count; i++)
+        {
+            weakEffectList[i].gameObject.SetActive(false);
+        }
+
+        weakPlayIndex = 0;
+        strengthPlayIndex = 0;
     }
 }

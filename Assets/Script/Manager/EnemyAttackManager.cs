@@ -73,4 +73,17 @@ public class EnemyAttackManager : Singleton<EnemyAttackManager> {
             createIndex = 0;
         }
     }
+
+    /// <summary>
+    /// すべて隠す
+    /// </summary>
+    public void AttackAllHide()
+    {
+        for (int i = 0; i < data.attackObjList.Count; i++)
+        {
+            data.attackObjList[i].gameObject.SetActive(false);
+        }
+
+        createIndex = 0;
+    }
 }
