@@ -435,6 +435,8 @@ Animation:
   - {fileID: 7400000, guid: 4da0f898023625d4d9cbdede64161b2f, type: 2}
   - {fileID: 7400000, guid: eea2c5e5dfa47754f8518b48ccf5872e, type: 2}
   - {fileID: 7400000, guid: 14fb457257961a74e99681fefd3521d1, type: 2}
+  - {fileID: 7400000, guid: 81dd4988faf209c45a46ca423253c7f2, type: 2}
+  - {fileID: 7400000, guid: 4f45d8e90202d0b46bbd5dd1d00e58ee, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -9852,7 +9854,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -440196397
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8b0c59649b0e8e7438cbf830ed2267ca, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b4d73906113dc424fbf9c34fe531017b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:

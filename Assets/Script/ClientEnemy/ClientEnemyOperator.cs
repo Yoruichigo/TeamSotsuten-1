@@ -51,7 +51,6 @@ public class ClientEnemyOperator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (TutorialScript.IsTutorial) return;
         if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
         
         // プレイヤーの方向に向く
@@ -61,6 +60,8 @@ public class ClientEnemyOperator : MonoBehaviour
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         {
             case EnemyData.EnamyState.ACTIVE:
+                if (TutorialScript.IsTutorial) break;
+
                 animationTime = animationState.normalizedTime;
 
                 spriteRenderer.color = EnemyManager.Instance.SpriteColor;
@@ -91,6 +92,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
             case EnemyData.EnamyState.HIT:
                 Hit();
+
                 if (!animationAI.isPlaying)
                 {
                     animationAI.Stop();
@@ -101,6 +103,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
             case EnemyData.EnamyState.SPAWN:
                 Spawn();
+
                 if (!animationAI.isPlaying)
                 {
                     animationAI.Stop();
@@ -140,7 +143,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
         Debugger.Log(">> Spawn()");
 
-        animationAI.PlayQueued("anim_enemy_spawn");
+        SpawnAnimationPlay();
 
         attackTime = attackTiming;
     }
@@ -163,7 +166,6 @@ public class ClientEnemyOperator : MonoBehaviour
 
         isLive = false;
         ChangeActive();
-        transform.localScale = Vector3.zero;
 
         SEPlayer.Instance.Play(Audio.SEID.ENEMYSIREN);
     }
@@ -178,7 +180,7 @@ public class ClientEnemyOperator : MonoBehaviour
         isHit = true;
         AIAnimationPause();
 
-        animationAI.PlayQueued("anim_goremu");
+        animationAI.PlayQueued("anim_enemy_hit");
 
         // HitEffect再生 座標の-30は、敵の手前に出す数値
         HitEffectManager.Instance.EffectPlay(
@@ -254,17 +256,32 @@ public class ClientEnemyOperator : MonoBehaviour
         switch (EnemyManager.Instance.GetActiveEnemyData().EnemyType)
         {
             case EnemyMasterData.ENEMY_TYPE.GOREMU:
-                animationState = animationAI.PlayQueued("anim_goremu");
+                animationState = animationAI.PlayQueued("anim_golem_move");
                 break;
             case EnemyMasterData.ENEMY_TYPE.SMALL_DORAGON:
-                animationState = animationAI.PlayQueued("anim_small_dragon");
+                animationState = animationAI.PlayQueued("anim_small_dragon_move");
                 break;
             case EnemyMasterData.ENEMY_TYPE.BIG_DORAGON:
-                animationState = animationAI.PlayQueued("anim_big_dragon");
+                animationState = animationAI.PlayQueued("anim_big_dragon_move");
                 break;
         }
 
         animationState.normalizedTime = pauseAnimationTime;
+    }
 
+    void SpawnAnimationPlay()
+    {
+        switch (EnemyManager.Instance.GetActiveEnemyData().EnemyType)
+        {
+            case EnemyMasterData.ENEMY_TYPE.GOREMU:
+                animationAI.PlayQueued("anim_golem_spawn");
+                break;
+            case EnemyMasterData.ENEMY_TYPE.SMALL_DORAGON:
+                animationAI.PlayQueued("anim_small_dragon_spawn");
+                break;
+            case EnemyMasterData.ENEMY_TYPE.BIG_DORAGON:
+                animationAI.PlayQueued("anim_big_dragon_spawn");
+                break;
+        }
     }
 }
