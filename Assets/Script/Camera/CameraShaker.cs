@@ -29,7 +29,11 @@ public class CameraShaker : MonoBehaviour
     /// <summary>
     /// 現在の振動の大きさ
     /// </summary>
-    private float shakeIntensity = 0f;
+    static private float shakeIntensity = 0f;
+
+
+    static private Vector3 randomRate = Vector3.zero;
+
 
     void Start()
     {
@@ -46,11 +50,11 @@ public class CameraShaker : MonoBehaviour
 
     void Update()
     {
-        
-
         if (shakeIntensity > 0)
         {
-            transform.localPosition = originPosition + Random.insideUnitSphere * shakeIntensity;
+            randomRate = Random.insideUnitSphere;
+
+            transform.localPosition = originPosition + randomRate * shakeIntensity;
 
             shakeIntensity -= shakeDecay;
         }
@@ -68,7 +72,6 @@ public class CameraShaker : MonoBehaviour
     public void Shake()
     {
         originPosition = transform.localPosition;
-
         shakeIntensity = coefShakeIntensity;
     }
 
