@@ -22,7 +22,8 @@ public class EffectMover : MonoBehaviour
 
 
     // ヒット範囲
-    const float HIT_RANGE = 200;
+    [SerializeField]
+    float HIT_RANGE = 1000;
 
     Rigidbody cashRigidBody = null;
 
