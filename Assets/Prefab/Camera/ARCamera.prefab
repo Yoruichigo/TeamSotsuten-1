@@ -73,8 +73,6 @@ GameObject:
   - 4: {fileID: 480572}
   - 23: {fileID: 2371148}
   - 114: {fileID: 11403790}
-  - 114: {fileID: 11465084}
-  - 114: {fileID: 11464112}
   m_Layer: 0
   m_Name: BackgroundPlane
   m_TagString: Untagged
@@ -385,32 +383,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matteShader: {fileID: 4800000, guid: 1ce7eb78425fb1540838bc9d5d95857a, type: 3}
   disableMattes: 0
---- !u!114 &11464112
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c85a5570a8fdf6f4aad75b0094fd85e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shakeDecay: .0500000007
-  coefShakeIntensity: 5
---- !u!114 &11465084
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 150648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c85a5570a8fdf6f4aad75b0094fd85e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shakeDecay: .0500000007
-  coefShakeIntensity: 5
 --- !u!114 &11478396
 MonoBehaviour:
   m_ObjectHideFlags: 1
