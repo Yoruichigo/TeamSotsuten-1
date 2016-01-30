@@ -29,6 +29,9 @@ public class EnemyManager : Singleton<EnemyManager>
     SpriteRenderer enemyRenderer = null;
 
     [SerializeField]
+    EnemyHelthVar enemyHelthVar = null;
+
+    [SerializeField]
     Transform appearanceEffectRoot = null;
 
     [SerializeField]
@@ -115,6 +118,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
                 // サバ―にエネミーを登録,初期化を行う
                 GetActiveEnemyData().SetMyDate();
+                enemyHelthVar.SetMaxLife(GetActiveEnemyData().Life);
 
                 Debugger.Log("登録終了");
 

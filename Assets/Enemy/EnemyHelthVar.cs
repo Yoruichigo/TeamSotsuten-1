@@ -12,13 +12,12 @@ public class EnemyHelthVar : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        SetMaxLife();
         HelthVar = GetComponent<Image>();
 	}
 
-    void SetMaxLife()
+    public void SetMaxLife(int maxLife)
     {
-        lifeMaX = EnemyManager.Instance.GetActiveEnemyData().Life;
+        lifeMaX = maxLife;
     }
 
 	// Update is called once per frame
