@@ -4,11 +4,13 @@
 //
 //  code by m_yamada
 //  and ogata
+//  and Keijiro Sugimoto
 //-------------------------------------------------------------
 
 using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -44,7 +46,41 @@ public class GameManager : Singleton<GameManager>
     const int MAXIMUM_ENEMY_NUM = 1;    // 最大数　エネミー
     public int MaxEnemyNum { get { return MAXIMUM_ENEMY_NUM; } }        // 外から最大数を取得したい場合、エネミー
     EnemyMasterData[] enemyDataArray = new EnemyMasterData[MAXIMUM_ENEMY_NUM];
+
+    // 時間表示
+    [System.Serializable]
+    public struct TimeCounter
+    {
+        /// <summary>
+        /// ゲーム開始時からの経過時間
+        /// </summary>
+        public float deltaSecond;
+
+        /// <summary>
+        /// 最大時間
+        /// </summary>
+        public float maxSecond;
+
+        /// <summary>
+        /// タイムオーバーをしているかどうか
+        /// true...制限時間を過ぎている。 false...まだ制限時間内
+        /// </summary>
+        public bool isTimeOver;
+
+        /// <summary>
+        /// 時間を表示するオブジェクトのタグ
+        /// </summary>
+        public string timeTextObjectTag;
     
+    }
+
+    [SerializeField]
+    TimeCounter timeCounter;
+
+    /// <summary>
+    /// タイム表示用テキスト
+    /// </summary>
+    List<Text> timeTextList = new List<Text>();
 
     //初回のみの初期化処理
     public override void Awake()
@@ -64,13 +100,17 @@ public class GameManager : Singleton<GameManager>
 
         SendPlayerDataAwake();
         SendEnemyDataAwake();
+
+        TimerInitialize();
     }
 
     //毎回の初期化処理
     public override void Start()
     {
         base.Start();
-        
+
+
+
     }
 
     //更新
@@ -85,6 +125,11 @@ public class GameManager : Singleton<GameManager>
     //クライアントのみ行うアップデートです。
     private void UpdateClient()
     {
+        //時間の計測
+        if (!timeCounter.isTimeOver)//&& !TutorialScript.IsTutorial)
+        {
+            UpdateTimeCounter();
+        }
         //クライアント確認
         if(!ConnectionManager.IsSmartPhone){
             return;
@@ -92,6 +137,7 @@ public class GameManager : Singleton<GameManager>
 
         //スマフォ位置更新
         UpdateClientPosition();
+
     }
 
 
@@ -132,6 +178,36 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    /// <summary>
+    /// 時間関係の初期化
+    /// </summary>
+    void TimerInitialize()
+    {
+
+        timeCounter.deltaSecond = 0f;
+        timeCounter.isTimeOver = false;
+
+
+        var timeTextArray = GameObject.FindGameObjectsWithTag(timeCounter.timeTextObjectTag);
+        if (timeTextArray.Length == 0)
+        {
+            Debugger.Log("timeTextというタグのゲームオブジェクトが存在しません。");
+        }
+
+
+        foreach (var timeText in timeTextArray)
+        {
+            var textCompornent = timeText.GetComponent<Text>();
+            if (textCompornent == null)
+            {
+                Debugger.Log("Textのコンポーネントが存在しません。");
+            }
+            else
+            {
+                timeTextList.Add(textCompornent);
+            }
+        }
+    }
 
 
     /// <summary>
@@ -338,6 +414,30 @@ public class GameManager : Singleton<GameManager>
 
 
     /// <summary>
+    /// 時間計測部の更新
+    /// </summary>
+    void UpdateTimeCounter()
+    {
+        timeCounter.deltaSecond += Time.deltaTime;
+
+        if (timeCounter.deltaSecond >= timeCounter.maxSecond)
+        {
+            timeCounter.isTimeOver = true;
+        }
+
+        UpdateTimeText();
+    }
+
+    void UpdateTimeText()
+    {
+        foreach (var timeText in timeTextList)
+        {
+            timeText.text = (timeCounter.maxSecond - timeCounter.deltaSecond).ToString();
+        }
+    }
+
+
+    /// <summary>
     /// 書かないといけない関数
     /// </summary>
     /// <param name="stream"></param>
@@ -346,5 +446,8 @@ public class GameManager : Singleton<GameManager>
     {
 
     }
+
+
+    
 
 }

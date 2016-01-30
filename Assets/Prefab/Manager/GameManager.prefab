@@ -43,6 +43,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   enemy: {fileID: 0}
+  PLAYER_INIT_HP: 100
+  timeCounter:
+    deltaSecond: 0
+    maxSecond: 300
+    isTimeOver: 0
+    timeTextObjectTag: TimeText
 --- !u!114 &11464672
 MonoBehaviour:
   m_ObjectHideFlags: 1
