@@ -67,8 +67,10 @@ public class SEPlayer : Singleton<SEPlayer>
     /// <param name="resName">Resource名</param>
     public void Play(Audio.SEID id, float pitch = 1.0f, bool loop = false)
     {
+#if !UNITY_EDITOR
         if (SequenceManager.Instance.IsBuildWatch) return;
-        
+#endif
+
         sources.Add(gameObject.AddComponent<AudioSource>());
         var index = sources.Count - 1;
         sources[index].clip = audioMap[id].clip;

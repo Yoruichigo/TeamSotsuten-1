@@ -46,12 +46,13 @@ public class HitEffectManager : Singleton<HitEffectManager> {
     public override void Start()
     {
         base.Update();
-
+#if !UNITY_EDITOR
         if (!ConnectionManager.IsSmartPhone)
         {
             Destroy(gameObject);
             return;
         }
+#endif
 
         foreach (var hitEffectTyoe in hitEffectTypeList)
         {

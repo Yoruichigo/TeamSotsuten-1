@@ -71,10 +71,13 @@ public class MotionManager : Singleton<MotionManager>
     {
         base.Start();
 
+#if !UNITY_EDITOR
         if (!ConnectionManager.IsSmartPhone)
         {
             enabled = false;
         }
+#endif
+
     }
 
 
@@ -94,8 +97,6 @@ public class MotionManager : Singleton<MotionManager>
             float x = Mathf.Abs(updateAcc.x - saveAcc.x);
             float y = Mathf.Abs(updateAcc.y - saveAcc.y);
             float z = Mathf.Abs(updateAcc.z - saveAcc.z);
-
-            Debug.Log("速度" + new Vector3(x, y, z));
 
             bool isRangeX = x >= data.accMin && x <= data.accMax;
             bool isRangeY = y >= data.accMin && y <= data.accMax;
@@ -153,5 +154,19 @@ public class MotionManager : Singleton<MotionManager>
                 isCalc = true;
             }
         }
+
+
+#if UNITY_EDITOR    // テストコード
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            MotionSkill = MotionSkillType.WEAK;
+            OnComplated(MotionSkill);
+        }
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            MotionSkill = MotionSkillType.STRENGTH;
+            OnComplated(MotionSkill);
+        }
+#endif
     }
 }

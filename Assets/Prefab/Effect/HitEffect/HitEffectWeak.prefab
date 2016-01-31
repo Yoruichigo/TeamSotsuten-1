@@ -226,7 +226,7 @@ ParticleSystem:
         rgba: 4093640703
       minMaxState: 0
     startSize:
-      scalar: 30
+      scalar: 800
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1359,7 +1359,7 @@ ParticleSystem:
   SizeModule:
     enabled: 1
     curve:
-      scalar: 30
+      scalar: 500
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1962,7 +1962,7 @@ ParticleSystem:
   RotationBySpeedModule:
     enabled: 0
     curve:
-      scalar: .785398185
+      scalar: .785398126
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2201,15 +2201,19 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: InitialModule.startSize.scalar
-      value: 30
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: SizeModule.curve.scalar
-      value: 30
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: RotationBySpeedModule.curve.scalar
+      value: .785398126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

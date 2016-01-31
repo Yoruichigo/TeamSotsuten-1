@@ -23,6 +23,9 @@ public class ClientEnemyOperator : MonoBehaviour
     float animationTime = 0;
     float pauseAnimationTime = 0;
 
+    bool spwanAnimHandle = false;
+    bool hitAnimHandle = false;
+    bool isAnimPause = false;
 
     // Use this for initialization
     void Start()
@@ -66,6 +69,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
                 animationTime = animationState.normalizedTime;
                 spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
+                spriteRenderer.color = EnemyManager.Instance.SpriteColor;
 
                 if (IsAttackTiming())
                 {
@@ -78,10 +82,12 @@ public class ClientEnemyOperator : MonoBehaviour
                 break;
             case EnemyData.EnamyState.ATTACK:
                 spriteRenderer.sprite = EnemyManager.Instance.GetAttackSpriteAutoAnim();
+                spriteRenderer.color = EnemyManager.Instance.SpriteColor;
 
                 if (!EnemyManager.Instance.IsAttackAnimPlay())
                 {
                     EnemyManager.Instance.StandingSpriteAnimPlay();
+
                     EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 200, 0));
                     EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
 
@@ -92,24 +98,31 @@ public class ClientEnemyOperator : MonoBehaviour
                 break;
 
             case EnemyData.EnamyState.HIT:
-                Hit();
 
-                if (!animationAI.isPlaying)
+                if (hitAnimHandle && !animationAI.isPlaying)
                 {
                     animationAI.Stop();
+                    hitAnimHandle = false;
                     HitEffectCompleted();
+                    return;
                 }
+
+                Hit();
 
                 break;
 
             case EnemyData.EnamyState.SPAWN:
-                Spawn();
 
-                if (!animationAI.isPlaying)
+                if (spwanAnimHandle && !animationAI.isPlaying)
                 {
                     animationAI.Stop();
+                    spwanAnimHandle = false;
                     SpawnCompleted();
+                    return;
                 }
+
+                Spawn();
+
                 break;
 
             case EnemyData.EnamyState.STAY:
@@ -137,6 +150,9 @@ public class ClientEnemyOperator : MonoBehaviour
         // 初期化
         isHit = false;
         attackTime = 0;
+        hitAnimHandle = false;
+        spwanAnimHandle = false;
+        transform.position = Vector3.zero;
 
         animAIClip = EnemyManager.Instance.GetActiveEnemyData().AnimationAIClip;
         animSpwanClip = EnemyManager.Instance.GetActiveEnemyData().AnimationSpwanClip;
@@ -150,7 +166,8 @@ public class ClientEnemyOperator : MonoBehaviour
 
         Debugger.Log(">> Spawn()");
 
-        SpawnAnimationPlay();
+        animationAI.PlayQueued(animSpwanClip.name);
+        spwanAnimHandle = true;
 
         attackTime = attackTiming;
     }
@@ -173,8 +190,6 @@ public class ClientEnemyOperator : MonoBehaviour
 
         isLive = false;
         ChangeActive();
-
-        SEPlayer.Instance.Play(Audio.SEID.ENEMYSIREN);
     }
 
     /// <summary>
@@ -185,14 +200,19 @@ public class ClientEnemyOperator : MonoBehaviour
         if (isHit) return;
 
         isHit = true;
-        AIAnimationPause();
 
-        animationAI.PlayQueued("anim_enemy_hit");
+        if (!hitAnimHandle)
+        {
+            AIAnimationPause();
+            animationAI.PlayQueued("anim_enemy_hit");
+        }
+
+        hitAnimHandle = true;
 
         // HitEffect再生 座標の-30は、敵の手前に出す数値
         HitEffectManager.Instance.EffectPlay(
             EnemyManager.Instance.GetActiveEnemyData().HitSkillType(), 
-            transform.position - new Vector3(0,0,30));
+            transform.position - new Vector3(0,0,300));
 
         SEPlayer.Instance.Play(Audio.SEID.ENEMYHIT);
     }
@@ -203,8 +223,11 @@ public class ClientEnemyOperator : MonoBehaviour
         AIAnimationPlay();
 
         isHit = false;
-        iTween.Stop(gameObject);
         EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
+        
+        EnemyManager.Instance.StandingSpriteAnimPlay();
+
+        EnemyManager.Instance.GetActiveEnemyData().HitRelease();
     }
 
     /// <summary>
@@ -212,7 +235,7 @@ public class ClientEnemyOperator : MonoBehaviour
     /// </summary>
     void ChangeActive()
     {
-        GameManager.Instance.SendEnemyIsActive(EnemyManager.Instance.GetActiveEnemyData().Id, isLive);
+        GameManager.Instance.SendEnemyIsActive(isLive);
     }
 
 
@@ -250,22 +273,25 @@ public class ClientEnemyOperator : MonoBehaviour
         pauseAnimationTime = 0;
         animationState = null;
         animationAI.Stop();
+
+        isAnimPause = false;
     }
 
     void AIAnimationPause()
     {
-        pauseAnimationTime = animationTime;
+        if (!isAnimPause)
+        {
+            pauseAnimationTime = animationTime;
+            isAnimPause = true;
+        }
+
         animationAI.Stop();
     }
 
     void AIAnimationPlay()
     {
+        isAnimPause = false;
         animationState = animationAI.PlayQueued(animAIClip.name);
         animationState.normalizedTime = pauseAnimationTime;
-    }
-
-    void SpawnAnimationPlay()
-    {
-        animationAI.PlayQueued(animSpwanClip.name);
     }
 }
