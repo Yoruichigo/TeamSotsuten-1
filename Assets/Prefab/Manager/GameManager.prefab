@@ -49,6 +49,7 @@ MonoBehaviour:
     maxSecond: 300
     isTimeOver: 0
     timeTextObjectTag: TimeText
+  debugPlayerPositionText: {fileID: 0}
 --- !u!114 &11464672
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Vuforia
 {
+#if !UNITY_EDITOR
     /// <summary>
     /// A utility behaviour to disable rendering of a game object at run time.
     /// </summary>
@@ -18,12 +19,6 @@ namespace Vuforia
 
         void Awake()
         {
-
-#if UNITY_EDITOR
-            Destroy(gameObject);
-            return;
-#endif
-
             if (VuforiaRuntimeUtilities.IsVuforiaEnabled())
             {
                 // We remove the mesh components at run-time only, but keep them for
@@ -38,4 +33,11 @@ namespace Vuforia
         #endregion // UNITY_MONOBEHAVIOUR_METHODS
 
     }
+
+#else 
+    public class TurnOffBehaviour : MonoBehaviour
+    { 
+    
+    }
+#endif
 }

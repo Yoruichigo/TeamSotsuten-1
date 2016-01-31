@@ -32,6 +32,7 @@ public class EnemyData: MonoBehaviour
     {
         get { return id; }
     }
+
     public enum EnamyState
     {
         NONE,
@@ -63,6 +64,10 @@ public class EnemyData: MonoBehaviour
 
     [SerializeField]
     EnemyMasterData.ENEMY_TYPE enemyType = EnemyMasterData.ENEMY_TYPE.NULL;
+
+    public AnimationClip AnimationAIClip = null;
+    public AnimationClip AnimationSpwanClip = null;
+
 
     public EnemyMasterData.ENEMY_TYPE EnemyType { get { return enemyType; } }
 

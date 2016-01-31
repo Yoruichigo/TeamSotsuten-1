@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Vuforia
 {
+#if !UNITY_EDITOR
     /// <summary>
     /// A custom handler that implements the ITrackableEventHandler interface.
     /// </summary>
@@ -123,4 +124,12 @@ namespace Vuforia
 
         #endregion // PRIVATE_METHODS
     }
+
+#else
+    public class DefaultTrackableEventHandler : MonoBehaviour
+    { 
+    
+    }
+
+#endif
 }

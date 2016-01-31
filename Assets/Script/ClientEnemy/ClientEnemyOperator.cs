@@ -51,8 +51,10 @@ public class ClientEnemyOperator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+#if !UNITY_EDITOR
         if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
-        
+#endif
+
         // プレイヤーの方向に向く
         transform.LookAt(new Vector3(GameManager.Instance.GetPlayerData().Position.x, 
             transform.position.y, GameManager.Instance.GetPlayerData().Position.z));
@@ -120,6 +122,9 @@ public class ClientEnemyOperator : MonoBehaviour
 
     }
 
+    AnimationClip animAIClip = null;
+    AnimationClip animSpwanClip = null;
+
     /// <summary>
     /// 発生
     /// </summary>
@@ -132,6 +137,9 @@ public class ClientEnemyOperator : MonoBehaviour
         // 初期化
         isHit = false;
         attackTime = 0;
+
+        animAIClip = EnemyManager.Instance.GetActiveEnemyData().AnimationAIClip;
+        animSpwanClip = EnemyManager.Instance.GetActiveEnemyData().AnimationSpwanClip;
 
         EnemyManager.Instance.StandingSpriteAnimPlay();
 
@@ -252,35 +260,12 @@ public class ClientEnemyOperator : MonoBehaviour
 
     void AIAnimationPlay()
     {
-        switch (EnemyManager.Instance.GetActiveEnemyData().EnemyType)
-        {
-            case EnemyMasterData.ENEMY_TYPE.GOREMU:
-                animationState = animationAI.PlayQueued("anim_golem_move");
-                break;
-            case EnemyMasterData.ENEMY_TYPE.SMALL_DORAGON:
-                animationState = animationAI.PlayQueued("anim_small_dragon_move");
-                break;
-            case EnemyMasterData.ENEMY_TYPE.BIG_DORAGON:
-                animationState = animationAI.PlayQueued("anim_big_dragon_move");
-                break;
-        }
-
+        animationState = animationAI.PlayQueued(animAIClip.name);
         animationState.normalizedTime = pauseAnimationTime;
     }
 
     void SpawnAnimationPlay()
     {
-        switch (EnemyManager.Instance.GetActiveEnemyData().EnemyType)
-        {
-            case EnemyMasterData.ENEMY_TYPE.GOREMU:
-                animationAI.PlayQueued("anim_golem_spawn");
-                break;
-            case EnemyMasterData.ENEMY_TYPE.SMALL_DORAGON:
-                animationAI.PlayQueued("anim_small_dragon_spawn");
-                break;
-            case EnemyMasterData.ENEMY_TYPE.BIG_DORAGON:
-                animationAI.PlayQueued("anim_big_dragon_spawn");
-                break;
-        }
+        animationAI.PlayQueued(animSpwanClip.name);
     }
 }

@@ -37,7 +37,6 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField]
     Transform destroyEffectRoot = null;
 
-    [SerializeField]
     List<EnemyData> enemyList = new List<EnemyData>();  //< 登録エネミー
 
     Sprite[] standingSpriteList = null;
@@ -64,6 +63,11 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         base.Awake();
         delayTime = nextWaveTime;
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            enemyList.Add(transform.GetChild(i).GetComponent<EnemyData>());
+        }
     }
 
     // Use this for initialization
@@ -108,8 +112,10 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         base.Update();
 
+#if !UNITY_EDITOR
         if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
-        
+#endif
+
         switch (state)
         {
             case State.Start:    //< 待機前処理

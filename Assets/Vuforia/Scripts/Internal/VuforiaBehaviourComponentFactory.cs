@@ -27,7 +27,11 @@ namespace Vuforia
 
         public TurnOffAbstractBehaviour AddTurnOffBehaviour(GameObject gameObject)
         {
+#if !UNITY_EDITOR
             return gameObject.AddComponent<TurnOffBehaviour>();
+#else 
+            return null;
+#endif
         }
 
         public ImageTargetAbstractBehaviour AddImageTargetBehaviour(GameObject gameObject)
