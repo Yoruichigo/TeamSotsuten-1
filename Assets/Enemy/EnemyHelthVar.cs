@@ -23,6 +23,7 @@ public class EnemyHelthVar : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+        if (HelthVar == null) return;
 
         if (EnemyManager.Instance.GetActiveEnemyData().IsActive())
         {

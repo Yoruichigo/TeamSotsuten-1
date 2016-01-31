@@ -8,6 +8,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Vuforia;
 
 /// <summary>
 /// シーンID
@@ -56,6 +57,9 @@ public class SequenceManager : Singleton<SequenceManager>
     [SerializeField]
     GameObject arCamera = null;
 
+    [SerializeField]
+    GameObject imageTarget = null;
+
     public bool IsBuildWatch { get { return isBuildWatch; } }
 
     public bool IsNowCharacterSelectScene { get { return nowScene == SceneID.CHARACTER_SELECT; } }
@@ -76,6 +80,15 @@ public class SequenceManager : Singleton<SequenceManager>
 
 #if UNITY_EDITOR
         isBuildWatch = true;
+        
+        // ImageTargetObjectが消えないようにしている。
+        var behaviours = imageTarget.GetComponents<Behaviour>();
+        foreach (var behaviour in behaviours)
+        {
+            Destroy(behaviour);
+        }
+
+        imageTarget.transform.SetParent(sceneList[(int)SceneID.GAME].behaviour.transform);
 #endif
 
         for (int i = 0; i < sceneList.Length; i++)

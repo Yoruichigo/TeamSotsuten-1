@@ -48,4 +48,5 @@ namespace Vuforia
             BehaviourComponentFactory.Instance = new VuforiaBehaviourComponentFactory();
         }
     }
+
 }

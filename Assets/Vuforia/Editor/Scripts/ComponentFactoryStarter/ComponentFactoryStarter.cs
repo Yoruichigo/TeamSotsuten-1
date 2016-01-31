@@ -23,4 +23,5 @@ namespace Vuforia.EditorClasses
             BehaviourComponentFactory.Instance = new VuforiaBehaviourComponentFactory();
         }
     }
+
 }

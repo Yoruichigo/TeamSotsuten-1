@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 441126}
   - 114: {fileID: 11419784}
   m_Layer: 0
-  m_Name: ServerEnemy (2)
+  m_Name: BigDragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ GameObject:
   - 4: {fileID: 479924}
   - 114: {fileID: 11441748}
   m_Layer: 0
-  m_Name: ServerEnemy (1)
+  m_Name: SmallDragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ GameObject:
   - 4: {fileID: 433040}
   - 114: {fileID: 11497832}
   m_Layer: 0
-  m_Name: ServerEnemy
+  m_Name: Golem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,16 +133,18 @@ MonoBehaviour:
   state: 0
   attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
   attackSpeed: 1000
-  color: {r: .944827437, g: 1, b: 0, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
   standingSpriteList:
-  - {fileID: 21300000, guid: d1294de1a7f48144caca4a091d8631ea, type: 3}
-  - {fileID: 21300000, guid: b49292795266f8247a63455b817b2547, type: 3}
-  - {fileID: 21300000, guid: e561daba3ae449c4f99a5ba1f7d331b0, type: 3}
+  - {fileID: 21300000, guid: 5cd71ff6fdff6364f8021d8206e06020, type: 3}
+  - {fileID: 21300000, guid: 59c604f43fd6ace498bc742eb07ff648, type: 3}
+  - {fileID: 21300000, guid: 0b63789443d749749bae11efc3a8c675, type: 3}
   attackSpriteList:
-  - {fileID: 21300000, guid: b4d73906113dc424fbf9c34fe531017b, type: 3}
-  - {fileID: 21300000, guid: 9525e00f9dfbb81469192e25682405f0, type: 3}
-  - {fileID: 21300000, guid: b2fe43995bafe9f48a41591b24435c69, type: 3}
+  - {fileID: 21300000, guid: f62191d735766f94799ff1f2a4f6cb4e, type: 3}
+  - {fileID: 21300000, guid: 4825f04b70cd55e4b98559112b6878dd, type: 3}
+  - {fileID: 21300000, guid: ad651a4272d1b6545bd86bbddf06f516, type: 3}
   enemyType: 3
+  AnimationAIClip: {fileID: 7400000, guid: 4da0f898023625d4d9cbdede64161b2f, type: 2}
+  AnimationSpwanClip: {fileID: 7400000, guid: 4f45d8e90202d0b46bbd5dd1d00e58ee, type: 2}
 --- !u!114 &11441748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -171,6 +173,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9525e00f9dfbb81469192e25682405f0, type: 3}
   - {fileID: 21300000, guid: b2fe43995bafe9f48a41591b24435c69, type: 3}
   enemyType: 2
+  AnimationAIClip: {fileID: 7400000, guid: bb3bff07503b5f74780739b9335cdd2c, type: 2}
+  AnimationSpwanClip: {fileID: 7400000, guid: 81dd4988faf209c45a46ca423253c7f2, type: 2}
 --- !u!114 &11453150
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -185,12 +189,9 @@ MonoBehaviour:
   changeSpriteAnimTime: .200000003
   nextWaveTime: 2
   enemyRenderer: {fileID: 0}
+  enemyHelthVar: {fileID: 0}
   appearanceEffectRoot: {fileID: 0}
   destroyEffectRoot: {fileID: 0}
-  enemyList:
-  - {fileID: 11497832}
-  - {fileID: 11441748}
-  - {fileID: 11419784}
   SpriteColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &11497832
 MonoBehaviour:
@@ -220,6 +221,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e27160ce6ab5ce841a4353ca43c1289f, type: 3}
   - {fileID: 21300000, guid: 4db34474121a9e649adeca2ef71bdaef, type: 3}
   enemyType: 1
+  AnimationAIClip: {fileID: 7400000, guid: 7cb4dd341b99a5b42b2a79912ed330af, type: 2}
+  AnimationSpwanClip: {fileID: 7400000, guid: 14fb457257961a74e99681fefd3521d1, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

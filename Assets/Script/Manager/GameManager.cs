@@ -77,6 +77,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     TimeCounter timeCounter;
 
+    [SerializeField]
+    Text debugPlayerPositionText = null;
+
     /// <summary>
     /// タイム表示用テキスト
     /// </summary>
@@ -126,14 +129,17 @@ public class GameManager : Singleton<GameManager>
     private void UpdateClient()
     {
         //時間の計測
-        if (!timeCounter.isTimeOver)//&& !TutorialScript.IsTutorial)
+        if (!timeCounter.isTimeOver) //&& !TutorialScript.IsTutorial)
         {
             UpdateTimeCounter();
         }
+
+#if !UNITY_EDITOR
         //クライアント確認
         if(!ConnectionManager.IsSmartPhone){
             return;
         }
+#endif
 
         //スマフォ位置更新
         UpdateClientPosition();
@@ -146,15 +152,24 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     private void UpdateClientPosition()
     {
+#if !UNITY_EDITOR
         // ターゲット画像が読み込まれていないなら処理しない。
         if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt)
         {
            // Debugger.Log("ターゲットロスト");
             return;
         }
+#endif
 
         //  スマートフォンのポジションの同期
+#if UNITY_EDITOR
+        playerData.Position = SequenceManager.Instance.SingleCamera.transform.position ;
+#else
         playerData.Position = SequenceManager.Instance.ARCamera.transform.position ;
+#endif
+
+        player.transform.position  = playerData.Position;
+        debugPlayerPositionText.text = playerData.Position.ToString();
     }
 
     /// <summary>

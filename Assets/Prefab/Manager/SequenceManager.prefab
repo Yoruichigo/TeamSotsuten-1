@@ -55,13 +55,14 @@ MonoBehaviour:
   isBuildWatch: 0
   singleCamera: {fileID: 0}
   arCamera: {fileID: 0}
+  imageTarget: {fileID: 0}
 --- !u!114 &11483596
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 182752}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05ab746dfcfec964d9e462545158b12f, type: 3}
   m_Name: 
