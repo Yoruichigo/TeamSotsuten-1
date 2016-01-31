@@ -12,9 +12,6 @@ public class EnemyData: MonoBehaviour
 {
 
     [SerializeField]
-    int id;      //ID
-
-    [SerializeField]
     int life;      //体力
 
     [SerializeField]
@@ -26,11 +23,6 @@ public class EnemyData: MonoBehaviour
     public int Life
     {
         get { return life; }
-    }
-
-    public int Id
-    {
-        get { return id; }
     }
 
     public enum EnamyState
@@ -75,28 +67,28 @@ public class EnemyData: MonoBehaviour
 
     public void StateChange(EnamyState _statNnum) { state = _statNnum; }
 
-    public bool IsActive() { return GameManager.Instance.GetEnemyData(id).IsActive; }
+    public bool IsActive() { return GameManager.Instance.GetEnemyData().IsActive; }
 
-    public bool IsHit() { return GameManager.Instance.GetEnemyData(id).IsHit; }
+    public bool IsHit() { return GameManager.Instance.GetEnemyData().IsHit; }
 
-    public MotionManager.MotionSkillType HitSkillType() { return GameManager.Instance.GetEnemyData(id).HitAttackType; }
+    public MotionManager.MotionSkillType HitSkillType() { return GameManager.Instance.GetEnemyData().HitAttackType; }
 
     /// <summary>
     /// ヒットフラグを解除する。
     /// </summary>
     public void HitRelease()
     {
-        GameManager.Instance.GetEnemyData(id).IsHit = false;
+        GameManager.Instance.GetEnemyData().IsHit = false;
     }
 
     //GameManager用のエネミーデータ
     public void SetMyDate()
     {
-        GameManager.Instance.SendEnemyHP(id, life);
-        GameManager.Instance.SendEnemyPosition(id, transform.position);
-        GameManager.Instance.SendEnemyRotation(id, transform.rotation.eulerAngles);
-        GameManager.Instance.SendEnemyIsActive(id, true);
-        GameManager.Instance.SendEnemyType(id, enemyType);
+        GameManager.Instance.SendEnemyHP(life);
+        GameManager.Instance.SendEnemyPosition(transform.position);
+        GameManager.Instance.SendEnemyRotation(transform.rotation.eulerAngles);
+        GameManager.Instance.SendEnemyIsActive(true);
+        GameManager.Instance.SendEnemyType(enemyType);
 
         EnemyManager.Instance.SetEnemySprite(ref standingSpriteList,ref attackSpriteList,ref color);
 
@@ -106,7 +98,7 @@ public class EnemyData: MonoBehaviour
 
     public void UpdateData()
     {
-        life = GameManager.Instance.GetEnemyData(id).HP;
+        life = GameManager.Instance.GetEnemyData().HP;
     }
 
 }

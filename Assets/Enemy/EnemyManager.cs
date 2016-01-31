@@ -59,7 +59,7 @@ public class EnemyManager : Singleton<EnemyManager>
     [HideInInspector]
     public Color SpriteColor = Color.white;
 
-    void Awake()
+    public override void Awake()
     {
         base.Awake();
         delayTime = nextWaveTime;
@@ -70,8 +70,7 @@ public class EnemyManager : Singleton<EnemyManager>
         }
     }
 
-    // Use this for initialization
-    void Start()
+    public override void Start()
     {
         base.Start();
 
@@ -107,8 +106,7 @@ public class EnemyManager : Singleton<EnemyManager>
         return enemyList[activeEnemyID];
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         base.Update();
 
@@ -152,18 +150,6 @@ public class EnemyManager : Singleton<EnemyManager>
                 {
                     GetActiveEnemyData().UpdateData();
 
-                    // SV側がHitフラグだ立ったら、CL状態を変更する。
-                    if (GetActiveEnemyData().IsHit())
-                    {
-                        if (GetActiveEnemyData().State == EnemyData.EnamyState.ATTACK) break;
-
-                        GetActiveEnemyData().StateChange(EnemyData.EnamyState.HIT);
-
-                        Debugger.Log(">> GetActiveEnemy State HIT");
-
-                        GetActiveEnemyData().HitRelease();
-                    }
-
                     // SV側のライフが0なら、CL状態を変更する。
                     if (GetActiveEnemyData().Life <= 0)
                     {
@@ -174,16 +160,29 @@ public class EnemyManager : Singleton<EnemyManager>
                         destroyEffect.Play();
 
                         Debugger.Log(">> GetActiveEnemy State DEAD");
+                        break;
                     }
+
+                    // SV側がHitフラグだ立ったら、CL状態を変更する。
+                    if (GetActiveEnemyData().IsHit())
+                    {
+                        GetActiveEnemyData().HitRelease();
+
+                        // 除外する状態
+                        if (GetActiveEnemyData().State == EnemyData.EnamyState.ATTACK) break;
+                        if (GetActiveEnemyData().State == EnemyData.EnamyState.SPAWN) break;
+                        
+                        GetActiveEnemyData().StateChange(EnemyData.EnamyState.HIT);
+                        Debugger.Log(">> GetActiveEnemy State HIT");
+
+                        break;
+                    }
+
                 }
                 else
                 {
-                    // SV側がアクティブでないなら、登録してある次のエネミーを設定する。
-                    if (!GetActiveEnemyData().IsActive())
-                    {
-                        GetActiveEnemyData().HitRelease();
-                        NextWave();
-                    }
+                    GetActiveEnemyData().HitRelease();
+                    NextWave();
                 }
 
                 break;

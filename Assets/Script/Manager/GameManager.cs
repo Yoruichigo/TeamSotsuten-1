@@ -44,8 +44,7 @@ public class GameManager : Singleton<GameManager>
 
     // エネミーデータ
     const int MAXIMUM_ENEMY_NUM = 1;    // 最大数　エネミー
-    public int MaxEnemyNum { get { return MAXIMUM_ENEMY_NUM; } }        // 外から最大数を取得したい場合、エネミー
-    EnemyMasterData[] enemyDataArray = new EnemyMasterData[MAXIMUM_ENEMY_NUM];
+    EnemyMasterData enemyDataArray = new EnemyMasterData();
 
     // 時間表示
     [System.Serializable]
@@ -187,10 +186,7 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     void SendEnemyDataAwake()
     {
-        for (int i = 0; i < MaxEnemyNum; i++)
-        {
-            enemyDataArray[i] = new EnemyMasterData();
-        }
+        enemyDataArray = new EnemyMasterData();
     }
 
     /// <summary>
@@ -225,27 +221,6 @@ public class GameManager : Singleton<GameManager>
     }
 
 
-    /// <summary>
-    /// エネミー
-    /// 配列インデクスの範囲外チェック
-    /// 範囲外(Error) = true , 範囲内(ok) = false
-    /// </summary>
-    /// <param name="_arrayNumber"></param>
-    /// <param name="_funcName"></param>
-    /// <returns></returns>
-    bool CheckOutRangeArrayNumberEnemy(int _arrayNumber, string _funcName)
-    {
-        if (_arrayNumber < 0 || _arrayNumber >= MaxEnemyNum)
-        {
-            Debug.LogError(_funcName + " 配列の範囲外です!!" + "Index = " + _arrayNumber);
-            return true;
-        }
-        return false;
-    }
-    
-
-    
-
 
 
     /// <summary>
@@ -265,12 +240,9 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     /// <param name="_id"></param>
     /// <returns></returns>
-    public EnemyMasterData GetEnemyData(int _arrayNumber)
-    {
-        if(CheckOutRangeArrayNumberEnemy(_arrayNumber,"GetEnemyData"))       
-            return null;
-        
-        return enemyDataArray[_arrayNumber];
+    public EnemyMasterData GetEnemyData()
+    {   
+        return enemyDataArray;
     }
 
 
@@ -280,9 +252,9 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     /// <param name="_id"></param>
     /// <param name="_isActive"></param>
-    public void SendEnemyType(int _arrayNumber, EnemyMasterData.ENEMY_TYPE _type)
+    public void SendEnemyType(EnemyMasterData.ENEMY_TYPE _type)
     {
-        enemyDataArray[_arrayNumber].EnemyType = _type;
+        enemyDataArray.EnemyType = _type;
     }
 
 
@@ -292,12 +264,9 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     /// <param name="_id"></param>
     /// <param name="_isActive"></param>
-    public void SendEnemyIsActive(int _arrayNumber,bool _isActive)
+    public void SendEnemyIsActive(bool _isActive)
     {
-        //if (CheckOutRangeArrayNumberEnemy(_arrayNumber, "SendEnemyIsActive"))
-        //    return;
-
-        enemyDataArray[_arrayNumber].IsActive = _isActive;
+        enemyDataArray.IsActive = _isActive;
     }
 
     /// <summary>
@@ -305,12 +274,9 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     /// <param name="_id"></param>
     /// <param name="_hp"></param>
-    public void SendEnemyHP(int _arrayNumber, int _hp)
+    public void SendEnemyHP(int _hp)
     {
-        if (CheckOutRangeArrayNumberEnemy(_arrayNumber, "SendEnemyHP"))
-            return;
-
-        enemyDataArray[_arrayNumber].HP = _hp;
+        enemyDataArray.HP = _hp;
     }
 
     
@@ -319,12 +285,9 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     /// <param name="_id"></param>
     /// <param name="_pos"></param>
-    public void SendEnemyPosition(int _arrayNumber, Vector3 _pos)
+    public void SendEnemyPosition(Vector3 _pos)
     {
-        if (CheckOutRangeArrayNumberEnemy(_arrayNumber, "SendEnemyPosition"))
-            return;
-
-        enemyDataArray[_arrayNumber].Position = _pos;
+        enemyDataArray.Position = _pos;
     }
 
 
@@ -333,13 +296,9 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     /// <param name="_id"></param>
     /// <param name="_pos"></param>
-    public void SendEnemyRotation(int _arrayNumber, Vector3 _rotation)
+    public void SendEnemyRotation(Vector3 _rotation)
     {
-        if (CheckOutRangeArrayNumberEnemy(_arrayNumber, "SendEnemyRotation"))
-            return;
-
-        enemyDataArray[_arrayNumber].Rotation = _rotation;
-
+        enemyDataArray.Rotation = _rotation;
     }
 
     /// <summary>
@@ -370,21 +329,6 @@ public class GameManager : Singleton<GameManager>
         playerData.Position = _pos;
     }
 
-
-    /// <summary>
-    /// プレイヤーの攻撃を生成します。
-    /// </summary>
-    /// <param name="_arrayNumber"></param>
-    /// <param name="_attackType"></param>
-    /// <param name="_enemyTargetIndex"></param>
-    public void CreatePlayerAttack(int _arrayNumber, MotionManager.MotionSkillType _attackType, int _enemyTargetIndex)
-    {
-        if (CheckOutRangeArrayNumberEnemy(_enemyTargetIndex, "CreatePlayerAttack _enemyTargetIndex"))
-            return;
-    
-        //TODO 後で追加らしい 
-    }
-
     
     /// <summary>
     /// エネミーが攻撃に当たった時用の関数
@@ -393,25 +337,9 @@ public class GameManager : Singleton<GameManager>
     /// <param name="_damage"></param>
     public void SendEnemyHit(MotionManager.MotionSkillType _playerAttackType,int _damage)
     {
-        int enemyIndex = -1;
-        for (int i = 0; i<MaxEnemyNum;i++)
-        {
-            //現在アクティブなエネミーを検索
-            if (enemyDataArray[i].IsActive == true)
-            {
-                enemyIndex = i;
-            }
-        }
-
-        // FIX 判定がおかしかった。
-        if (CheckOutRangeArrayNumberEnemy(enemyIndex, "SendEnemyHit"))
-        {
-            //return;
-        }
-
-        enemyDataArray[enemyIndex].HP -= _damage;
-        enemyDataArray[enemyIndex].HitAttackType = _playerAttackType;
-        enemyDataArray[enemyIndex].IsHit = true;
+        enemyDataArray.HP -= _damage;
+        enemyDataArray.HitAttackType = _playerAttackType;
+        enemyDataArray.IsHit = true;
     }
 
     /// <summary>

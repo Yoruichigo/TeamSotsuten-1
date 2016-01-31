@@ -90,8 +90,6 @@ public class ConnectionManager : Singleton<ConnectionManager>
 
         view = GetComponent(typeof(PhotonView)) as PhotonView;
 
-        MotionManager.Instance.gameObject.SetActive(false);
-        HitEffectManager.Instance.gameObject.SetActive(false);
     }
 
 
@@ -119,6 +117,9 @@ public class ConnectionManager : Singleton<ConnectionManager>
     public override void Start()
     {
         base.Start();
+
+        MotionManager.Instance.gameObject.SetActive(false);
+        HitEffectManager.Instance.gameObject.SetActive(false);
 
         var canvasRoot = transform.parent.GetComponentsInChildren<Canvas>();
 

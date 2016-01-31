@@ -47,7 +47,7 @@ MonoBehaviour:
   - strength: {fileID: 165352, guid: d1a4893aeb6e2934c9de5e56112fbc24, type: 2}
     weak: {fileID: 113072, guid: 4fea88229052d0e45b572b54218fef37, type: 2}
     type: 1
-  createNum: 5
+  createNum: 10
 --- !u!114 &11461546
 MonoBehaviour:
   m_ObjectHideFlags: 1
