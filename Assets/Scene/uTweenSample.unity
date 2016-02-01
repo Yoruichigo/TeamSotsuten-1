@@ -405,10 +405,10 @@ GameObject:
   - 224: {fileID: 2090422993}
   - 222: {fileID: 2090422996}
   - 114: {fileID: 2090422995}
-  - 114: {fileID: 2090422994}
   - 114: {fileID: 2090422997}
   - 114: {fileID: 2090422998}
   - 114: {fileID: 2090422999}
+  - 114: {fileID: 2090422994}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2090422992}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb8f9ef393012f24a899fe1c2ced3379, type: 3}
+  m_Script: {fileID: 11500000, guid: e8e908496a7f8bc48bbf08b3775f52b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2090422995
@@ -483,7 +483,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2090422992}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91bdc76ba949b0447af1be0a8aa53644, type: 3}
   m_Name: 
@@ -506,7 +506,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  isAwakePlay: 1
+  isAwakePlay: 0
   cashRectTransform: {fileID: 0}
   startPosition: {x: 100, y: 100, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}
@@ -556,7 +556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tweenName: test3
   tweenTime: 3
-  loopType: 2
+  loopType: 1
   tweenCurve:
     serializedVersion: 2
     m_Curve:

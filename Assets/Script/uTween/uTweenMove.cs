@@ -9,13 +9,10 @@ public class uTweenMove : uTweenBase {
     Vector3 tweenStartPos = Vector3.zero;
 
     /// <summary>
-    /// 再生する。
+    /// 初期化
     /// </summary>
-    public override void Play()
+    public override void Init()
     {
-        isTweening = true;
-        pauseTime = 0;
-        playTime = 0;
         cashRectTransform.anchoredPosition3D = startPosition;
         tweenStartPos = cashRectTransform.anchoredPosition3D;
     }

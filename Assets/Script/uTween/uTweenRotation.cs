@@ -3,19 +3,15 @@ using System.Collections;
 
 public class uTweenRotation : uTweenBase
 {
-
     public Vector3 startRotation = Vector3.zero;
     public Vector3 targetRotation = Vector3.zero;
     Vector3 tweenStartRotation = Vector3.zero;
 
     /// <summary>
-    /// 再生する。
+    /// 初期化
     /// </summary>
-    public override void Play()
+    public override void Init()
     {
-        isTweening = true;
-        pauseTime = 0;
-        playTime = 0;
         cashRectTransform.localRotation = Quaternion.Euler(startRotation);
         tweenStartRotation = cashRectTransform.localRotation.eulerAngles;
     }

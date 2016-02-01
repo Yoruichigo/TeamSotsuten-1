@@ -10,24 +10,29 @@ public class uTweenBase : MonoBehaviour
         PingPong,
     }
 
-    public string tweenName = "";
-    public float tweenTime = 0.0f;
-    public LoopType loopType = LoopType.Once;
+    public string tweenName = "";       //< 処理するための名前
+    public float tweenTime = 0.0f;      //< 時間
+    public LoopType loopType = LoopType.Once;   //< ループ種類
     
+    // アニメーションカーブ
     public AnimationCurve tweenCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    public bool isAwakePlay = false;
 
-    public RectTransform cashRectTransform = null;
-    protected float pauseTime = 0;
+    public bool isAwakePlay = false;    //< 最初で再生するかどうか
 
-    protected bool isTweening = false;
-    protected bool isBackMove = false;
-    protected float playTime = 0;
+    public RectTransform cashRectTransform = null;  //< キャッシュしておくRectTransform
+
+    [SerializeField,Range(0.0f,1.0f)]
+    float rate = 0;
+    
+    protected float pauseTime = 0;      //< ポーズ時間
+
+    protected bool isTweening = false;  //< Tween中かどうか
+    protected bool isPlayBack = false;  //< 逆再生かどうか
+    protected float playTime = 0;       //< 再生時間
+
 
     public void Awake()
     {
-        uTween.Register(this);
-
         cashRectTransform = transform as RectTransform;
 
         if (cashRectTransform == null)
@@ -36,14 +41,33 @@ public class uTweenBase : MonoBehaviour
             return;
         }
 
+        uTween.Register(this);
+
         if (isAwakePlay)
         {
             Play();
         }
     }
 
-    public virtual void Play() { }
+    /// <summary>
+    /// 各種初期化
+    /// </summary>
+    public virtual void Init() { }
+    
+    /// <summary>
+    /// 再生
+    /// </summary>
+    public void Play()
+    {
+        isTweening = true;
+        isPlayBack = false;
+        pauseTime = 0;
+        playTime = 0;
 
+        Init();
+    }
+
+    
     /// <summary>
     /// 一時停止する。
     /// </summary>
@@ -67,6 +91,7 @@ public class uTweenBase : MonoBehaviour
     /// </summary>
     public void Stop()
     {
+        isPlayBack = false;
         playTime = 0;
         pauseTime = 0;
         isTweening = false;
@@ -74,27 +99,18 @@ public class uTweenBase : MonoBehaviour
 
     protected float GetCurve()
     {
-        if (isBackMove)
-        {
-            playTime -= Time.deltaTime;
-        }
-        else
-        {
-            playTime += Time.deltaTime;
-        }
+        playTime += isPlayBack ? -Time.deltaTime : Time.deltaTime;
 
-        float rate = playTime / tweenTime;
+        rate = playTime / tweenTime;
 
         return tweenCurve.Evaluate(rate);
-
     }
 
     protected void Finish()
     {
-
         if (playTime < 0.0 && loopType == LoopType.PingPong)
         {
-            isBackMove = false;
+            isPlayBack = false;
         }
 
         if (playTime >= tweenTime)
@@ -106,7 +122,7 @@ public class uTweenBase : MonoBehaviour
                     break;
 
                 case LoopType.PingPong:
-                    isBackMove = true;
+                    isPlayBack = true;
                     break;
 
                 case LoopType.Once:
