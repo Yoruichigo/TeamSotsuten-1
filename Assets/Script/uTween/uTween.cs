@@ -19,17 +19,20 @@ public class uTween
     /// 再生する。
     /// </summary>
     /// <param name="name"></param>
-    public static void Play(ref string name)
+    public static uTweenBase Play(ref string name)
     {
         for (int i = 0; i < tweenList.Count; i++)
         {
             if (tweenList[i].tweenName == name)
             {
                 tweenList[i].Play();
-                return;
+                return tweenList[i];
             }
         }
+
+        return null;
     }
+    
 
     /// <summary>
     /// 再生する。

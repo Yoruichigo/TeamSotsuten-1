@@ -8,14 +8,10 @@ public class uTweenScale : uTweenBase
     Vector3 tweenStartScale = Vector3.zero;
 
     /// <summary>
-    /// 再生する。
+    /// 初期化
     /// </summary>
-    public override void Play()
+    public override void Init()
     {
-        isTweening = true;
-        pauseTime = 0;
-        playTime = 0;
-
         cashRectTransform.localScale = startScale;
         tweenStartScale = cashRectTransform.localScale;
     }
