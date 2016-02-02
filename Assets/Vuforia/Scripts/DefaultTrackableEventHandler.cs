@@ -9,6 +9,7 @@ using UnityEngine;
 namespace Vuforia
 {
 #if !UNITY_EDITOR
+
     /// <summary>
     /// A custom handler that implements the ITrackableEventHandler interface.
     /// </summary>
@@ -20,9 +21,6 @@ namespace Vuforia
         private TrackableBehaviour mTrackableBehaviour;
     
         #endregion // PRIVATE_MEMBER_VARIABLES
-
-        [SerializeField]
-        SequenceBehaviour scene = null;
 
         #region UNTIY_MONOBEHAVIOUR_METHODS
 
@@ -39,7 +37,7 @@ namespace Vuforia
                 mTrackableBehaviour.RegisterTrackableEventHandler(this);
             }
 
-            transform.SetParent(scene.transform);
+            transform.SetParent(SequenceManager.Instance.GetSequence(SceneID.GAME).transform);
         }
 
         #endregion // UNTIY_MONOBEHAVIOUR_METHODS
@@ -98,7 +96,6 @@ namespace Vuforia
             VuforiaBehaviour.IsMarkerLookAt = true;
         }
 
-
         private void OnTrackingLost()
         {
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
@@ -126,6 +123,7 @@ namespace Vuforia
     }
 
 #else
+
     public class DefaultTrackableEventHandler : MonoBehaviour
     { 
     

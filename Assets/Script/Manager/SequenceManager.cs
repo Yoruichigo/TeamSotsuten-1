@@ -60,6 +60,7 @@ public class SequenceManager : Singleton<SequenceManager>
     [SerializeField]
     GameObject imageTarget = null;
 
+
     public bool IsBuildWatch { get { return isBuildWatch; } }
 
     public bool IsNowCharacterSelectScene { get { return nowScene == SceneID.CHARACTER_SELECT; } }
@@ -174,4 +175,24 @@ public class SequenceManager : Singleton<SequenceManager>
         }
 
     }
+
+
+    /// <summary>
+    /// Sequenceを取得
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public SequenceBehaviour GetSequence(SceneID id)
+    {
+        for (int i = 0; i < sceneList.Length; i++)
+        {
+            if (sceneList[i].scene == id)
+            {
+                return sceneList[i].behaviour;
+            }
+        }
+
+        return null;
+    }
+
 }
