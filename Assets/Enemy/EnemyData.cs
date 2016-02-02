@@ -46,6 +46,9 @@ public class EnemyData: MonoBehaviour
     float attackSpeed = 1000.0f;
 
     [SerializeField]
+    float attackTiming = 2.0f;
+
+    [SerializeField]
     Color color = Color.white;
 
     [SerializeField]
@@ -60,6 +63,7 @@ public class EnemyData: MonoBehaviour
     public AnimationClip AnimationAIClip = null;
     public AnimationClip AnimationSpwanClip = null;
 
+    public float AttackTiming { get { return attackTiming; } }
 
     public EnemyMasterData.ENEMY_TYPE EnemyType { get { return enemyType; } }
 
@@ -90,7 +94,7 @@ public class EnemyData: MonoBehaviour
         GameManager.Instance.SendEnemyIsActive(true);
         GameManager.Instance.SendEnemyType(enemyType);
 
-        EnemyManager.Instance.SetEnemySprite(ref standingSpriteList,ref attackSpriteList,ref color);
+        EnemyManager.Instance.SetEnemySprite(ref standingSpriteList, ref attackSpriteList, ref color);
 
         EnemyAttackManager.Instance.Create(attackEffect, attackSpeed);
     }

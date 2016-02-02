@@ -80,6 +80,7 @@ public class EnemyManager : Singleton<EnemyManager>
         destroyEffect = destroyEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
     }
 
+
     /// <summary>
     /// 敵の画像情報を設定する。
     /// </summary>
