@@ -161,11 +161,13 @@ public class MotionManager : Singleton<MotionManager>
         {
             MotionSkill = MotionSkillType.WEAK;
             OnComplated(MotionSkill);
+            isCalc = false;
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
             MotionSkill = MotionSkillType.STRENGTH;
             OnComplated(MotionSkill);
+            isCalc = false;
         }
 #endif
     }

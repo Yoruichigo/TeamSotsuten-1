@@ -10,6 +10,12 @@ using System.Collections;
 public class TitleSequence : SequenceBehaviour
 {
     PhotonView view = null;
+    const string TWEEN_START_SCALE = "TitleStartScale";
+    const string TWEEN_START_COLOR = "TitleStartColor";
+
+    uTweenBase scaleTween = null;
+    bool isStartAnim = false;
+
 
     public override void Reset()
     {
@@ -30,12 +36,35 @@ public class TitleSequence : SequenceBehaviour
 	// Update is called once per frame
 	void Update () 
     {
+#if !UNITY_EDITOR
         if (!ConnectionManager.IsSmartPhone) return;
+#endif
 
-        if (MotionManager.Instance.MotionSkill == MotionManager.MotionSkillType.STRENGTH)
+        if (!isStartAnim)
         {
+            if (MotionManager.Instance.MotionSkill == MotionManager.MotionSkillType.STRENGTH)
+            {
+                isStartAnim = true;
+                
+                scaleTween = uTween.Play(TWEEN_START_SCALE);
+                uTween.Play(TWEEN_START_COLOR);
+
+                SEPlayer.Instance.Play(Audio.SEID.DECISION);
+
+            }
+        }
+        else
+        {
+            if (!scaleTween.IsPlaying)
+            {
+                isStartAnim = false;
+
+#if !UNITY_EDITOR
             view.RPC("ChangeScene", PhotonTargets.All);
-            SEPlayer.Instance.Play(Audio.SEID.DECISION);
+#else
+                SequenceManager.Instance.ChangeScene(SceneID.GAME);
+#endif
+            }
         }
 	}
 
