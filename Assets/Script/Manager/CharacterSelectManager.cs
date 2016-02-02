@@ -7,6 +7,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class CharacterSelectManager : Singleton<CharacterSelectManager> {
    
@@ -33,6 +34,7 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager> {
     public struct JobButtonData
     {
         public Button button;
+        public Image icon;
         public JobType type;
     }
 
@@ -44,14 +46,20 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager> {
     {
         base.Awake();
 
+        List<Sprite> spriteList = new List<Sprite>();
+
         for (int i = 0; i < jobData.Length; i++)
         {
             var job = jobData[i].type;
+            var image = jobData[i].icon;
             jobData[i].button.onClick.AddListener(() => {
-                Selected(job);
+                Selected(job, ref image);
             });
+
+            spriteList.Add(image.sprite);
         }
 
+        WatchManager.Instance.SetJonAllSprite(spriteList.ToArray());
         decisionButton.onClick.AddListener(Decision);
     }
 
@@ -70,11 +78,13 @@ public class CharacterSelectManager : Singleton<CharacterSelectManager> {
     /// <summary>
     /// 選択処理
     /// </summary>
-    public void Selected(JobType type)
+    public void Selected(JobType type,ref Image icon)
     {
         selectedJob = type;
         jobSelectType.text = selectedJob.ToString();
+        WatchManager.Instance.SetJobIcon(icon.sprite);
     }
+
 
     /// <summary>
     /// 決定処理

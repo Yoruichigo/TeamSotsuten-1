@@ -364,11 +364,14 @@ public class ConnectionManager : Singleton<ConnectionManager>
     [PunRPC]
     public void SyncChangeScene(PhotonMessageInfo info)
     {
-        Debugger.Log(">> ゲームシーンを変更します。");
-
         SequenceManager.Instance.ChangeScene(nextSceneID);
         MotionManager.Instance.gameObject.SetActive(true);
         HitEffectManager.Instance.gameObject.SetActive(true);
+
+        if (IsWacth)
+        {
+            WatchManager.Instance.CanvasActive();
+        }
     }
     
     /// <summary>

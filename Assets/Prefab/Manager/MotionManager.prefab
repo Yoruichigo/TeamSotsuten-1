@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5eaa1e165e0a449b1cd3be26156c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  watchCanvasObj: {fileID: 0}
 --- !u!114 &11429998
 MonoBehaviour:
   m_ObjectHideFlags: 1
