@@ -12,7 +12,7 @@ public class uTweenSample : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        string playName = "test";
+        string playName = "testButtonScale";
 
 
         if (Input.GetKeyDown(KeyCode.Q))
