@@ -5,14 +5,14 @@ using System.Collections;
 
 public class EnemyHelthVar : MonoBehaviour 
 {
-    Image HelthVar;
+    Slider helthVar;
 
     int lifeMaX;//体力
 
 	// Use this for initialization
 	void Start () 
     {
-        HelthVar = GetComponent<Image>();
+        helthVar = GetComponent<Slider>();
 	}
 
     public void SetMaxLife(int maxLife)
@@ -23,16 +23,16 @@ public class EnemyHelthVar : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
     {
-        if (HelthVar == null) return;
+        if (helthVar == null) return;
 
         if (EnemyManager.Instance.GetActiveEnemyData().IsActive())
         {
-            HelthVar.enabled = true;
-            HelthVar.fillAmount = EnemyManager.Instance.GetActiveEnemyData().Life / lifeMaX;
+            helthVar.enabled = true;
+            helthVar.value = (float)EnemyManager.Instance.GetActiveEnemyData().Life / (float)lifeMaX;
         }
         else 
         {
-            HelthVar.enabled = false;
+            helthVar.enabled = false;
         }
 	
 	}
