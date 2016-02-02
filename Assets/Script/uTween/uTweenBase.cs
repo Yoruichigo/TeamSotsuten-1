@@ -30,6 +30,7 @@ public class uTweenBase : MonoBehaviour
     protected bool isPlayBack = false;  //< 逆再生かどうか
     protected float playTime = 0;       //< 再生時間
 
+    public bool IsPlaying { get { return isTweening; } }
 
     public void Awake()
     {
@@ -65,6 +66,7 @@ public class uTweenBase : MonoBehaviour
         playTime = 0;
 
         Init();
+
     }
 
     

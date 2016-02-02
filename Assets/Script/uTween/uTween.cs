@@ -15,11 +15,24 @@ public class uTween
         tweenList.Add(handle);
     }
 
+    public static bool IsPlaying(string name)
+    {
+        for (int i = 0; i < tweenList.Count; i++)
+        {
+            if (tweenList[i].tweenName == name)
+            {
+                return tweenList[i].IsPlaying;
+            }
+        }
+
+        return false;
+    }
+
     /// <summary>
     /// 再生する。
     /// </summary>
     /// <param name="name"></param>
-    public static uTweenBase Play(ref string name)
+    public static uTweenBase Play(string name)
     {
         for (int i = 0; i < tweenList.Count; i++)
         {
@@ -38,7 +51,7 @@ public class uTween
     /// 再生する。
     /// </summary>
     /// <param name="name"></param>
-    public static void Pause(ref string name)
+    public static void Pause(string name)
     {
         for (int i = 0; i < tweenList.Count; i++)
         {
@@ -55,7 +68,7 @@ public class uTween
     /// 再生する。
     /// </summary>
     /// <param name="name"></param>
-    public static void Resume(ref string name)
+    public static void Resume(string name)
     {
         for (int i = 0; i < tweenList.Count; i++)
         {
@@ -72,7 +85,7 @@ public class uTween
     /// 再生する。
     /// </summary>
     /// <param name="name"></param>
-    public static void Stop(ref string name)
+    public static void Stop(string name)
     {
         for (int i = 0; i < tweenList.Count; i++)
         {

@@ -14,26 +14,25 @@ public class uTweenSample : MonoBehaviour {
     {
         string playName = "testButtonScale";
 
-
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            var move = uTween.Play(ref playName) as uTweenMove;
+            var move = uTween.Play(playName) as uTweenMove;
             move.startPosition = new Vector3(-100, 0, 0);
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            uTween.Play(ref playName) ;
+            uTween.Play(playName) ;
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            uTween.Pause(ref playName);
+            uTween.Pause(playName);
         }
 
         if (Input.GetKeyDown(KeyCode.D))
         {
-            uTween.Resume(ref playName);
+            uTween.Resume(playName);
         }
     }
 }
