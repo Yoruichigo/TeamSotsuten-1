@@ -9,9 +9,6 @@ using System.Collections;
 public class ClientEnemyOperator : MonoBehaviour 
 {
 
-    [SerializeField]
-    float attackTiming = 2.0f;
-
     SpriteRenderer spriteRenderer = null;
 
     bool isLive = false;
@@ -44,7 +41,7 @@ public class ClientEnemyOperator : MonoBehaviour
         attackTime -= Time.deltaTime;
         if (attackTime <= 0)
         {
-            attackTime = attackTiming;
+            attackTime = EnemyManager.Instance.GetActiveEnemyData().AttackTiming ;
             return true;
         }
 
@@ -169,7 +166,7 @@ public class ClientEnemyOperator : MonoBehaviour
         animationAI.PlayQueued(animSpwanClip.name);
         spwanAnimHandle = true;
 
-        attackTime = attackTiming;
+        attackTime = EnemyManager.Instance.GetActiveEnemyData().AttackTiming;
     }
 
     void SpawnCompleted()
