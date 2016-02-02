@@ -17,11 +17,13 @@ public class Debugger : MonoBehaviour
 
     void Awake()
     {
+//#if DEBUG
         var child = transform.GetComponentInChildren<Canvas>();
 
         debugText = child.GetComponentInChildren<Text>();
 
         Reset();
+//#endif
     }
 
 
@@ -30,7 +32,9 @@ public class Debugger : MonoBehaviour
     /// </summary>
     public static void Reset()
     {
+#if DEBUG
         debugText.text = "";
+#endif
     }
 
     /// <summary>
@@ -41,13 +45,13 @@ public class Debugger : MonoBehaviour
     { 
 #if UNITY_EDITOR
         Debug.Log(message);
-#endif
+//#endif
         OverLineTextReset();
 
         debugText.text += message + "\n";
 
         messageNum++;
-
+#endif
 
     }
 
@@ -59,13 +63,14 @@ public class Debugger : MonoBehaviour
     {
 #if UNITY_EDITOR
         Debug.LogError(message);
-#endif
+//#endif
+
         OverLineTextReset();
 
         debugText.text += "<color=red>" + message + "</color>" + "\n";
 
         messageNum++;
-
+#endif
     }
 
     /// <summary>
@@ -76,18 +81,19 @@ public class Debugger : MonoBehaviour
     {
 #if UNITY_EDITOR
         Debug.LogWarning(message);
-#endif
+//#endif
         OverLineTextReset();
 
         debugText.text += "<color=yellow>" + message + "</color>" + "\n";
 
         messageNum++;
-
+#endif
     }
 
 
     private static void OverLineTextReset()
     {
+#if UNITY_EDITOR
         const int MaxLineNum = 25;
 
         if (messageNum >= MaxLineNum)
@@ -96,5 +102,6 @@ public class Debugger : MonoBehaviour
 
             debugText.text = "";
         }
+#endif
     }
 }
