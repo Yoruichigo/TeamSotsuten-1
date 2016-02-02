@@ -59,8 +59,10 @@ MonoBehaviour:
   decisionButton: {fileID: 0}
   jobData:
   - button: {fileID: 0}
+    icon: {fileID: 0}
     type: 0
   - button: {fileID: 0}
+    icon: {fileID: 0}
     type: 1
 --- !u!1001 &100100000
 Prefab:

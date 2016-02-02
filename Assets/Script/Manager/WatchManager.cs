@@ -12,6 +12,18 @@ using System.Collections.Generic;
 
 public class WatchManager : Singleton<WatchManager>
 {
+    class WatchCanvasData
+    {
+        public Transform trans;
+        public Canvas canvas;
+        public Image icon;
+    }
+
+    [SerializeField]
+    GameObject watchCanvasObj = null;
+
+    WatchCanvasData watchCanvasData = new WatchCanvasData();
+
     List<Text> debugTextList = new List<Text>();
 
     PhotonView view = null;
@@ -41,6 +53,11 @@ public class WatchManager : Singleton<WatchManager>
             debugTextList.Add(child[i].GetComponentInChildren<Text>());
         }
 
+        watchCanvasData.trans = watchCanvasObj.transform;
+        watchCanvasData.canvas = watchCanvasData.trans.GetComponentInChildren<Canvas>();
+        watchCanvasData.icon = watchCanvasData.canvas.GetComponentInChildren<Image>();
+
+        watchCanvasObj.SetActive(false);
     }
 
     public override void Start()
@@ -85,6 +102,42 @@ public class WatchManager : Singleton<WatchManager>
         {
             debugTextList[i].text = "Acc : " + acc.ToString() + "\n";
             debugTextList[i].text += "GyroAngle : " + gyroAngle.ToString();
+        }
+    }
+
+    /// <summary>
+    /// 職種アイコンを設定する。
+    /// </summary>
+    /// <param name="icon"></param>
+    public void SetJobIcon(Sprite icon)
+    {
+        view.RPC("SendIcon", ConnectionManager.GetWatchPlayer(), new object[] { icon.name });
+    }
+
+    Sprite[] spriteList = null;
+
+    public void SetJonAllSprite(Sprite[] spriteList)
+    {
+        this.spriteList = spriteList;
+    }
+
+    public void CanvasActive()
+    {
+        watchCanvasObj.SetActive(true);
+    }
+
+    [PunRPC]
+    public void SendIcon(string iconName, PhotonMessageInfo info)
+    {
+        if (spriteList == null) return;
+
+        for (int i = 0; i < spriteList.Length; i++)
+        {
+            if (spriteList[i].name == iconName)
+            {
+                watchCanvasData.icon.sprite = spriteList[i];
+                return;
+            }
         }
     }
 
