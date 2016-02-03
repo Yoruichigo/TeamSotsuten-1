@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: TitleStartColor
-  tweenTime: 1
+  tweenTime: .5
   loopType: 0
   tweenCurve:
     serializedVersion: 2
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: 
-  tweenTime: 3
+  tweenTime: 2
   loopType: 2
   tweenCurve:
     serializedVersion: 2
@@ -177,7 +177,7 @@ MonoBehaviour:
   cashRectTransform: {fileID: 0}
   rate: 0
   startPosition: {x: 0, y: -179, z: 0}
-  targetPosition: {x: 0, y: -200, z: 0}
+  targetPosition: {x: 0, y: -210, z: 0}
 --- !u!114 &11472378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: TitleStartScale
-  tweenTime: 1
+  tweenTime: .5
   loopType: 0
   tweenCurve:
     serializedVersion: 2
