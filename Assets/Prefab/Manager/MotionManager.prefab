@@ -140,11 +140,11 @@ MonoBehaviour:
   calcTime: .5
   motionData:
   - skillType: 0
-    accMin: .800000012
-    accMax: 1.39999998
+    accMin: .5
+    accMax: 1.10000002
     clearIndex: 0
   - skillType: 1
-    accMin: 1.5
+    accMin: 1.20000005
     accMax: 2
     clearIndex: 0
   attackSkill: {fileID: 0}
