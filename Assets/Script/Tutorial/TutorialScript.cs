@@ -24,7 +24,7 @@ public class TutorialScript : MonoBehaviour {
 
     // スライダー
     [SerializeField]
-    Slider Slider_AttackInduction;
+    GameObject Slider_AttackInduction;
 
     //スライダー速度　弱
     [SerializeField]
@@ -65,7 +65,26 @@ public class TutorialScript : MonoBehaviour {
         //MotionManager.MotionSkillType.STRENGTH;
         //MotionManager.MotionSkillType.WEAK;
     }
-	
+
+    void Finish()
+    {
+        state = false;
+    }
+
+    /// <summary>
+    /// 終了関数
+    /// </summary>
+    void EndUpdate()
+    {
+        Image_AttackInduction.SetActive(false);
+        Slider_AttackInduction.SetActive(false);
+
+        NowFunc = null;
+        Destroy(gameObject);
+    }
+
+
+
 
     /// <summary>
     /// アプデ
@@ -77,7 +96,10 @@ public class TutorialScript : MonoBehaviour {
         {
             NowFunc();
         }
-
+        else
+        {
+            EndUpdate();
+        }
     }
 
 
@@ -117,20 +139,12 @@ public class TutorialScript : MonoBehaviour {
         
         if(endFlag)
         {
-            NowFunc = EndUpdate;
+            NowFunc = Finish;
         }
     }
 
 
-    /// <summary>
-    /// 終了関数
-    /// </summary>
-    void EndUpdate()
-    {
-        state = false;
-        NowFunc = null;
-        Destroy(gameObject);
-    }
+   
     
 
     //待機時間をつけたスライダー動作
@@ -168,20 +182,28 @@ public class TutorialScript : MonoBehaviour {
         OldSliderTweenEndTime = GetNowTime();
         iTweenSliderActivate = false;
         iTween.Stop(gameObject);
-        Slider_AttackInduction.value = 0;
+
+        //Slider_AttackInduction.value = 0;
+        var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
+        sliderobj.value = 0;
     }
 
 
     // iTweenで来るupdate関数
     void iTween_SliderUpdate(float value)
     {
-        Slider_AttackInduction.value = value;
+        //Slider_AttackInduction.value = value;
+        var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
+        sliderobj.value = value;
     }
 
     // iTweenが終了したとき来る関数
     void iTween_SliderEnd()
     {
-        Slider_AttackInduction.value = 0;
+        //Slider_AttackInduction.value = 0;
+        var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
+        sliderobj.value = 0;
+
         OldSliderTweenEndTime = GetNowTime();
         iTweenSliderActivate = false;
     }

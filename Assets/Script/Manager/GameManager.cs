@@ -435,19 +435,7 @@ public class GameManager : Singleton<GameManager>
             timeText.text = (timeCounter.maxSecond - timeCounter.deltaSecond).ToString();
         }
     }
-
-
-    /// <summary>
-    /// 書かないといけない関数
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="info"></param>
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-    }
-
-
+    
     
 
 }
