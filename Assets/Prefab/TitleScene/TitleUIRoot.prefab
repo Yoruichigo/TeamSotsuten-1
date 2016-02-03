@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: TitleStartColor
-  tweenTime: .5
+  tweenTime: 1
   loopType: 0
   tweenCurve:
     serializedVersion: 2
@@ -124,6 +124,11 @@ MonoBehaviour:
       value: 0
       inSlope: 2
       outSlope: 2
+      tangentMode: 0
+    - time: .305842012
+      value: .805385292
+      inSlope: 1.36137009
+      outSlope: 1.36137009
       tangentMode: 0
     - time: 1
       value: 1
@@ -233,20 +238,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: TitleStartScale
-  tweenTime: .5
+  tweenTime: 1
   loopType: 0
   tweenCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: .354438096
+      value: .845661998
+      inSlope: 1.19298697
+      outSlope: 1.19298697
       tangentMode: 0
     - time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
