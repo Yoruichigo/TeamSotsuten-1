@@ -623,7 +623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37fc9b436dea57e40b9df0bc0b6df2c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTiming: 2
 --- !u!114 &11455154
 MonoBehaviour:
   m_ObjectHideFlags: 1
