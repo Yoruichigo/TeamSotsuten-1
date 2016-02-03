@@ -45,6 +45,30 @@ public class uTween
 
         return null;
     }
+
+    /// <summary>
+    /// 再生する。
+    /// </summary>
+    /// <param name="name"></param>
+    public static void Plays(string name)
+    {
+        for (int i = 0; i < tweenList.Count; i++)
+        {
+            if (tweenList[i].tweenName == name)
+            {
+                tweenList[i].Play();
+            }
+        }
+    }
+
+    /// <summary>
+    /// 再生する。
+    /// </summary>
+    /// <param name="name"></param>
+    public static uTweenBase[] GetPlayList(string name)
+    {
+        return tweenList.FindAll(i => i.tweenName == name).ToArray();
+    }
     
 
     /// <summary>

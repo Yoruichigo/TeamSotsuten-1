@@ -13,7 +13,7 @@ public class TitleSequence : SequenceBehaviour
     const string TWEEN_START_SCALE = "TitleStartScale";
     const string TWEEN_START_COLOR = "TitleStartColor";
 
-    uTweenBase scaleTween = null;
+    uTweenBase[] scaleTweenList = null;
     bool isStartAnim = false;
 
 
@@ -46,21 +46,21 @@ public class TitleSequence : SequenceBehaviour
             {
                 isStartAnim = true;
                 
-                scaleTween = uTween.Play(TWEEN_START_SCALE);
-                uTween.Play(TWEEN_START_COLOR);
+                scaleTweenList = uTween.GetPlayList(TWEEN_START_SCALE);
+                uTween.Plays(TWEEN_START_SCALE);
+                uTween.Plays(TWEEN_START_COLOR);
 
                 SEPlayer.Instance.Play(Audio.SEID.DECISION);
-
             }
         }
         else
         {
-            if (!scaleTween.IsPlaying)
+            if (!scaleTweenList[0].IsPlaying)
             {
                 isStartAnim = false;
 
 #if !UNITY_EDITOR
-            view.RPC("ChangeScene", PhotonTargets.All);
+                view.RPC("ChangeScene", PhotonTargets.All);
 #else
                 SequenceManager.Instance.ChangeScene(SceneID.GAME);
 #endif
