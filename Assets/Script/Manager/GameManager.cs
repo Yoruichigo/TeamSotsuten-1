@@ -46,8 +46,68 @@ public class GameManager : Singleton<GameManager>
     const int MAXIMUM_ENEMY_NUM = 1;    // 最大数　エネミー
     EnemyMasterData enemyDataArray = new EnemyMasterData();
 
+    // 時間表示
+    [System.Serializable]
+    public struct TimeCounter
+    {
+        /// <summary>
+        /// ゲーム開始時からの経過時間
+        /// </summary>
+        public float deltaSecond;
+
+        /// <summary>
+        /// 最大時間
+        /// </summary>
+        public float maxSecond;
+
+        /// <summary>
+        /// タイムオーバーをしているかどうか
+        /// true...制限時間を過ぎている。 false...まだ制限時間内
+        /// </summary>
+        public bool isTimeOver;
+
+        /// <summary>
+        /// 時間を表示するオブジェクトのタグ
+        /// </summary>
+        public string timeTextObjectTag;
+    
+    }
+
+    [SerializeField]
+    TimeCounter timeCounter;
+
     [SerializeField]
     Text debugPlayerPositionText = null;
+
+    /// <summary>
+    /// タイム表示用テキスト
+    /// </summary>
+    List<Text> timeTextList = new List<Text>();
+
+
+    //マーカーを見ているかどうかの状態
+    public enum LookMarkerState
+    {
+        Look,
+        NonLook,
+        OnLook,
+        OnNonLook,
+    };
+    
+    LookMarkerState lookstate = LookMarkerState.NonLook;
+    public LookMarkerState GetLookState()
+    {
+        return lookstate; 
+    }
+    public bool IsOnLook
+    {
+        get { return lookstate == LookMarkerState.OnLook; }
+    }
+
+    public bool IsOnNonLook
+    {
+        get { return lookstate == LookMarkerState.OnNonLook; }
+    }
 
     //初回のみの初期化処理
     public override void Awake()
@@ -67,6 +127,8 @@ public class GameManager : Singleton<GameManager>
 
         SendPlayerDataAwake();
         SendEnemyDataAwake();
+
+        TimerInitialize();
     }
 
     //毎回の初期化処理
@@ -90,12 +152,10 @@ public class GameManager : Singleton<GameManager>
     //クライアントのみ行うアップデートです。
     private void UpdateClient()
     {
-        TimeUIInfo.UpdateTimeUI();
-
-        // タイムオーバー処理をここに記述する。
-        if (TimeUIInfo.IsTimeOver())
-        { 
-            
+        //時間の計測
+        if (!timeCounter.isTimeOver) //&& !TutorialScript.IsTutorial)
+        {
+            UpdateTimeCounter();
         }
 
 #if !UNITY_EDITOR
@@ -107,6 +167,10 @@ public class GameManager : Singleton<GameManager>
 
         //スマフォ位置更新
         UpdateClientPosition();
+
+
+        //マーカーを見ているか確認
+        UpdateLookState();
 
     }
 
@@ -136,6 +200,51 @@ public class GameManager : Singleton<GameManager>
         debugPlayerPositionText.text = playerData.Position.ToString();
     }
 
+
+    /// <summary>
+    /// マーカーを見ているかの状態を更新
+    /// </summary>
+    void UpdateLookState()
+    {
+        switch (lookstate)
+        {
+            case LookMarkerState.Look:
+                if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt)
+                {
+                    lookstate = LookMarkerState.OnNonLook;
+                }
+
+                break;
+
+            case LookMarkerState.OnLook:
+                lookstate = LookMarkerState.Look;
+                break;
+
+            case LookMarkerState.NonLook:
+                if (Vuforia.VuforiaBehaviour.IsMarkerLookAt)
+                {
+                    lookstate = LookMarkerState.OnLook;
+                }
+
+                break;
+
+            case LookMarkerState.OnNonLook:
+                NonLookMarkerHideObjects();
+                lookstate = LookMarkerState.NonLook;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// オブジェクトを消す
+    /// </summary>
+    void NonLookMarkerHideObjects()
+    {
+        HitEffectManager.Instance.EffectAllHide();
+        PlayerAttackEffectManager.Instance.AttackEffectAllHide();
+        EnemyAttackManager.Instance.AttackAllHide();
+    }
+
     /// <summary>
     /// プレイヤー情報の初回初期化
     /// </summary>
@@ -153,6 +262,38 @@ public class GameManager : Singleton<GameManager>
     {
         enemyDataArray = new EnemyMasterData();
     }
+
+    /// <summary>
+    /// 時間関係の初期化
+    /// </summary>
+    void TimerInitialize()
+    {
+
+        timeCounter.deltaSecond = 0f;
+        timeCounter.isTimeOver = false;
+
+
+        var timeTextArray = GameObject.FindGameObjectsWithTag(timeCounter.timeTextObjectTag);
+        if (timeTextArray.Length == 0)
+        {
+            Debugger.Log("timeTextというタグのゲームオブジェクトが存在しません。");
+        }
+
+
+        foreach (var timeText in timeTextArray)
+        {
+            var textCompornent = timeText.GetComponent<Text>();
+            if (textCompornent == null)
+            {
+                Debugger.Log("Textのコンポーネントが存在しません。");
+            }
+            else
+            {
+                timeTextList.Add(textCompornent);
+            }
+        }
+    }
+
 
 
 
@@ -288,6 +429,30 @@ public class GameManager : Singleton<GameManager>
         SequenceManager.Instance.ChangeScene(SceneID.RESULT);
     }
 
+
+    /// <summary>
+    /// 時間計測部の更新
+    /// </summary>
+    void UpdateTimeCounter()
+    {
+        timeCounter.deltaSecond += Time.deltaTime;
+
+        if (timeCounter.deltaSecond >= timeCounter.maxSecond)
+        {
+            timeCounter.isTimeOver = true;
+        }
+
+        UpdateTimeText();
+    }
+
+    void UpdateTimeText()
+    {
+        foreach (var timeText in timeTextList)
+        {
+            timeText.text = (timeCounter.maxSecond - timeCounter.deltaSecond).ToString();
+        }
+    }
+    
     
 
 }
