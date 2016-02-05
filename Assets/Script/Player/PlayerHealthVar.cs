@@ -18,6 +18,7 @@ public class PlayerHealthVar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+#if !UNITY_EDITOR
         if (Vuforia.VuforiaBehaviour.IsMarkerLookAt)
         {
             helthVar.enabled = true;
@@ -27,6 +28,11 @@ public class PlayerHealthVar : MonoBehaviour
         {
             helthVar.enabled = false;
         }
+#else
+        helthVar.enabled = true;
+        helthVar.value = (float)GameManager.Instance.GetPlayerData().HelthPoint / (float)lifeMax;
+#endif
+
 
     }
 

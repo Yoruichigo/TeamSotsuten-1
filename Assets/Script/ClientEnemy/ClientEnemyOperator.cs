@@ -27,7 +27,7 @@ public class ClientEnemyOperator : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        animationAI = GetComponent<Animation>();
+        animationAI = transform.parent.GetComponent<Animation>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -55,9 +55,8 @@ public class ClientEnemyOperator : MonoBehaviour
         if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
 #endif
 
-        // プレイヤーの方向に向く
-        transform.LookAt(new Vector3(GameManager.Instance.GetPlayerData().Position.x, 
-            transform.position.y, GameManager.Instance.GetPlayerData().Position.z));
+        // もしエネミーがいないなら処理しない
+        if (EnemyManager.Instance.IsEnemyNothing) return;
 
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         {
@@ -149,7 +148,8 @@ public class ClientEnemyOperator : MonoBehaviour
         attackTime = 0;
         hitAnimHandle = false;
         spwanAnimHandle = false;
-        transform.position = Vector3.zero;
+        transform.localPosition = Vector3.zero;
+        transform.parent.position = Vector3.zero;
 
         animAIClip = EnemyManager.Instance.GetActiveEnemyData().AnimationAIClip;
         animSpwanClip = EnemyManager.Instance.GetActiveEnemyData().AnimationSpwanClip;

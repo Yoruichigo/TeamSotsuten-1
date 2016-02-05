@@ -24,6 +24,7 @@ public class EnemyHelthVar : MonoBehaviour
 	void Update () 
     {
         if (helthVar == null) return;
+        if (EnemyManager.Instance.IsEnemyNothing) return;
 
         if (EnemyManager.Instance.GetActiveEnemyData().IsActive())
         {
