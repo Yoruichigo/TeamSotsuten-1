@@ -11,6 +11,13 @@ using System.Collections.Generic;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
+    class ClientEnemyData
+    {
+        public Transform trans = null;
+        public SpriteRenderer sprite = null;
+        public Canvas canvas = null;
+    }
+
     enum State
     {
         None,
@@ -26,7 +33,7 @@ public class EnemyManager : Singleton<EnemyManager>
     float nextWaveTime = 2.0f;
 
     [SerializeField]
-    SpriteRenderer enemyRenderer = null;
+    Transform clientEnemy = null;
 
     [SerializeField]
     EnemyHelthVar enemyHelthVar = null;
@@ -37,7 +44,12 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField]
     Transform destroyEffectRoot = null;
 
+    [HideInInspector]
+    public Color SpriteColor = Color.white;
+
     List<EnemyData> enemyList = new List<EnemyData>();  //< 登録エネミー
+
+    ClientEnemyData clientEnemyData = new ClientEnemyData();
 
     Sprite[] standingSpriteList = null;
     Sprite[] attackSpriteList = null;
@@ -56,8 +68,7 @@ public class EnemyManager : Singleton<EnemyManager>
     float delayTime = 0;
     float animTime = 0;
 
-    [HideInInspector]
-    public Color SpriteColor = Color.white;
+    public bool IsEnemyNothing { get; private set; }
 
     public override void Awake()
     {
@@ -68,6 +79,10 @@ public class EnemyManager : Singleton<EnemyManager>
         {
             enemyList.Add(transform.GetChild(i).GetComponent<EnemyData>());
         }
+
+        clientEnemyData.trans = clientEnemy;
+        clientEnemyData.sprite = clientEnemyData.trans.GetComponentInChildren<SpriteRenderer>();
+        clientEnemyData.canvas = clientEnemyData.trans.GetComponentInChildren<Canvas>();
     }
 
     public override void Start()
@@ -114,6 +129,7 @@ public class EnemyManager : Singleton<EnemyManager>
 #if !UNITY_EDITOR
         if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
 #endif
+        if (IsEnemyNothing) return;
 
         switch (state)
         {
@@ -145,20 +161,33 @@ public class EnemyManager : Singleton<EnemyManager>
                 break;
 
             case State.Update:   //< アップデート処理
-
+                
                 // 死んでないなら処理をする。
                 if (GetActiveEnemyData().State != EnemyData.EnamyState.DEAD)
                 {
+                    bool isEnable = true;
+#if UNITY_EDITOR
+
+#else 
+                    isEnable = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
+#endif
+
+                    clientEnemyData.sprite.enabled = isEnable;
+                    clientEnemyData.canvas.enabled = isEnable;
+
                     GetActiveEnemyData().UpdateData();
 
                     // SV側のライフが0なら、CL状態を変更する。
-                    if (GetActiveEnemyData().Life <= 0)
+                    if (GetActiveEnemyData().Life < 0)
                     {
                         GetActiveEnemyData().HitRelease();
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.DEAD);
 
-                        destroyEffect.transform.position = GetActiveEnemyData().transform.position;
+                        destroyEffect.transform.position = clientEnemyData.trans.position;
                         destroyEffect.Play();
+
+                        clientEnemyData.canvas.enabled = false;
+                        clientEnemyData.sprite.enabled = false;
 
                         Debugger.Log(">> GetActiveEnemy State DEAD");
                         break;
@@ -193,6 +222,7 @@ public class EnemyManager : Singleton<EnemyManager>
     }
 
 
+
     void NextWave()
     {
         delayTime -= Time.deltaTime;
@@ -204,7 +234,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
         if (activeEnemyID >= enemyList.Count)
         {
-            SequenceManager.Instance.ChangeScene(SceneID.RESULT);
+            IsEnemyNothing = true;
             return;
         }
 

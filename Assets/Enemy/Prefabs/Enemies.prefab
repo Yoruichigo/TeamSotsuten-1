@@ -188,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeSpriteAnimTime: .200000003
   nextWaveTime: 2
-  enemyRenderer: {fileID: 0}
+  clientEnemy: {fileID: 0}
   enemyHelthVar: {fileID: 0}
   appearanceEffectRoot: {fileID: 0}
   destroyEffectRoot: {fileID: 0}

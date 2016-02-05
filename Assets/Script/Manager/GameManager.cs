@@ -70,6 +70,22 @@ public class GameManager : Singleton<GameManager>
         get { return lookstate == LookMarkerState.OnNonLook; }
     }
 
+
+    enum JUDGE_STATE
+    { 
+        NONE,           //< 未定義
+        GAME_CLEAR,     //< ゲームクリア
+        GAME_OVER,      //< ゲームオーバー
+    }
+
+    static JUDGE_STATE judgeState = JUDGE_STATE.NONE;
+
+    // ゲームクリア
+    static public bool IsGameClear { get { return judgeState == JUDGE_STATE.GAME_CLEAR; } }
+
+    // ゲームオーバーかどうか
+    static public bool IsGameOver { get { return judgeState == JUDGE_STATE.GAME_OVER; } }
+
     //初回のみの初期化処理
     public override void Awake()
     {
@@ -111,21 +127,40 @@ public class GameManager : Singleton<GameManager>
     //クライアントのみ行うアップデートです。
     private void UpdateClient()
     {
-        TimeUIInfo.UpdateTimeUI();
-
-        // タイムオーバーになったら、実行したい処理をここに記述してください。
-        if (TimeUIInfo.IsTimeOver())
-        {
-
-            return;
-        }
-
 #if !UNITY_EDITOR
         //クライアント確認
         if(!ConnectionManager.IsSmartPhone){
             return;
         }
 #endif
+        TimeUIInfo.UpdateTimeUI();
+
+        if (judgeState != JUDGE_STATE.NONE)
+        {
+            NonLookMarkerHideObjects();
+            SequenceManager.Instance.ChangeScene(SceneID.RESULT);
+            return;
+        }
+
+        if (EnemyManager.Instance.IsEnemyNothing)
+        {
+            judgeState = JUDGE_STATE.GAME_CLEAR;
+            return;
+        }
+
+        // タイムオーバーになったら、実行したい処理をここに記述してください。
+        if (TimeUIInfo.IsTimeOver())
+        {
+            judgeState = JUDGE_STATE.GAME_OVER;
+            return;
+        }
+
+        if (playerData.HelthPoint <= 0)
+        {
+            judgeState = JUDGE_STATE.GAME_OVER;
+            return;
+        }
+
 
         //スマフォ位置更新
         UpdateClientPosition();

@@ -53,6 +53,7 @@ public class EffectMover : MonoBehaviour
 
     void Update()
     {
+        if (EnemyManager.Instance.IsEnemyNothing) return;
         if (EnemyManager.Instance.GetActiveEnemyData().State == EnemyData.EnamyState.DEAD) return;
 
         // 距離以内なら当たったとみなす。
@@ -69,9 +70,6 @@ public class EffectMover : MonoBehaviour
     {
         // オブジェクトの非アクティブ化
         gameObject.SetActive(false);
-
-        // 死んでいたら処理しないようにする。
-        if (EnemyManager.Instance.GetActiveEnemyData().State == EnemyData.EnamyState.DEAD) return;
 
         // マネージャーへターゲットへのダメージを渡す
         GameManager.Instance.SendEnemyHit(type,takeDamage);
