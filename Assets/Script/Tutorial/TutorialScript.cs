@@ -113,9 +113,9 @@ public class TutorialScript : MonoBehaviour {
 
 
         //スマホかどうか見て、適当にやる
-        bool endFlag = ConnectionManager.IsSmartPhone ?
-            MotionManager.MotionSkillType.WEAK == MotionManager.Instance.MotionSkill :
-            SaveTime + WaitTime < GetNowTime();
+        bool endFlag = //ConnectionManager.IsSmartPhone ?
+            MotionManager.MotionSkillType.WEAK == MotionManager.Instance.MotionSkill;
+            //SaveTime + WaitTime < GetNowTime();
         
         if(endFlag)
         {
@@ -133,9 +133,9 @@ public class TutorialScript : MonoBehaviour {
         SliderWaitAndTween(SLIDER_TIME_STRENGTH);
 
 
-        bool endFlag = ConnectionManager.IsSmartPhone ?
-            MotionManager.MotionSkillType.STRENGTH == MotionManager.Instance.MotionSkill :
-            SaveTime + WaitTime < GetNowTime();
+        bool endFlag = //ConnectionManager.IsSmartPhone ?
+            MotionManager.MotionSkillType.STRENGTH == MotionManager.Instance.MotionSkill;
+            //SaveTime + WaitTime < GetNowTime();
         
         if(endFlag)
         {
