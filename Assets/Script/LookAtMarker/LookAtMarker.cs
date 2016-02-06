@@ -13,7 +13,7 @@ public class LookAtMarker : MonoBehaviour {
     void Start () {
 
         //最初隠しておく
-        //ImageLookAt.SetActive(false);
+        ImageLookAt.SetActive(false);
 
         IBcs = ImageLookAt.GetComponent<uTweenBase>();
         IBcs.Play();
@@ -34,12 +34,12 @@ public class LookAtMarker : MonoBehaviour {
                 break;
             case GameManager.LookMarkerState.OnLook:
                 IBcs.Resume();
-                ImageLookAt.SetActive(true);
+                ImageLookAt.SetActive(false);
                 break;
 
             case GameManager.LookMarkerState.OnNonLook:
                 IBcs.Play();
-                ImageLookAt.SetActive(false);
+                ImageLookAt.SetActive(true);
                 break;
         }
         
