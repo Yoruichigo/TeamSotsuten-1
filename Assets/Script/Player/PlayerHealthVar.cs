@@ -4,36 +4,34 @@ using System.Collections;
 
 public class PlayerHealthVar : MonoBehaviour 
 {
-    Slider helthVar;
+    [SerializeField]
+    Image helthVar = null;
 
-    int lifeMax;//体力の最大
+    int lifeMax = 0;    // 体力の最大
 
-    // Use this for initialization
     void Start()
     {
         lifeMax = GameManager.Instance.GetPlayerData().HelthPoint;
-        helthVar = GetComponent<Slider>();
     }
 
-    // Update is called once per frame
     void Update()
     {
 #if !UNITY_EDITOR
-        if (Vuforia.VuforiaBehaviour.IsMarkerLookAt)
+        helthVar.enabled = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
+
+        if (helthVar.enabled)
         {
-            helthVar.enabled = true;
-            helthVar.value = (float)GameManager.Instance.GetPlayerData().HelthPoint / (float)lifeMax;
-        }
-        else
-        {
-            helthVar.enabled = false;
+            HelthVarUpdate();
         }
 #else
-        helthVar.enabled = true;
-        helthVar.value = (float)GameManager.Instance.GetPlayerData().HelthPoint / (float)lifeMax;
+        HelthVarUpdate();
 #endif
 
+    }
 
+    void HelthVarUpdate()
+    {
+        helthVar.fillAmount = (float)GameManager.Instance.GetPlayerData().HelthPoint / (float)lifeMax;
     }
 
 }

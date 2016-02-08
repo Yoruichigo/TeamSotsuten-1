@@ -19,6 +19,7 @@ public class ClientEnemyOperator : MonoBehaviour
     AnimationState animationState = null;
     float animationTime = 0;
     float pauseAnimationTime = 0;
+    float voicePlayTiming = 0;
 
     bool spwanAnimHandle = false;
     bool hitAnimHandle = false;
@@ -61,11 +62,19 @@ public class ClientEnemyOperator : MonoBehaviour
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         {
             case EnemyData.EnamyState.ACTIVE:
-                if (TutorialScript.IsTutorial) break;
 
                 animationTime = animationState.normalizedTime;
                 spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
                 spriteRenderer.color = EnemyManager.Instance.SpriteColor;
+                
+                voicePlayTiming -= Time.deltaTime;
+                if (voicePlayTiming <= 0)
+                {
+                    voicePlayTiming = Random.Range(3.0f,10.0f);
+                    VoiceSoundPlay();
+                }
+
+                if (TutorialScript.IsTutorial) break;
 
                 if (IsAttackTiming())
                 {
@@ -134,22 +143,16 @@ public class ClientEnemyOperator : MonoBehaviour
     AnimationClip animAIClip = null;
     AnimationClip animSpwanClip = null;
 
-    /// <summary>
-    /// 発生
-    /// </summary>
-    void Spawn()
+    // 初期化
+    void Init()
     {
-        if (isLive) return;
-
-        isLive = true;
-
-        // 初期化
         isHit = false;
         attackTime = 0;
         hitAnimHandle = false;
         spwanAnimHandle = false;
         transform.localPosition = Vector3.zero;
         transform.parent.position = Vector3.zero;
+        voicePlayTiming = 0;
 
         animAIClip = EnemyManager.Instance.GetActiveEnemyData().AnimationAIClip;
         animSpwanClip = EnemyManager.Instance.GetActiveEnemyData().AnimationSpwanClip;
@@ -159,14 +162,28 @@ public class ClientEnemyOperator : MonoBehaviour
         spriteRenderer.sprite = EnemyManager.Instance.GetStandingSpriteAutoAnim();
         spriteRenderer.color = EnemyManager.Instance.SpriteColor;
 
-        ChangeActive();
+    }
 
-        Debugger.Log(">> Spawn()");
+    /// <summary>
+    /// 発生
+    /// </summary>
+    void Spawn()
+    {
+        if (isLive) return;
+
+        isLive = true;
+
+        Init();
+
+        ChangeActive();
 
         animationAI.PlayQueued(animSpwanClip.name);
         spwanAnimHandle = true;
 
         attackTime = EnemyManager.Instance.GetActiveEnemyData().AttackTiming;
+
+        Debugger.Log(">> Spawn()");
+
     }
 
     void SpawnCompleted()
@@ -187,6 +204,8 @@ public class ClientEnemyOperator : MonoBehaviour
 
         isLive = false;
         ChangeActive();
+
+        SEPlayer.Instance.Play(Audio.SEID.EXPLOSION_1);
     }
 
     /// <summary>
@@ -258,6 +277,26 @@ public class ClientEnemyOperator : MonoBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// 種類別に攻撃のサウンドを再生する。
+    /// </summary>
+    void VoiceSoundPlay()
+    {
+        switch (EnemyManager.Instance.GetActiveEnemyData().EnemyType)
+        {
+            case EnemyMasterData.ENEMY_TYPE.GOREMU:
+                SEPlayer.Instance.Play(Audio.SEID.DRAGONSIGH);
+                break;
+            case EnemyMasterData.ENEMY_TYPE.SMALL_DORAGON:
+                SEPlayer.Instance.Play(Audio.SEID.DRAGONROAR);
+                break;
+            case EnemyMasterData.ENEMY_TYPE.BIG_DORAGON:
+                SEPlayer.Instance.Play(Audio.SEID.DRAGONROAR);
+                break;
+        }
+    }
+
 
 
     // ---------------------------------------------------------
