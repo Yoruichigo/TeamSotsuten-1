@@ -126,6 +126,8 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         base.Update();
 
+        if (TutorialScript.IsTutorial) return;
+
 #if !UNITY_EDITOR
         if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;
 #endif
@@ -169,7 +171,7 @@ public class EnemyManager : Singleton<EnemyManager>
 #if UNITY_EDITOR
 
 #else 
-                    isEnable = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
+                isEnable = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
 #endif
 
                     clientEnemyData.sprite.enabled = isEnable;

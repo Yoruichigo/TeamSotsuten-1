@@ -49,6 +49,9 @@ public class EnemyData: MonoBehaviour
     float attackTiming = 2.0f;
 
     [SerializeField]
+    int attackPower = 10;
+
+    [SerializeField]
     Color color = Color.white;
 
     [SerializeField]
@@ -64,6 +67,7 @@ public class EnemyData: MonoBehaviour
     public AnimationClip AnimationSpwanClip = null;
 
     public float AttackTiming { get { return attackTiming; } }
+    public int AttackPower { get { return attackPower; } }
 
     public EnemyMasterData.ENEMY_TYPE EnemyType { get { return enemyType; } }
 

@@ -6,6 +6,8 @@ public class EnemyAttackEffectMover : MonoBehaviour {
     // ヒット範囲
     const float HIT_RANGE = 300;
 
+    int hitPower = 0;
+
     Rigidbody cashRigidBody = null;
 
     // Use this for initialization
@@ -17,8 +19,9 @@ public class EnemyAttackEffectMover : MonoBehaviour {
     /// <summary>
     /// 初期化
     /// </summary>
-    public void Init(float speed)
+    public void Init(float speed,int power)
     {
+        hitPower = power;
         var direction = (GameManager.Instance.GetPlayerData().Position - transform.position).normalized;
         cashRigidBody.velocity = direction * speed;
     }
@@ -30,7 +33,7 @@ public class EnemyAttackEffectMover : MonoBehaviour {
         if (Vector3.Distance(transform.position, SequenceManager.Instance.ARCamera.transform.position) <= HIT_RANGE)
         {
             gameObject.SetActive(false);
-            GameManager.Instance.SendPlayerHit(true,2);
+            GameManager.Instance.SendPlayerHit(true, hitPower);
         }
 	}
 

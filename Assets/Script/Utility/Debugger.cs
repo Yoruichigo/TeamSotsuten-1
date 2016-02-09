@@ -17,13 +17,13 @@ public class Debugger : MonoBehaviour
 
     void Awake()
     {
-//#if DEBUG
+#if DEBUG
         var child = transform.GetComponentInChildren<Canvas>();
 
         debugText = child.GetComponentInChildren<Text>();
 
         Reset();
-//#endif
+#endif
     }
 
 
