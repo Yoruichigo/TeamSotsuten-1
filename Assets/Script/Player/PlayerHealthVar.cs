@@ -12,6 +12,7 @@ public class PlayerHealthVar : MonoBehaviour
     void Start()
     {
         lifeMax = GameManager.Instance.GetPlayerData().HelthPoint;
+        helthVar.fillAmount = 1;
     }
 
     void Update()

@@ -8,6 +8,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
@@ -16,6 +17,9 @@ public class EnemyManager : Singleton<EnemyManager>
         public Transform trans = null;
         public SpriteRenderer sprite = null;
         public Canvas canvas = null;
+        public Transform gaugeTrans = null;
+        public UnityEngine.UI.Image gauge = null;
+        public UnityEngine.UI.Image gaugeBG = null;
     }
 
     enum State
@@ -75,6 +79,13 @@ public class EnemyManager : Singleton<EnemyManager>
         base.Awake();
         delayTime = nextWaveTime;
 
+
+    }
+
+    public override void Start()
+    {
+        base.Start();
+
         for (int i = 0; i < transform.childCount; i++)
         {
             enemyList.Add(transform.GetChild(i).GetComponent<EnemyData>());
@@ -83,16 +94,14 @@ public class EnemyManager : Singleton<EnemyManager>
         clientEnemyData.trans = clientEnemy;
         clientEnemyData.sprite = clientEnemyData.trans.GetComponentInChildren<SpriteRenderer>();
         clientEnemyData.canvas = clientEnemyData.trans.GetComponentInChildren<Canvas>();
-    }
-
-    public override void Start()
-    {
-        base.Start();
-
-        state = State.Start;
+        clientEnemyData.gaugeTrans = clientEnemyData.canvas.transform.GetChild(0);
+        clientEnemyData.gauge = clientEnemyData.gaugeTrans.FindChild("Gauge").GetComponent<Image>();
+        clientEnemyData.gaugeBG = clientEnemyData.gaugeTrans.FindChild("Background").GetComponent<Image>();
 
         appearanceEffect = appearanceEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
         destroyEffect = destroyEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
+
+        state = State.Start;
 
         appearanceEffect.Stop();
         destroyEffect.Stop();
@@ -176,7 +185,7 @@ public class EnemyManager : Singleton<EnemyManager>
 #if UNITY_EDITOR
 
 #else 
-                isEnable = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
+                    isEnable = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
 #endif
                     EnemyShowEnable(isEnable);
 
@@ -218,9 +227,7 @@ public class EnemyManager : Singleton<EnemyManager>
                     GetActiveEnemyData().HitRelease();
                     NextWave();
                 }
-
                 break;
-
         }
 
     }
@@ -228,8 +235,8 @@ public class EnemyManager : Singleton<EnemyManager>
 
     void EnemyShowEnable(bool isEnable)
     {
-        clientEnemyData.canvas.enabled = isEnable;
-        clientEnemyData.sprite.enabled = isEnable;
+        var lostPos = isEnable ? Vector3.zero : new Vector3(5000, 0, 0);
+        clientEnemyData.trans.localPosition = lostPos;
     }
 
 
