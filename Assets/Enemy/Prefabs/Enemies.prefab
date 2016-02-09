@@ -131,8 +131,8 @@ MonoBehaviour:
   Rotation: {x: 0, y: 0, z: 0}
   state: 0
   attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
-  attackSpeed: 1500
-  attackTiming: 2
+  attackSpeed: 1200
+  attackTiming: 3
   attackPower: 30
   color: {r: 1, g: 1, b: 1, a: 1}
   standingSpriteList:
@@ -161,9 +161,9 @@ MonoBehaviour:
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
   state: 0
-  attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
-  attackSpeed: 2000
-  attackTiming: 2
+  attackEffect: {fileID: 144438, guid: b926ec8a1b123c940a488ac790a64ae0, type: 2}
+  attackSpeed: 1500
+  attackTiming: 3
   attackPower: 10
   color: {r: 1, g: 1, b: 1, a: 1}
   standingSpriteList:
@@ -210,9 +210,9 @@ MonoBehaviour:
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
   state: 0
-  attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
-  attackSpeed: 1000
-  attackTiming: 3
+  attackEffect: {fileID: 185192, guid: dbe75d0d8964d084d8c74019ccb61aef, type: 2}
+  attackSpeed: 700
+  attackTiming: 5
   attackPower: 20
   color: {r: 1, g: 1, b: 1, a: 1}
   standingSpriteList:
