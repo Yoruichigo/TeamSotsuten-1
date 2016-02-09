@@ -93,6 +93,11 @@ public class EnemyManager : Singleton<EnemyManager>
 
         appearanceEffect = appearanceEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
         destroyEffect = destroyEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
+
+        appearanceEffect.Stop();
+        destroyEffect.Stop();
+
+        EnemyShowEnable(false);
     }
 
 
@@ -173,9 +178,7 @@ public class EnemyManager : Singleton<EnemyManager>
 #else 
                 isEnable = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
 #endif
-
-                    clientEnemyData.sprite.enabled = isEnable;
-                    clientEnemyData.canvas.enabled = isEnable;
+                    EnemyShowEnable(isEnable);
 
                     GetActiveEnemyData().UpdateData();
 
@@ -185,11 +188,10 @@ public class EnemyManager : Singleton<EnemyManager>
                         GetActiveEnemyData().HitRelease();
                         GetActiveEnemyData().StateChange(EnemyData.EnamyState.DEAD);
 
+                        EnemyShowEnable(false);
+
                         destroyEffect.transform.position = clientEnemyData.trans.position;
                         destroyEffect.Play();
-
-                        clientEnemyData.canvas.enabled = false;
-                        clientEnemyData.sprite.enabled = false;
 
                         Debugger.Log(">> GetActiveEnemy State DEAD");
                         break;
@@ -223,6 +225,12 @@ public class EnemyManager : Singleton<EnemyManager>
 
     }
 
+
+    void EnemyShowEnable(bool isEnable)
+    {
+        clientEnemyData.canvas.enabled = isEnable;
+        clientEnemyData.sprite.enabled = isEnable;
+    }
 
 
     void NextWave()
