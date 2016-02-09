@@ -18,8 +18,6 @@ public class EnemyManager : Singleton<EnemyManager>
         public SpriteRenderer sprite = null;
         public Canvas canvas = null;
         public Transform gaugeTrans = null;
-        public UnityEngine.UI.Image gauge = null;
-        public UnityEngine.UI.Image gaugeBG = null;
     }
 
     enum State
@@ -95,8 +93,6 @@ public class EnemyManager : Singleton<EnemyManager>
         clientEnemyData.sprite = clientEnemyData.trans.GetComponentInChildren<SpriteRenderer>();
         clientEnemyData.canvas = clientEnemyData.trans.GetComponentInChildren<Canvas>();
         clientEnemyData.gaugeTrans = clientEnemyData.canvas.transform.GetChild(0);
-        clientEnemyData.gauge = clientEnemyData.gaugeTrans.FindChild("Gauge").GetComponent<Image>();
-        clientEnemyData.gaugeBG = clientEnemyData.gaugeTrans.FindChild("Background").GetComponent<Image>();
 
         appearanceEffect = appearanceEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
         destroyEffect = destroyEffectRoot.GetChild(0).GetComponent<ParticleSystem>();
@@ -236,7 +232,8 @@ public class EnemyManager : Singleton<EnemyManager>
     void EnemyShowEnable(bool isEnable)
     {
         var lostPos = isEnable ? Vector3.zero : new Vector3(5000, 0, 0);
-        clientEnemyData.trans.localPosition = lostPos;
+        clientEnemyData.sprite.transform.localPosition = lostPos;
+        clientEnemyData.gaugeTrans.transform.localPosition = lostPos;
     }
 
 
