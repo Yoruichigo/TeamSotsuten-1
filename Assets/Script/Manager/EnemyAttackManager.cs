@@ -61,11 +61,11 @@ public class EnemyAttackManager : Singleton<EnemyAttackManager> {
     /// 攻撃を生成する
     /// </summary>
     /// <param name="position"></param>
-    public void CreateAttack(Vector3 position)
+    public void CreateAttack(Vector3 position,int power)
     {
         data.attackObjList[createIndex].gameObject.SetActive(true);
         data.attackObjList[createIndex].transform.position = position;
-        data.attackObjList[createIndex].Init(data.speed);
+        data.attackObjList[createIndex].Init(data.speed, power);
         createIndex++;
 
         if (data.attackObjList.Count <= createIndex)

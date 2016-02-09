@@ -58,6 +58,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
         // もしエネミーがいないなら処理しない
         if (EnemyManager.Instance.IsEnemyNothing) return;
+        if (TutorialScript.IsTutorial) return;
 
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         {
@@ -73,8 +74,6 @@ public class ClientEnemyOperator : MonoBehaviour
                     voicePlayTiming = Random.Range(3.0f,10.0f);
                     VoiceSoundPlay();
                 }
-
-                if (TutorialScript.IsTutorial) break;
 
                 if (IsAttackTiming())
                 {
@@ -93,8 +92,10 @@ public class ClientEnemyOperator : MonoBehaviour
                 {
                     EnemyManager.Instance.StandingSpriteAnimPlay();
 
-                    EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 200, 0));
-                    EnemyManager.Instance.GetActiveEnemyData().StateChange(EnemyData.EnamyState.ACTIVE);
+                    var enemyData = EnemyManager.Instance.GetActiveEnemyData();
+
+                    EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 200, 0), enemyData.AttackPower);
+                    enemyData.StateChange(EnemyData.EnamyState.ACTIVE);
 
                     AttackSoundPlay();
                     AIAnimationPlay();

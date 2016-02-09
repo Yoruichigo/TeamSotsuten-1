@@ -133,6 +133,7 @@ MonoBehaviour:
   attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
   attackSpeed: 1500
   attackTiming: 2
+  attackPower: 30
   color: {r: 1, g: 1, b: 1, a: 1}
   standingSpriteList:
   - {fileID: 21300000, guid: 5cd71ff6fdff6364f8021d8206e06020, type: 3}
@@ -163,6 +164,7 @@ MonoBehaviour:
   attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
   attackSpeed: 2000
   attackTiming: 2
+  attackPower: 10
   color: {r: 1, g: 1, b: 1, a: 1}
   standingSpriteList:
   - {fileID: 21300000, guid: d1294de1a7f48144caca4a091d8631ea, type: 3}
@@ -211,6 +213,7 @@ MonoBehaviour:
   attackEffect: {fileID: 188206, guid: 2fdb9ef4406e8d74cbbbea977fdb0157, type: 2}
   attackSpeed: 1000
   attackTiming: 3
+  attackPower: 20
   color: {r: 1, g: 1, b: 1, a: 1}
   standingSpriteList:
   - {fileID: 21300000, guid: 8b0c59649b0e8e7438cbf830ed2267ca, type: 3}

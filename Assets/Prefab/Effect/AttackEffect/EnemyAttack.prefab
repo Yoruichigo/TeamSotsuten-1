@@ -1457,7 +1457,7 @@ ParticleSystem:
   SizeModule:
     enabled: 1
     curve:
-      scalar: 500
+      scalar: 2000
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2480,7 +2480,7 @@ ParticleSystem:
   SizeModule:
     enabled: 1
     curve:
-      scalar: 1000
+      scalar: 2000
       maxCurve:
         serializedVersion: 2
         m_Curve:
