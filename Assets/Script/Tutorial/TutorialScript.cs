@@ -10,13 +10,8 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 
-public class TutorialScript : MonoBehaviour {
-
-    
-    // チュートリアルかどうか
-    static bool state = true;
-    static public bool IsTutorial { get { return state; } }
-
+public class TutorialScript : MonoBehaviour
+{
 
     // 誘導画像
     [SerializeField]
@@ -26,10 +21,14 @@ public class TutorialScript : MonoBehaviour {
     [SerializeField]
     GameObject Slider_AttackInduction;
 
+    //tweenタイプ
+    [SerializeField]
+    iTween.EaseType SliderEaseType = iTween.EaseType.linear;
+
     //スライダー速度　弱
     [SerializeField]
     float SLIDER_TIME_WEAK = 5;
-    
+
     //スライダー速度　強
     [SerializeField]
     float SLIDER_TIME_STRENGTH = 2;
@@ -41,35 +40,25 @@ public class TutorialScript : MonoBehaviour {
     //スライダー用　過去時間
     int OldSliderTweenEndTime;
 
-    //アップデート用
-    private Action NowFunc = null;
-    
     //iTween有効フラグ
     private bool iTweenSliderActivate = false;
 
     const int WaitTime = 20;
     int SaveTime;
 
-
-
-	/// <summary>
+    /// <summary>
     /// 初期化
     /// </summary>
-    void Start () {
-        //NowFuncに関数を突っ込む
-        NowFunc = WakeInductionUpdate;
-
-        SaveTime = GetNowTime();
-        OldSliderTweenEndTime = GetNowTime();
-
-        //MotionManager.MotionSkillType.STRENGTH;
-        //MotionManager.MotionSkillType.WEAK;
-    }
-
-    void Finish()
+    void Start()
     {
-        state = false;
+
+        Image_AttackInduction.SetActive(false);
+        Slider_AttackInduction.SetActive(false);
+        SaveTime = TutorialManager.GetNowTime();
+        OldSliderTweenEndTime = TutorialManager.GetNowTime();
+
     }
+
 
     /// <summary>
     /// 終了関数
@@ -78,8 +67,6 @@ public class TutorialScript : MonoBehaviour {
     {
         Image_AttackInduction.SetActive(false);
         Slider_AttackInduction.SetActive(false);
-
-        NowFunc = null;
         Destroy(gameObject);
     }
 
@@ -89,69 +76,47 @@ public class TutorialScript : MonoBehaviour {
     /// <summary>
     /// アプデ
     /// </summary>
-	void Update () {
-
-        //現在入っている関数を回す（スイッチ文とか面倒だった）
-        if (IsTutorial)
-        {
-            NowFunc();
-        }
-        else
-        {
-            EndUpdate();
-        }
-    }
-
-
-    /// <summary>
-    /// 弱攻撃関数
-    /// </summary>
-    void WakeInductionUpdate()
+	void Update()
     {
-        //ツイーン
-        SliderWaitAndTween(SLIDER_TIME_WEAK);
 
-
-        //スマホかどうか見て、適当にやる
-        bool endFlag = //ConnectionManager.IsSmartPhone ?
-            MotionManager.MotionSkillType.WEAK == MotionManager.Instance.MotionSkill;
-            //SaveTime + WaitTime < GetNowTime();
-        
-        if(endFlag)
+        switch (TutorialManager.Instance.GetNowState())
         {
-            SaveTime = GetNowTime();
-            SlideriTweenStop();
-            NowFunc = StrengthInductionUpdate;
+            case TutorialManager.State.ON_WEAK:
+                Image_AttackInduction.SetActive(true);
+                Slider_AttackInduction.SetActive(true);
+                SaveTime = TutorialManager.GetNowTime();
+                break;
+            case TutorialManager.State.WEAK:
+                SliderWaitAndTween(SLIDER_TIME_WEAK);
+                break;
+            case TutorialManager.State.OUT_WEAK:
+                SlideriTweenStop();
+                TutorialManager.Instance.MakeGood();
+                break;
+            case TutorialManager.State.ON_STRENGTH:
+                SaveTime = TutorialManager.GetNowTime();
+                break;
+            case TutorialManager.State.STRENGTH:
+                SliderWaitAndTween(SLIDER_TIME_STRENGTH);
+                break;
+            case TutorialManager.State.OUT_STRENGTH:
+                SlideriTweenStop();
+                TutorialManager.Instance.MakeGood();
+                break;
+            case TutorialManager.State.FINISH:
+                EndUpdate();
+                break;
         }
-    }
 
-    /// <summary>
-    /// 強攻撃関数
-    /// </summary>
-    void StrengthInductionUpdate()
-    {
-        SliderWaitAndTween(SLIDER_TIME_STRENGTH);
-
-
-        bool endFlag = //ConnectionManager.IsSmartPhone ?
-            MotionManager.MotionSkillType.STRENGTH == MotionManager.Instance.MotionSkill;
-            //SaveTime + WaitTime < GetNowTime();
-        
-        if(endFlag)
-        {
-            NowFunc = Finish;
-        }
     }
 
 
-   
-    
 
     //待機時間をつけたスライダー動作
     void SliderWaitAndTween(float _time)
     {
         if (!iTweenSliderActivate &&
-            (OldSliderTweenEndTime + SLIDER_WAIT_TIME) < GetNowTime())
+            (OldSliderTweenEndTime + SLIDER_WAIT_TIME) < TutorialManager.GetNowTime())
         {
             SliderValueTo(_time);
         }
@@ -170,7 +135,8 @@ public class TutorialScript : MonoBehaviour {
                 "from", 0,
                 "to", 1,
                 "time", _time,
-                "onUpdate", "iTween_SliderUpdate", 
+                "easetype", SliderEaseType,
+                "onUpdate", "iTween_SliderUpdate",
                 "oncomplete", "iTween_SliderEnd",
                 "oncompletetarget", this.gameObject));
 
@@ -179,7 +145,7 @@ public class TutorialScript : MonoBehaviour {
 
     void SlideriTweenStop()
     {
-        OldSliderTweenEndTime = GetNowTime();
+        OldSliderTweenEndTime = TutorialManager.GetNowTime();
         iTweenSliderActivate = false;
         iTween.Stop(gameObject);
 
@@ -204,28 +170,17 @@ public class TutorialScript : MonoBehaviour {
         var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
         sliderobj.value = 0;
 
-        OldSliderTweenEndTime = GetNowTime();
+        OldSliderTweenEndTime = TutorialManager.GetNowTime();
         iTweenSliderActivate = false;
     }
 
 
-    
-    /// <summary>
-    /// 現在時刻を秒で取得,１桁目のミリ秒から取得
-    /// </summary>
-    /// <returns>SecondTime</returns>
-    int GetNowTime()
-    {
-        int retdata;
-        retdata = DateTime.Now.Millisecond / 100;
-        retdata += DateTime.Now.Second * 10;
-        retdata += DateTime.Now.Minute * 10 * 60;
-        retdata += DateTime.Now.Hour * 10 * 60 * 60;
-        return retdata;
-    }
-    
+
+
+
 
 }
+
 
 
 

@@ -58,7 +58,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
         // もしエネミーがいないなら処理しない
         if (EnemyManager.Instance.IsEnemyNothing) return;
-        if (TutorialScript.IsTutorial) return;
+        if (TutorialManager.Instance.IsTutorial) return;
 
         switch (EnemyManager.Instance.GetActiveEnemyData().State)
         {
