@@ -43,9 +43,12 @@ public class TimeUIInfo : MonoBehaviour
     //時間の計測
     static public void UpdateTimeUI()
     {
-        if (timeCounter.isTimeOver /*&& !TutorialScript.IsTutorial */ )return;
+        if (timeCounter.isTimeOver)return;
 
-        timeCounter.deltaSecond += Time.deltaTime;
+        if (!TutorialSequence.IsTutorial)
+        {
+            timeCounter.deltaSecond += Time.deltaTime;
+        }
 
         double time = timeCounter.maxSecond - timeCounter.deltaSecond;
         foreach (var timeRender in timeRendererList)
@@ -59,6 +62,8 @@ public class TimeUIInfo : MonoBehaviour
         }
 
     }
+
+    
 
     static public bool IsTimeOver()
     {
