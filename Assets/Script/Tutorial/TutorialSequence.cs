@@ -17,10 +17,10 @@ public class TutorialSequence : MonoBehaviour
     int StartGuidTime = 10;
 
     [SerializeField]
-    int WeakMosionStartWaitTime = 10;
+    int WeakEndTime = 200;
 
     [SerializeField]
-    int StrengthMosionStartWaitTime = 10;
+    int StrengthEndTime = 200;
 
     [SerializeField]
     int GoodActiveTime = 20;
@@ -88,12 +88,17 @@ public class TutorialSequence : MonoBehaviour
 
 
     int saveTime = 0;
-    
+
+    bool isStartWeakEndTime;
+    bool isStartStrengthEndTime;
+
     // Use this for initialization
     //毎回の初期化処理
     public void Start()
     {
         nowState = State.START;
+        isStartWeakEndTime = false;
+        isStartStrengthEndTime = false;
     }
 
     // Update is called once per frame
@@ -137,6 +142,13 @@ public class TutorialSequence : MonoBehaviour
                 {
                     nowState = State.OUT_WEAK;
                 }
+                else
+                {
+                    if (MotionManager.MotionSkillType.WEAK == MotionManager.Instance.MotionSkill)
+                    {
+                        PlayerAttackEffectManager.Instance.CheckType(MotionManager.MotionSkillType.WEAK);
+                    }
+                }
                 break;
             case State.OUT_WEAK:
 
@@ -151,6 +163,13 @@ public class TutorialSequence : MonoBehaviour
                 if (StrengthEndCheck())
                 {
                     nowState = State.OUT_STRENGTH;
+                }
+                else
+                {
+                    if (MotionManager.MotionSkillType.STRENGTH == MotionManager.Instance.MotionSkill)
+                    {
+                        PlayerAttackEffectManager.Instance.CheckType(MotionManager.MotionSkillType.STRENGTH);
+                    }
                 }
                 break;
             case State.OUT_STRENGTH:
@@ -196,12 +215,19 @@ public class TutorialSequence : MonoBehaviour
 
     bool WeakEndCheck()
     {
-        if (GetNowTime() > (saveTime + WeakMosionStartWaitTime))
+        if (!isStartWeakEndTime)
         {
             if (MotionManager.MotionSkillType.WEAK == MotionManager.Instance.MotionSkill)
             {
-                return true;
+                isStartWeakEndTime = true;
+                saveTime = GetNowTime();
             }
+            return false;
+        }
+
+        if (GetNowTime() > (saveTime + WeakEndTime))
+        {
+            return true;   
         }
 
         return false;
@@ -210,12 +236,19 @@ public class TutorialSequence : MonoBehaviour
 
     bool StrengthEndCheck()
     {
-        if (GetNowTime() > (saveTime + StrengthMosionStartWaitTime))
+        if (!isStartStrengthEndTime)
         {
             if (MotionManager.MotionSkillType.STRENGTH == MotionManager.Instance.MotionSkill)
             {
-                return true;
+                isStartStrengthEndTime = true;
+                saveTime = GetNowTime();
             }
+            return false;
+        }
+
+        if (GetNowTime() > (saveTime + StrengthEndTime))
+        {
+            return true;
         }
 
         return false;
