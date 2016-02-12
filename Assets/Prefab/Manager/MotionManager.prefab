@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   calcTime: .5
+  intervalTime: 1
   motionData:
   - skillType: 0
     accMin: .5
