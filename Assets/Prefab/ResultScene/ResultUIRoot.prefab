@@ -83,7 +83,7 @@ GameObject:
   - 224: {fileID: 22461190}
   - 222: {fileID: 22274292}
   - 114: {fileID: 11474480}
-  - 114: {fileID: 11402148}
+  - 114: {fileID: 11499742}
   m_Layer: 5
   m_Name: ResultWindow
   m_TagString: Untagged
@@ -91,19 +91,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &11402148
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 174112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f633d34c7124bb498c40138046ac1c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameOverImage: {fileID: 11478224}
-  gameClearImage: {fileID: 11490944}
 --- !u!114 &11402926
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -366,6 +353,60 @@ MonoBehaviour:
   rate: 0
   startRotation: {x: 0, y: 180, z: 190}
   targetRotation: {x: 0, y: 180, z: 170}
+--- !u!114 &11499742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 174112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbefe4124093cb43a7090c4d1c9a0be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: 
+  tweenTime: 5
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: .00607210398
+      value: -.0478186011
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: .343102098
+      value: .913457632
+      inSlope: 2.09361315
+      outSlope: 2.09361315
+      tangentMode: 0
+    - time: .486748785
+      value: .377028376
+      inSlope: -.0145805283
+      outSlope: -.0145805283
+      tangentMode: 0
+    - time: .608805656
+      value: .815038979
+      inSlope: 1.14907241
+      outSlope: 1.14907241
+      tangentMode: 0
+    - time: .732498765
+      value: .457279503
+      inSlope: 2.89904118
+      outSlope: 2.89904118
+      tangentMode: 0
+    - time: .927008271
+      value: .656356454
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 1
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startRotation: {x: 90, y: 0, z: 0}
+  targetRotation: {x: 220, y: 0, z: 0}
 --- !u!222 &22214260
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -483,7 +524,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 174112}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 3.4742918}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 22454440}
@@ -493,7 +534,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: 587}
+  m_AnchoredPosition: {x: 0, y: 520.041748}
   m_SizeDelta: {x: 1040, y: 950}
   m_Pivot: {x: .5, y: 0}
 --- !u!1001 &100100000
