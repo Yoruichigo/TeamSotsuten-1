@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class ResultWindowMover : MonoBehaviour 
+public class ResultWindowInfo : MonoBehaviour 
 {
     [SerializeField]
     Image gameOverImage = null;
@@ -13,8 +13,6 @@ public class ResultWindowMover : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        iTween.RotateTo(this.gameObject, iTween.Hash("x", 180, "time", 3));
-
         if (GameManager.IsGameClear)
         {
             gameOverImage.gameObject.SetActive(false);
@@ -31,8 +29,4 @@ public class ResultWindowMover : MonoBehaviour
 
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
