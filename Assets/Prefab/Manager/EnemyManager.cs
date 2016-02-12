@@ -136,7 +136,7 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         base.Update();
 
-        if (TutorialManager.Instance.IsTutorial) return;
+        if (TutorialSequence.IsTutorial) return;
 
 #if !UNITY_EDITOR
         if (!Vuforia.VuforiaBehaviour.IsMarkerLookAt) return;

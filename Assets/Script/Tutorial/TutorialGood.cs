@@ -23,18 +23,18 @@ public class TutorialGood : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	    
-        switch(TutorialManager.Instance.GetNowState())
+        switch(TutorialSequence.GetNowState())
         {
-            case TutorialManager.State.ON_GOOD:
+            case TutorialSequence.State.ON_GOOD:
                 Image_Good.SetActive(true);
                 break;
-            case TutorialManager.State.GOOD:
+            case TutorialSequence.State.GOOD:
                 break;
-            case TutorialManager.State.OUT_GOOD:
+            case TutorialSequence.State.OUT_GOOD:
                 Image_Good.SetActive(false);
                 break;
 
-            case TutorialManager.State.FINISH:
+            case TutorialSequence.State.FINISH:
                 Destroy(gameObject);
                 break;
         }
