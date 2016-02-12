@@ -46,6 +46,10 @@ public class TutorialScript : MonoBehaviour
     const int WaitTime = 20;
     int SaveTime;
 
+
+    string tweenNameSlider = "TutorialSlider";
+    string tweenNameImage = "TutorialPleaseAttack";
+
     /// <summary>
     /// 初期化
     /// </summary>
@@ -54,8 +58,8 @@ public class TutorialScript : MonoBehaviour
 
         Image_AttackInduction.SetActive(false);
         Slider_AttackInduction.SetActive(false);
-        SaveTime = TutorialManager.GetNowTime();
-        OldSliderTweenEndTime = TutorialManager.GetNowTime();
+        SaveTime = TutorialSequence.GetNowTime();
+        OldSliderTweenEndTime = TutorialSequence.GetNowTime();
 
     }
 
@@ -79,31 +83,33 @@ public class TutorialScript : MonoBehaviour
 	void Update()
     {
 
-        switch (TutorialManager.Instance.GetNowState())
+        switch (TutorialSequence.GetNowState())
         {
-            case TutorialManager.State.ON_WEAK:
+            case TutorialSequence.State.ON_WEAK:
                 Image_AttackInduction.SetActive(true);
                 Slider_AttackInduction.SetActive(true);
-                SaveTime = TutorialManager.GetNowTime();
+                SaveTime = TutorialSequence.GetNowTime();
+                uTween.Play(tweenNameSlider);
+                uTween.Play(tweenNameImage);
                 break;
-            case TutorialManager.State.WEAK:
+            case TutorialSequence.State.WEAK:
                 SliderWaitAndTween(SLIDER_TIME_WEAK);
                 break;
-            case TutorialManager.State.OUT_WEAK:
+            case TutorialSequence.State.OUT_WEAK:
                 SlideriTweenStop();
-                TutorialManager.Instance.MakeGood();
+                TutorialSequence.MakeGood();
                 break;
-            case TutorialManager.State.ON_STRENGTH:
-                SaveTime = TutorialManager.GetNowTime();
+            case TutorialSequence.State.ON_STRENGTH:
+                SaveTime = TutorialSequence.GetNowTime();
                 break;
-            case TutorialManager.State.STRENGTH:
+            case TutorialSequence.State.STRENGTH:
                 SliderWaitAndTween(SLIDER_TIME_STRENGTH);
                 break;
-            case TutorialManager.State.OUT_STRENGTH:
+            case TutorialSequence.State.OUT_STRENGTH:
                 SlideriTweenStop();
-                TutorialManager.Instance.MakeGood();
+                TutorialSequence.MakeGood();
                 break;
-            case TutorialManager.State.FINISH:
+            case TutorialSequence.State.FINISH:
                 EndUpdate();
                 break;
         }
@@ -116,7 +122,7 @@ public class TutorialScript : MonoBehaviour
     void SliderWaitAndTween(float _time)
     {
         if (!iTweenSliderActivate &&
-            (OldSliderTweenEndTime + SLIDER_WAIT_TIME) < TutorialManager.GetNowTime())
+            (OldSliderTweenEndTime + SLIDER_WAIT_TIME) < TutorialSequence.GetNowTime())
         {
             SliderValueTo(_time);
         }
@@ -145,7 +151,7 @@ public class TutorialScript : MonoBehaviour
 
     void SlideriTweenStop()
     {
-        OldSliderTweenEndTime = TutorialManager.GetNowTime();
+        OldSliderTweenEndTime = TutorialSequence.GetNowTime();
         iTweenSliderActivate = false;
         iTween.Stop(gameObject);
 
@@ -170,7 +176,7 @@ public class TutorialScript : MonoBehaviour
         var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
         sliderobj.value = 0;
 
-        OldSliderTweenEndTime = TutorialManager.GetNowTime();
+        OldSliderTweenEndTime = TutorialSequence.GetNowTime();
         iTweenSliderActivate = false;
     }
 

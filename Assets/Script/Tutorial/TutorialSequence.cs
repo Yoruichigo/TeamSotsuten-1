@@ -11,8 +11,11 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 
-public class TutorialManager : Singleton<TutorialManager>
+public class TutorialSequence : MonoBehaviour
 {
+    [SerializeField]
+    int StartGuidTime = 10;
+
     [SerializeField]
     int WeakMosionStartWaitTime = 10;
 
@@ -26,7 +29,7 @@ public class TutorialManager : Singleton<TutorialManager>
     /// <summary>
     /// Good画像を表示し、次の状態へ行きます。
     /// </summary>
-    public void MakeGood()
+    static public void MakeGood()
     {
         switch(nowState)
         {
@@ -48,8 +51,10 @@ public class TutorialManager : Singleton<TutorialManager>
     public enum State
     {
         NULL,
+        START,
         ON_START_GUID,
         START_GUID,
+        OUT_START_GUID,
         ON_WEAK,
         WEAK,
         OUT_WEAK,
@@ -64,52 +69,61 @@ public class TutorialManager : Singleton<TutorialManager>
         OUT_GOOD,
     }
 
-    State nowState = State.NULL;
+    static State nowState = State.NULL;
 
-    State goodNextState = State.NULL;
+    static State goodNextState = State.NULL;
 
     //チュートリアルかどうか(true = チュート中, false = チュート終了)
-    public bool IsTutorial {
+    static public bool IsTutorial {
         get {
             if (nowState != State.NULL) return true;
             return false;
         }
     }
 
-    public State GetNowState() { return nowState; }
+    static public State GetNowState() { return nowState; }
 
     
 
 
 
     int saveTime = 0;
-
-    public override void Awake()
-    {
-        base.Awake();
-    }
-
+    
     // Use this for initialization
     //毎回の初期化処理
-    public override void Start()
+    public void Start()
     {
-        base.Start();
-        nowState = State.ON_START_GUID;
+        nowState = State.START;
     }
 
     // Update is called once per frame
     //更新
-    public override void Update()
+    public void Update()
     {
-        base.Update();
-        Debug.Log("T_M " + nowState);
         
         switch (nowState)
         {
+            default:
+                Debug.LogError("Tutorial Sequence default in = " + nowState);
+                Debugger.LogError("Tutorial Sequence default in = " + nowState);
+                break;
+            case State.NULL:
+                gameObject.SetActive(false);
+                break;
+            case State.START:
+                nowState = State.ON_START_GUID;
+                break;
             case State.ON_START_GUID:
                 nowState = State.START_GUID;
+                saveTime = GetNowTime();
                 break;
             case State.START_GUID:
+                if (StartGuidEndCheck())
+                {
+                    nowState = State.OUT_START_GUID;
+                }
+                break;
+            case State.OUT_START_GUID:
                 nowState = State.ON_WEAK;
                 break;
             case State.ON_WEAK:
@@ -166,6 +180,16 @@ public class TutorialManager : Singleton<TutorialManager>
                 break;
         }
 
+    }
+
+    bool StartGuidEndCheck()
+    {
+        if (GetNowTime() > (saveTime + StartGuidTime))
+        {
+            return true;
+        }
+
+        return false;
     }
 
 

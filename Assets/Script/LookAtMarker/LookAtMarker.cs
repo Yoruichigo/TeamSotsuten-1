@@ -53,7 +53,7 @@ public class LookAtMarker : MonoBehaviour {
     bool DoingUpdate()
     {
         //　チュートリアル中なら無視
-        if (TutorialManager.Instance.IsTutorial)
+        if (TutorialSequence.IsTutorial)
         {
             return false;
         }
