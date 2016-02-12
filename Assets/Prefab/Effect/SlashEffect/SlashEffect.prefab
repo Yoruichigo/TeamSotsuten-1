@@ -14,7 +14,7 @@ GameObject:
   - 12: {fileID: 1259170}
   - 26: {fileID: 2600142}
   m_Layer: 0
-  m_Name: Effec001
+  m_Name: SlashEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

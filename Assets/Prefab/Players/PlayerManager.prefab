@@ -41,7 +41,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
     Position: {x: 0, y: 0, z: 0}
-    Job: 1
+    Job: 0
     HelthPoint: 0
     IsHit: 0
   cameraShaker: {fileID: 0}

@@ -389,7 +389,7 @@ ParticleSystem:
   RotationModule:
     enabled: 1
     curve:
-      scalar: -6.28318501
+      scalar: -1.74532926
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2155,6 +2155,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: RotationModule.curve.scalar
+      value: -1.74532926
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
