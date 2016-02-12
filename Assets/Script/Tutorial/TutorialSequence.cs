@@ -29,23 +29,14 @@ public class TutorialSequence : MonoBehaviour
     /// <summary>
     /// Good画像を表示し、次の状態へ行きます。
     /// </summary>
-    static public void MakeGood()
+    static void MakeGood()
     {
-        switch(nowState)
-        {
-            default:
-                Debugger.LogError("TutorialManager MakeGood NULL Error");
-                goodNextState = State.NULL;
-                break;
-            case State.OUT_WEAK:
-                goodNextState = State.ON_STRENGTH;
-                break;
-            case State.OUT_STRENGTH:
-                goodNextState = State.ON_FINISH_GUID;
-                break;
+        if (GoodState.NULL == nowGoodState) {
+            nowGoodState = GoodState.SETUP;
         }
-        nowState = State.ON_GOOD;
     }
+
+
 
 
     public enum State
@@ -64,14 +55,21 @@ public class TutorialSequence : MonoBehaviour
         ON_FINISH_GUID,
         FINISH_GUID,
         FINISH,
-        ON_GOOD,
-        GOOD,
-        OUT_GOOD,
     }
 
-    static State nowState = State.NULL;
 
-    static State goodNextState = State.NULL;
+    public enum GoodState
+    {
+        NULL,
+        SETUP,
+        ON,
+        UPDATE,
+        OFF,
+    }
+
+
+    static State nowState = State.NULL;
+    static GoodState nowGoodState = GoodState.NULL;
 
     //チュートリアルかどうか(true = チュート中, false = チュート終了)
     static public bool IsTutorial {
@@ -83,7 +81,7 @@ public class TutorialSequence : MonoBehaviour
 
     static public State GetNowState() { return nowState; }
 
-    
+    static public GoodState GetNowGoodState() { return nowGoodState; }
 
 
 
@@ -97,6 +95,7 @@ public class TutorialSequence : MonoBehaviour
     public void Start()
     {
         nowState = State.START;
+        nowGoodState = GoodState.NULL;
         isStartWeakEndTime = false;
         isStartStrengthEndTime = false;
     }
@@ -151,7 +150,7 @@ public class TutorialSequence : MonoBehaviour
                 }
                 break;
             case State.OUT_WEAK:
-
+                nowState = State.ON_STRENGTH;
                 break;
             case State.ON_STRENGTH:
                 {
@@ -173,7 +172,7 @@ public class TutorialSequence : MonoBehaviour
                 }
                 break;
             case State.OUT_STRENGTH:
-
+                nowState = State.ON_FINISH_GUID;
                 break;
             case State.ON_FINISH_GUID:
                 nowState = State.FINISH_GUID;
@@ -184,18 +183,25 @@ public class TutorialSequence : MonoBehaviour
             case State.FINISH:
                 nowState = State.NULL;
                 break;
-            case State.ON_GOOD:
-                saveTime = GetNowTime();
-                nowState = State.GOOD;
+        }
+
+        switch (nowGoodState)
+        {
+            case GoodState.SETUP:
+                nowGoodState = GoodState.ON;
                 break;
-            case State.GOOD:
+            case GoodState.ON:
+                saveTime = GetNowTime();
+                nowGoodState = GoodState.UPDATE;
+                break;
+            case GoodState.UPDATE:
                 if (GoodEndCheck())
                 {
-                    nowState = State.OUT_GOOD;
+                    nowGoodState = GoodState.OFF;
                 }
                 break;
-            case State.OUT_GOOD:
-                nowState = goodNextState;
+            case GoodState.OFF:
+                nowGoodState = GoodState.NULL;
                 break;
         }
 
@@ -221,6 +227,7 @@ public class TutorialSequence : MonoBehaviour
             {
                 isStartWeakEndTime = true;
                 saveTime = GetNowTime();
+                MakeGood();
             }
             return false;
         }
@@ -242,6 +249,7 @@ public class TutorialSequence : MonoBehaviour
             {
                 isStartStrengthEndTime = true;
                 saveTime = GetNowTime();
+                MakeGood();
             }
             return false;
         }
