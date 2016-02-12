@@ -44,8 +44,8 @@ MonoBehaviour:
   - strength: {fileID: 128630, guid: fb9322279fe42b341884ca178fb59d08, type: 2}
     weak: {fileID: 124790, guid: a87a6a3e2d9ca5945b490746129228eb, type: 2}
     type: 0
-  - strength: {fileID: 165352, guid: d1a4893aeb6e2934c9de5e56112fbc24, type: 2}
-    weak: {fileID: 113072, guid: 4fea88229052d0e45b572b54218fef37, type: 2}
+  - strength: {fileID: 162204, guid: 6c13af9beed024e46926740a55ba036f, type: 2}
+    weak: {fileID: 131966, guid: 186d8fa919076484180713b37c6209e7, type: 2}
     type: 1
   createNum: 10
 --- !u!114 &11461546
