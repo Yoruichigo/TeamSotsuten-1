@@ -22,20 +22,25 @@ public class TutorialGood : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    
-        switch(TutorialSequence.GetNowState())
+        
+
+        switch(TutorialSequence.GetNowGoodState())
         {
-            case TutorialSequence.State.ON_GOOD:
+            case TutorialSequence.GoodState.ON:
+                Debugger.Log("Good ON");
                 Image_Good.SetActive(true);
                 break;
-            case TutorialSequence.State.GOOD:
+            case TutorialSequence.GoodState.UPDATE:
                 break;
-            case TutorialSequence.State.OUT_GOOD:
+            case TutorialSequence.GoodState.OFF:
+                Debugger.Log("Good OFF");
                 Image_Good.SetActive(false);
                 break;
 
-            case TutorialSequence.State.FINISH:
-                Destroy(gameObject);
+            case TutorialSequence.GoodState.NULL:
+                if (TutorialSequence.State.NULL == TutorialSequence.GetNowState()) {
+                    Destroy(gameObject);
+                }
                 break;
         }
 	}

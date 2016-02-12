@@ -53,7 +53,7 @@ public class TutorialScript : MonoBehaviour
     string tweenNameInSlider = "TutorialSlider_IN";
     string tweenNameOutSlider = "TutorialSlider_OUT";
     string tweenNameInImage = "TutorialPleaseAttack_IN";
-    string tweenNameOutImage = "TutorialPleaseAttack_OUT";
+    string tweenNameOutImage = "TutorialPleasAttack_OUT";
 
 
     bool SliderStartWaitFlag = true;
@@ -106,12 +106,13 @@ public class TutorialScript : MonoBehaviour
                 break;
             case TutorialSequence.State.OUT_WEAK:
                 SlideriTweenStop();
-                TutorialSequence.MakeGood();
+                //TutorialSequence.MakeGood();
                 uTween.Play(tweenNameOutSlider);
                 uTween.Play(tweenNameOutImage);
                 break;
             case TutorialSequence.State.ON_STRENGTH:
                 SaveTime = TutorialSequence.GetNowTime();
+                SliderStartWaitFlag = true;
                 uTween.Play(tweenNameInSlider);
                 uTween.Play(tweenNameInImage);
                 break;
@@ -122,7 +123,7 @@ public class TutorialScript : MonoBehaviour
                 SlideriTweenStop();
                 uTween.Play(tweenNameOutSlider);
                 uTween.Play(tweenNameOutImage);
-                TutorialSequence.MakeGood();
+                //TutorialSequence.MakeGood();
                 break;
             case TutorialSequence.State.FINISH:
                 EndUpdate();
@@ -143,6 +144,11 @@ public class TutorialScript : MonoBehaviour
                 SaveTime = TutorialSequence.GetNowTime();
                 SliderStartWaitFlag = false;
             }
+            return;
+        }
+
+        if (uTween.IsPlaying(tweenNameOutSlider))
+        {
             return;
         }
 
@@ -200,7 +206,7 @@ public class TutorialScript : MonoBehaviour
     {
         //Slider_AttackInduction.value = 0;
         var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
-        sliderobj.value = 0;
+        //sliderobj.value = 0;
 
         OldSliderTweenEndTime = TutorialSequence.GetNowTime();
         iTweenSliderActivate = false;

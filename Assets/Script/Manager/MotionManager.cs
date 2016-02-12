@@ -189,13 +189,13 @@ public class MotionManager : Singleton<MotionManager>
         {
             MotionSkill = MotionSkillType.WEAK;
             OnComplated(MotionSkill);
-            state = State.WAIT;
+            state = State.STEP;
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
             MotionSkill = MotionSkillType.STRENGTH;
             OnComplated(MotionSkill);
-            state = State.WAIT;
+            state = State.STEP;
         }
 #endif
     }
