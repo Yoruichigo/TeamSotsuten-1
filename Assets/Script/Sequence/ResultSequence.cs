@@ -27,9 +27,6 @@ public class ResultSequence : SequenceBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            SequenceManager.Instance.ChangeScene(SceneID.TITLE);
-        }
+
     }
 }
