@@ -24,7 +24,7 @@ public class TutorialGuid : MonoBehaviour {
         {
             case TutorialSequence.State.ON_START_GUID:
                 GuidImage.SetActive(true);
-                uTween.Play(tweenName1);
+                TweenPlay(tweenName1);
                 break;
 
             case TutorialSequence.State.START_GUID:
@@ -33,7 +33,7 @@ public class TutorialGuid : MonoBehaviour {
 
                 break;
             case TutorialSequence.State.ON_FINISH_GUID:
-                uTween.Play(tweenName3);
+                TweenPlay(tweenName3);
                 break;
             case TutorialSequence.State.FINISH_GUID:
                 if (!uTween.IsPlaying(tweenName3))
@@ -48,4 +48,12 @@ public class TutorialGuid : MonoBehaviour {
 
     }
 
+    void TweenPlay(string _name)
+    {
+        var playlist = uTween.GetPlayList(_name);
+        foreach (var dat in playlist)
+        {
+            dat.Play();
+        }
+    }
 }
