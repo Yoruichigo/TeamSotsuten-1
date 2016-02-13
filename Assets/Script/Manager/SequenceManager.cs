@@ -78,7 +78,7 @@ public class SequenceManager : Singleton<SequenceManager>
         Application.runInBackground = true;
 
         base.Awake();
-
+        
 #if UNITY_EDITOR
         isBuildWatch = true;
         
