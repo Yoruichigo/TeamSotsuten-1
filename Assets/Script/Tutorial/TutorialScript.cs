@@ -15,11 +15,14 @@ public class TutorialScript : MonoBehaviour
 
     // 誘導画像
     [SerializeField]
-    GameObject Image_AttackInduction;
+    GameObject ImageWeak;
+
+    [SerializeField]
+    GameObject ImageStrength;
 
     // スライダー
     [SerializeField]
-    GameObject Slider_AttackInduction;
+    GameObject SliderInduction;
 
     //tweenタイプ
     [SerializeField]
@@ -55,8 +58,10 @@ public class TutorialScript : MonoBehaviour
 
     string tweenNameInSlider = "TutorialSlider_IN";
     string tweenNameOutSlider = "TutorialSlider_OUT";
-    string tweenNameInImage = "TutorialPleaseAttack_IN";
-    string tweenNameOutImage = "TutorialPleaseAttack_OUT";
+    string tweenNameWeakInImage = "TutorialWeakIn";
+    string tweenNameWeakOutImage = "TutorialWeakOut";
+    string tweenNameStrengthInImage = "TutorialStrengthIn";
+    string tweenNameStrengthOutImage = "TutorialStrengthOut";
 
 
     bool SliderStartWaitFlag = true;
@@ -69,8 +74,9 @@ public class TutorialScript : MonoBehaviour
     void Start()
     {
         SubFunc = null;
-        Image_AttackInduction.SetActive(false);
-        Slider_AttackInduction.SetActive(false);
+        ImageWeak.SetActive(false);
+        ImageStrength.SetActive(false);
+        SliderInduction.SetActive(false);
         SliderStartWaitFlag = true;
         SaveTime = TutorialSequence.GetNowTime();
         OldSliderTweenEndTime = TutorialSequence.GetNowTime();
@@ -83,8 +89,9 @@ public class TutorialScript : MonoBehaviour
     /// </summary>
     void EndUpdate()
     {
-        Image_AttackInduction.SetActive(false);
-        Slider_AttackInduction.SetActive(false);
+        ImageWeak.SetActive(false);
+        ImageStrength.SetActive(false);
+        SliderInduction.SetActive(false);
         gameObject.SetActive(false);
     }
 
@@ -93,10 +100,10 @@ public class TutorialScript : MonoBehaviour
     void OnStrengthDelayPlay()
     {
         if (!uTween.IsPlaying(tweenNameOutSlider) &&
-            !uTween.IsPlaying(tweenNameOutImage) )
+            !uTween.IsPlaying(tweenNameWeakOutImage) )
         {
             TweenPlay(tweenNameInSlider);
-            TweenPlay(tweenNameInImage);
+            TweenPlay(tweenNameStrengthInImage);
             SubFunc = null;
         }
 
@@ -125,11 +132,11 @@ public class TutorialScript : MonoBehaviour
         switch (TutorialSequence.GetNowState())
         {
             case TutorialSequence.State.ON_WEAK:
-                Image_AttackInduction.SetActive(true);
-                Slider_AttackInduction.SetActive(true);
+                ImageWeak.SetActive(true);
+                SliderInduction.SetActive(true);
                 SaveTime = TutorialSequence.GetNowTime();
                 TweenPlay(tweenNameInSlider);
-                TweenPlay(tweenNameInImage);
+                TweenPlay(tweenNameWeakInImage);
                 break;
             case TutorialSequence.State.WEAK:
                 SliderWaitAndTween(SLIDER_TIME_WEAK,SLIDER_WEAK_WAIT_TIME);
@@ -137,10 +144,11 @@ public class TutorialScript : MonoBehaviour
             case TutorialSequence.State.OUT_WEAK:
                 SlideriTweenStop();
                 TweenPlay(tweenNameOutSlider);
-                TweenPlay(tweenNameOutImage);
+                TweenPlay(tweenNameWeakOutImage);
                 break;
             case TutorialSequence.State.ON_STRENGTH:
                 SaveTime = TutorialSequence.GetNowTime();
+                ImageStrength.SetActive(true);
                 SliderStartWaitFlag = true;
                 SubFunc = OnStrengthDelayPlay;
                 break;
@@ -150,7 +158,7 @@ public class TutorialScript : MonoBehaviour
             case TutorialSequence.State.OUT_STRENGTH:
                 SlideriTweenStop();
                 TweenPlay(tweenNameOutSlider);
-                TweenPlay(tweenNameOutImage);
+                TweenPlay(tweenNameStrengthOutImage);
                 break;
             case TutorialSequence.State.FINISH:
                 EndUpdate();
@@ -215,7 +223,7 @@ public class TutorialScript : MonoBehaviour
         iTween.Stop(gameObject);
 
         //Slider_AttackInduction.value = 0;
-        var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
+        var sliderobj = SliderInduction.GetComponent<Slider>();
         sliderobj.value = 0;
     }
 
@@ -224,7 +232,7 @@ public class TutorialScript : MonoBehaviour
     void iTween_SliderUpdate(float value)
     {
         //Slider_AttackInduction.value = value;
-        var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
+        var sliderobj = SliderInduction.GetComponent<Slider>();
         sliderobj.value = value;
     }
 
@@ -232,7 +240,7 @@ public class TutorialScript : MonoBehaviour
     void iTween_SliderEnd()
     {
         //Slider_AttackInduction.value = 0;
-        var sliderobj = Slider_AttackInduction.GetComponent<Slider>();
+        var sliderobj = SliderInduction.GetComponent<Slider>();
         //sliderobj.value = 0;
 
         OldSliderTweenEndTime = TutorialSequence.GetNowTime();
