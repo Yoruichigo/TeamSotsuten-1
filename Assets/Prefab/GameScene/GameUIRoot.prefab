@@ -169,6 +169,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &144800
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22496692}
+  - 222: {fileID: 22258552}
+  - 114: {fileID: 11436208}
+  - 114: {fileID: 11493216}
+  - 114: {fileID: 11406056}
+  m_Layer: 5
+  m_Name: Tutorial_StrengthImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &149340
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +197,6 @@ GameObject:
   m_Component:
   - 224: {fileID: 22473308}
   - 222: {fileID: 22269610}
-  - 114: {fileID: 11499208}
   m_Layer: 5
   m_Name: TutorialLoot
   m_TagString: Untagged
@@ -302,7 +320,7 @@ GameObject:
   - 114: {fileID: 11443016}
   - 114: {fileID: 11484798}
   m_Layer: 5
-  m_Name: Tutorial_PleaseAttack
+  m_Name: Tutorial_WeakImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,6 +472,40 @@ MonoBehaviour:
   rate: 0
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: -800, z: 0}
+--- !u!114 &11406056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bdc76ba949b0447af1be0a8aa53644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: TutorialStrengthOut
+  tweenTime: 1
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startPosition: {x: 0, y: -200, z: 0}
+  targetPosition: {x: 0, y: -1000, z: 0}
 --- !u!114 &11408946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -648,6 +700,33 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11436208
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: d3fa6f65a48447548ac2cdd8d1d68da8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &11437736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -699,7 +778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bdc76ba949b0447af1be0a8aa53644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenName: TutorialPleaseAttack_IN
+  tweenName: TutorialWeakIn
   tweenTime: 1
   loopType: 0
   tweenCurve:
@@ -820,7 +899,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 5c651e71687d3cf4e8f32e37ae1e8c5c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 305164f75aef2f9429b3a29440d06270, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -866,11 +945,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58cab1f5fe5c5894cbfd963f385bc0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Image_AttackInduction: {fileID: 166744}
-  Slider_AttackInduction: {fileID: 101974}
+  ImageWeak: {fileID: 166744}
+  ImageStrength: {fileID: 144800}
+  SliderInduction: {fileID: 101974}
   SliderEaseType: 10
   SLIDER_TIME_WEAK: 1.5
-  SLIDER_TIME_STRENGTH: .800000012
+  SLIDER_TIME_STRENGTH: .600000024
   SLIDER_START_WAIT_TIME: 10
   SLIDER_WEAK_WAIT_TIME: 2
   SLIDER_STRENGTH_WAIT_TIME: 2
@@ -1121,7 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bdc76ba949b0447af1be0a8aa53644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenName: TutorialPleaseAttack_OUT
+  tweenName: TutorialWeakOut
   tweenTime: 1
   loopType: 0
   tweenCurve:
@@ -1196,23 +1276,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shakeDecay: 3
   coefShakeIntensity: 50
---- !u!114 &11499208
+--- !u!114 &11493216
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 149340}
+  m_GameObject: {fileID: 144800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62bc3df369acf9f4298bbcaf64d658b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 91bdc76ba949b0447af1be0a8aa53644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartGuidTime: 20
-  WeakEndTime: 30
-  StrengthEndTime: 30
-  FinishGuidEndTime: 30
-  GoodActiveTime: 20
-  FinishWaitTime: 10
+  tweenName: TutorialStrengthIn
+  tweenTime: 1
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startPosition: {x: 0, y: 800, z: 0}
+  targetPosition: {x: 0, y: -200, z: 0}
 --- !u!114 &11499628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1295,6 +1392,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134112}
+--- !u!222 &22258552
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144800}
 --- !u!222 &22259994
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1493,14 +1596,14 @@ RectTransform:
   m_GameObject: {fileID: 166744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 22482968}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 600, y: 200}
+  m_SizeDelta: {x: 818, y: 143}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22420310
 RectTransform:
@@ -1728,8 +1831,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 22417298}
+  - {fileID: 22496692}
   - {fileID: 22446962}
+  - {fileID: 22417298}
   m_Father: {fileID: 22473308}
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
@@ -1754,6 +1858,23 @@ RectTransform:
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: .5, y: .5}
+--- !u!224 &22496692
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144800}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 22482968}
+  m_RootOrder: 0
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 0, y: 800}
+  m_SizeDelta: {x: 978, y: 143}
   m_Pivot: {x: .5, y: .5}
 --- !u!1001 &100100000
 Prefab:
