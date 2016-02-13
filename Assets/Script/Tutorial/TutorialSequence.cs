@@ -23,8 +23,13 @@ public class TutorialSequence : MonoBehaviour
     int StrengthEndTime = 200;
 
     [SerializeField]
+    int FinishGuidEndTime = 30;
+
+    [SerializeField]
     int GoodActiveTime = 20;
 
+    [SerializeField]
+    int FinishWaitTime = 10;
 
     /// <summary>
     /// Good画像を表示し、次の状態へ行きます。
@@ -54,6 +59,8 @@ public class TutorialSequence : MonoBehaviour
         OUT_STRENGTH,
         ON_FINISH_GUID,
         FINISH_GUID,
+        OUT_FINISH_GUID,
+        FINISH_WAIT,
         FINISH,
     }
 
@@ -175,10 +182,24 @@ public class TutorialSequence : MonoBehaviour
                 nowState = State.ON_FINISH_GUID;
                 break;
             case State.ON_FINISH_GUID:
+                saveTime = GetNowTime();
                 nowState = State.FINISH_GUID;
                 break;
             case State.FINISH_GUID:
-                nowState = State.FINISH;
+                if (FinishGuidEndCheck())
+                {
+                    nowState = State.OUT_FINISH_GUID;
+                }
+                break;
+            case State.OUT_FINISH_GUID:
+                nowState = State.FINISH_WAIT;
+                saveTime = GetNowTime();
+                break;
+            case State.FINISH_WAIT:
+                if (FinishWaitEndCheck())
+                {
+                    nowState = State.FINISH;
+                }
                 break;
             case State.FINISH:
                 nowState = State.NULL;
@@ -255,6 +276,27 @@ public class TutorialSequence : MonoBehaviour
         }
 
         if (GetNowTime() > (saveTime + StrengthEndTime))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    bool FinishGuidEndCheck()
+    {
+        if (GetNowTime() > (saveTime + FinishGuidEndTime))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool FinishWaitEndCheck()
+    {
+        if (GetNowTime() > (saveTime + FinishWaitTime))
         {
             return true;
         }

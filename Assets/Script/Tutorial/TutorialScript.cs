@@ -38,7 +38,10 @@ public class TutorialScript : MonoBehaviour
 
     //スライダーの待機時間
     [SerializeField]
-    int SLIDER_WAIT_TIME = 2;
+    int SLIDER_WEAK_WAIT_TIME = 2;
+
+    [SerializeField]
+    int SLIDER_STRENGTH_WAIT_TIME = 2;
 
     //スライダー用　過去時間
     int OldSliderTweenEndTime;
@@ -53,17 +56,19 @@ public class TutorialScript : MonoBehaviour
     string tweenNameInSlider = "TutorialSlider_IN";
     string tweenNameOutSlider = "TutorialSlider_OUT";
     string tweenNameInImage = "TutorialPleaseAttack_IN";
-    string tweenNameOutImage = "TutorialPleasAttack_OUT";
+    string tweenNameOutImage = "TutorialPleaseAttack_OUT";
 
 
     bool SliderStartWaitFlag = true;
+
+    Action SubFunc = null;
 
     /// <summary>
     /// 初期化
     /// </summary>
     void Start()
     {
-
+        SubFunc = null;
         Image_AttackInduction.SetActive(false);
         Slider_AttackInduction.SetActive(false);
         SliderStartWaitFlag = true;
@@ -80,10 +85,22 @@ public class TutorialScript : MonoBehaviour
     {
         Image_AttackInduction.SetActive(false);
         Slider_AttackInduction.SetActive(false);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     
+
+    void OnStrengthDelayPlay()
+    {
+        if (!uTween.IsPlaying(tweenNameOutSlider) &&
+            !uTween.IsPlaying(tweenNameOutImage) )
+        {
+            uTween.Play(tweenNameInSlider);
+            uTween.Play(tweenNameInImage);
+            SubFunc = null;
+        }
+
+    }
 
 
     /// <summary>
@@ -91,6 +108,10 @@ public class TutorialScript : MonoBehaviour
     /// </summary>
 	void Update()
     {
+        if (null != SubFunc)
+        {
+            SubFunc();
+        }
 
         switch (TutorialSequence.GetNowState())
         {
@@ -102,7 +123,7 @@ public class TutorialScript : MonoBehaviour
                 uTween.Play(tweenNameInImage);
                 break;
             case TutorialSequence.State.WEAK:
-                SliderWaitAndTween(SLIDER_TIME_WEAK);
+                SliderWaitAndTween(SLIDER_TIME_WEAK,SLIDER_WEAK_WAIT_TIME);
                 break;
             case TutorialSequence.State.OUT_WEAK:
                 SlideriTweenStop();
@@ -113,11 +134,12 @@ public class TutorialScript : MonoBehaviour
             case TutorialSequence.State.ON_STRENGTH:
                 SaveTime = TutorialSequence.GetNowTime();
                 SliderStartWaitFlag = true;
-                uTween.Play(tweenNameInSlider);
-                uTween.Play(tweenNameInImage);
+                SubFunc = OnStrengthDelayPlay;
+                //uTween.Play(tweenNameInSlider);
+                //uTween.Play(tweenNameInImage);
                 break;
             case TutorialSequence.State.STRENGTH:
-                SliderWaitAndTween(SLIDER_TIME_STRENGTH);
+                SliderWaitAndTween(SLIDER_TIME_STRENGTH,SLIDER_STRENGTH_WAIT_TIME);
                 break;
             case TutorialSequence.State.OUT_STRENGTH:
                 SlideriTweenStop();
@@ -135,11 +157,11 @@ public class TutorialScript : MonoBehaviour
 
 
     //待機時間をつけたスライダー動作
-    void SliderWaitAndTween(float _time)
+    void SliderWaitAndTween(float _time,int _waitTime)
     {
         if (SliderStartWaitFlag)
         {
-            if (!uTween.IsPlaying(tweenNameInSlider))
+            if (!uTween.IsPlaying(tweenNameInSlider) && !uTween.IsPlaying(tweenNameOutSlider))
             {
                 SaveTime = TutorialSequence.GetNowTime();
                 SliderStartWaitFlag = false;
@@ -153,7 +175,7 @@ public class TutorialScript : MonoBehaviour
         }
 
         if (!iTweenSliderActivate &&
-            (OldSliderTweenEndTime + SLIDER_WAIT_TIME) < TutorialSequence.GetNowTime())
+            (OldSliderTweenEndTime + _waitTime) < TutorialSequence.GetNowTime())
         {
             SliderValueTo(_time);
         }
