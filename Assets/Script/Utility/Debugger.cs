@@ -11,19 +11,24 @@ using System.Collections.Generic;
 
 public class Debugger : MonoBehaviour 
 {
-
+    static GameObject debugFrame = null;
     static Text debugText = null;
     static int messageNum = 0;
 
     void Awake()
     {
-#if DEBUG
+#if UNITY_EDITOR
         var child = transform.GetComponentInChildren<Canvas>();
 
         debugText = child.GetComponentInChildren<Text>();
 
         Reset();
+#else 
+        debugFrame = child.transform.FindChild("DebugFrame").gameObject;
+        debugFrame.SetActive(false);
 #endif
+
+
     }
 
 
@@ -32,7 +37,7 @@ public class Debugger : MonoBehaviour
     /// </summary>
     public static void Reset()
     {
-#if DEBUG
+#if UNITY_EDITOR
         debugText.text = "";
 #endif
     }
