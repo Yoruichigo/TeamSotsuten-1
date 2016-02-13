@@ -27,13 +27,11 @@ public class TutorialGood : MonoBehaviour {
         switch(TutorialSequence.GetNowGoodState())
         {
             case TutorialSequence.GoodState.ON:
-                Debugger.Log("Good ON");
                 Image_Good.SetActive(true);
                 break;
             case TutorialSequence.GoodState.UPDATE:
                 break;
             case TutorialSequence.GoodState.OFF:
-                Debugger.Log("Good OFF");
                 Image_Good.SetActive(false);
                 break;
 
@@ -44,7 +42,7 @@ public class TutorialGood : MonoBehaviour {
                 break;
         }
 	}
-
+    
 
 
 }

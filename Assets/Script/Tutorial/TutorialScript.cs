@@ -95,11 +95,20 @@ public class TutorialScript : MonoBehaviour
         if (!uTween.IsPlaying(tweenNameOutSlider) &&
             !uTween.IsPlaying(tweenNameOutImage) )
         {
-            uTween.Play(tweenNameInSlider);
-            uTween.Play(tweenNameInImage);
+            TweenPlay(tweenNameInSlider);
+            TweenPlay(tweenNameInImage);
             SubFunc = null;
         }
 
+    }
+
+    void TweenPlay(string _name)
+    {
+        var playlist = uTween.GetPlayList(_name);
+        foreach (var dat in playlist)
+        {
+            dat.Play();
+        }
     }
 
 
@@ -119,33 +128,29 @@ public class TutorialScript : MonoBehaviour
                 Image_AttackInduction.SetActive(true);
                 Slider_AttackInduction.SetActive(true);
                 SaveTime = TutorialSequence.GetNowTime();
-                uTween.Play(tweenNameInSlider);
-                uTween.Play(tweenNameInImage);
+                TweenPlay(tweenNameInSlider);
+                TweenPlay(tweenNameInImage);
                 break;
             case TutorialSequence.State.WEAK:
                 SliderWaitAndTween(SLIDER_TIME_WEAK,SLIDER_WEAK_WAIT_TIME);
                 break;
             case TutorialSequence.State.OUT_WEAK:
                 SlideriTweenStop();
-                //TutorialSequence.MakeGood();
-                uTween.Play(tweenNameOutSlider);
-                uTween.Play(tweenNameOutImage);
+                TweenPlay(tweenNameOutSlider);
+                TweenPlay(tweenNameOutImage);
                 break;
             case TutorialSequence.State.ON_STRENGTH:
                 SaveTime = TutorialSequence.GetNowTime();
                 SliderStartWaitFlag = true;
                 SubFunc = OnStrengthDelayPlay;
-                //uTween.Play(tweenNameInSlider);
-                //uTween.Play(tweenNameInImage);
                 break;
             case TutorialSequence.State.STRENGTH:
                 SliderWaitAndTween(SLIDER_TIME_STRENGTH,SLIDER_STRENGTH_WAIT_TIME);
                 break;
             case TutorialSequence.State.OUT_STRENGTH:
                 SlideriTweenStop();
-                uTween.Play(tweenNameOutSlider);
-                uTween.Play(tweenNameOutImage);
-                //TutorialSequence.MakeGood();
+                TweenPlay(tweenNameOutSlider);
+                TweenPlay(tweenNameOutImage);
                 break;
             case TutorialSequence.State.FINISH:
                 EndUpdate();

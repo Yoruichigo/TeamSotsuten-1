@@ -37,7 +37,7 @@ public class TutorialFinishScript : MonoBehaviour {
     {
         if (!uTween.IsPlaying(endWaitTweenName))
         {
-            uTween.Play(tweenNameIn);
+            TweenPlay(tweenNameIn);
             ImageObj.SetActive(true);
             SubFunc = null;
         }
@@ -61,7 +61,7 @@ public class TutorialFinishScript : MonoBehaviour {
 
                 break;
             case TutorialSequence.State.OUT_FINISH_GUID:
-                uTween.Play(tweenNameOut);
+                TweenPlay(tweenNameOut);
                 break;
             case TutorialSequence.State.FINISH:
                 SubFunc = MyFinish;
@@ -71,7 +71,14 @@ public class TutorialFinishScript : MonoBehaviour {
 	}
 
 
-
+    void TweenPlay(string _name)
+    {
+        var playlist = uTween.GetPlayList(_name);
+        foreach (var dat in playlist)
+        {
+            dat.Play();
+        }
+    }
 
 
 }
