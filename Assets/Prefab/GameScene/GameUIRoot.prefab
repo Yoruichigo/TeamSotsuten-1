@@ -1021,6 +1021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ImageObj: {fileID: 123370}
+  endWaitTweenName: TutorialPleaseAttack_OUT
 --- !u!114 &11477694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1244,8 +1245,8 @@ MonoBehaviour:
   isAwakePlay: 0
   cashRectTransform: {fileID: 0}
   rate: 0
-  startPosition: {x: 0, y: 0, z: 0}
-  targetPosition: {x: 0, y: 800, z: 0}
+  startPosition: {x: 0, y: 300, z: 0}
+  targetPosition: {x: 0, y: -800, z: 0}
 --- !u!222 &22207832
 CanvasRenderer:
   m_ObjectHideFlags: 1
