@@ -38,8 +38,7 @@ public class CameraShaker : MonoBehaviour
 
             var randomX = Random.Range(-coefShakeIntensity,coefShakeIntensity);
             var randomY = Random.Range(-coefShakeIntensity,coefShakeIntensity);
-            var randomZ = Random.Range(-coefShakeIntensity,coefShakeIntensity);
-            move.targetPosition = move.startPosition + new Vector3(randomX, randomY, randomZ);
+            move.targetPosition = move.startPosition + new Vector3(randomX, randomY, 0);
 
             move.Play();
         }
