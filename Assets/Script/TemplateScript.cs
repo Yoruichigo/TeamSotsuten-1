@@ -14,11 +14,11 @@ public class TemplateScript : MonoBehaviour
     /// <summary>
     /// Editorのみ変更可能にする。 
     /// </summary>
-    [SerializeField]
-    int value = 0;
+    // [SerializeField]
+    //int value = 0;
 
-    [SerializeField]
-    GameObject attackObject;
+    //[SerializeField]
+    //GameObject attackObject;
 
 
     /// <summary>

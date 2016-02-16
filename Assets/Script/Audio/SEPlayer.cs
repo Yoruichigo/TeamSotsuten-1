@@ -27,7 +27,7 @@ public class SEPlayer : Singleton<SEPlayer>
     public const float maxVolume = 1.0f;
 
 
-    void Awake()
+    public override void Awake()
     {
         base.Awake();
 
@@ -38,14 +38,13 @@ public class SEPlayer : Singleton<SEPlayer>
 
     }
 
-    void Start()
+    public override void Start()
     {
         base.Start();
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         base.Update();
 
@@ -67,9 +66,10 @@ public class SEPlayer : Singleton<SEPlayer>
     /// <param name="resName">Resource名</param>
     public void Play(Audio.SEID id, float pitch = 1.0f, bool loop = false)
     {
-#if !UNITY_EDITOR
-        if (SequenceManager.Instance.IsBuildWatch) return;
-#endif
+        if (!Global.IsBuidEditor())
+        {
+            if (SequenceManager.Instance.IsBuildWatch) return;
+        }
 
         sources.Add(gameObject.AddComponent<AudioSource>());
         var index = sources.Count - 1;
@@ -160,15 +160,3 @@ public class SEPlayer : Singleton<SEPlayer>
 }
 
 
-
-/*
- * <SEのResource名リスト>
- * EnemyAppearance  : 敵の登場
- * EnemyAttack      : 敵の攻撃
- * EnemyHit         : 敵がヒットした音
- * EnemySiren       : 敵の出現ワーニング
- * Decision         : 決定
- * PlayerWeakAttack     : プレイヤー攻撃
- * PlayerStrengthAttack : プレイヤー攻撃
- * Damage           : ダメージ
-*/

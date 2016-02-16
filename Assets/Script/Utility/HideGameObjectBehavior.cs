@@ -17,8 +17,7 @@ public class HideGameObjectBehavior : MonoBehaviour {
 
 	void Awake ()
     {
-
-#if !UNITY_EDITOR
+        if (Global.IsBuidEditor()) return;
         if (!ConnectionManager.IsWacth) return;
 
         // ここでゲームオブジェクトを非アクティブにしている。
@@ -33,7 +32,6 @@ public class HideGameObjectBehavior : MonoBehaviour {
         }
 
         Debugger.Log(">> HideGameObjectBehavior");
-#endif
 
     }
 	
