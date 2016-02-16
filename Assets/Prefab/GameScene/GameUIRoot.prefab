@@ -1524,22 +1524,17 @@ MonoBehaviour:
   tweenCurve:
     serializedVersion: 2
     m_Curve:
-    - time: 0
-      value: 0
+    - time: .00175259507
+      value: 1.00060725
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: .0488003902
-      value: .993255317
-      inSlope: .950843096
-      outSlope: .950843096
-      tangentMode: 0
-    - time: .098438561
+    - time: .0651392564
       value: -.0105317105
       inSlope: .3439188
       outSlope: .3439188
       tangentMode: 0
-    - time: .149074584
+    - time: .130672336
       value: .994344234
       inSlope: 2.38150358
       outSlope: 2.38150358
