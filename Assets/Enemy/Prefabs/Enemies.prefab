@@ -194,6 +194,7 @@ MonoBehaviour:
   enemyHelthVar: {fileID: 0}
   appearanceEffectRoot: {fileID: 0}
   destroyEffectRoot: {fileID: 0}
+  uiNextWaveRenderer: {fileID: 0}
   SpriteColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &11497832
 MonoBehaviour:
