@@ -145,6 +145,7 @@ GameObject:
   - 114: {fileID: 11496210}
   - 114: {fileID: 11450696}
   - 114: {fileID: 11489246}
+  - 114: {fileID: 11495482}
   m_Layer: 5
   m_Name: NextWaveImage
   m_TagString: Untagged
@@ -928,40 +929,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: NextWave
-  tweenTime: 3
+  tweenTime: 1
   loopType: 0
   tweenCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: .096105665
-      value: .000984761864
-      inSlope: .131465495
-      outSlope: .131465495
-      tangentMode: 0
-    - time: .349745512
-      value: -.00317465398
-      inSlope: -.039152801
-      outSlope: -.039152801
-      tangentMode: 0
-    - time: .400393039
-      value: .00508467667
-      inSlope: .800713897
-      outSlope: .800713897
-      tangentMode: 0
-    - time: .595523357
-      value: .891007721
-      inSlope: 1.22035515
-      outSlope: 1.22035515
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
     - time: 1
       value: 1
-      inSlope: .169513762
-      outSlope: .169513762
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1271,7 +1252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b611d8f34687a474e901e368cb1ab9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textImage: {fileID: 11496210}
 --- !u!114 &11477002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1458,40 +1438,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: NextWave
-  tweenTime: 3
+  tweenTime: 1
   loopType: 0
   tweenCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: .200880542
-      value: -.00220099906
-      inSlope: .00492669642
-      outSlope: .00492669642
-      tangentMode: 0
-    - time: .402634174
-      value: .00933652278
-      inSlope: .19438526
-      outSlope: .19438526
-      tangentMode: 0
-    - time: .599888146
-      value: .798540473
-      inSlope: 2.23322725
-      outSlope: 2.23322725
-      tangentMode: 0
-    - time: .800870597
-      value: 1.00096035
-      inSlope: -.215263277
-      outSlope: -.215263277
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
     - time: 1
       value: 1
-      inSlope: -.0715036914
-      outSlope: -.0715036914
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1547,6 +1507,92 @@ MonoBehaviour:
   rate: 0
   startPosition: {x: 0, y: 800, z: 0}
   targetPosition: {x: 0, y: -200, z: 0}
+--- !u!114 &11495482
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed24524fa37d6248b603124d699ccec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: NextWaveFlash
+  tweenTime: 4
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: .00175259507
+      value: 1.00060725
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: .0651392564
+      value: -.0105317105
+      inSlope: .3439188
+      outSlope: .3439188
+      tangentMode: 0
+    - time: .130672336
+      value: .994344234
+      inSlope: 2.38150358
+      outSlope: 2.38150358
+      tangentMode: 0
+    - time: .195161983
+      value: -.00724439323
+      inSlope: 2.60899711
+      outSlope: 2.60899711
+      tangentMode: 0
+    - time: .252739787
+      value: .991229773
+      inSlope: -2.91824341
+      outSlope: -2.91824341
+      tangentMode: 0
+    - time: .298288733
+      value: .00578631042
+      inSlope: 1.79773092
+      outSlope: 1.79773092
+      tangentMode: 0
+    - time: .399180532
+      value: .992237926
+      inSlope: -1.20829797
+      outSlope: -1.20829797
+      tangentMode: 0
+    - time: .504272819
+      value: .0125249056
+      inSlope: 4.08207989
+      outSlope: 4.08207989
+      tangentMode: 0
+    - time: .596758604
+      value: .992046297
+      inSlope: .041294843
+      outSlope: .041294843
+      tangentMode: 0
+    - time: .698140562
+      value: .00168550527
+      inSlope: 1.37925148
+      outSlope: 1.37925148
+      tangentMode: 0
+    - time: .832161546
+      value: 1.00222778
+      inSlope: -.189282
+      outSlope: -.189282
+      tangentMode: 0
+    - time: .994597852
+      value: -.0034160614
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  targetColor: {r: 1, g: 1, b: 1, a: 0}
+  cashImage: {fileID: 0}
+  cashSpriteRenderer: {fileID: 0}
 --- !u!114 &11496210
 MonoBehaviour:
   m_ObjectHideFlags: 1
