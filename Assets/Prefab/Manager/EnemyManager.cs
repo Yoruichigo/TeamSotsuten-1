@@ -46,6 +46,9 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField]
     Transform destroyEffectRoot = null;
 
+    [SerializeField]
+    UINextWaveRenderer uiNextWaveRenderer = null;
+
     [HideInInspector]
     public Color SpriteColor = Color.white;
 
@@ -71,6 +74,14 @@ public class EnemyManager : Singleton<EnemyManager>
     float animTime = 0;
 
     public bool IsEnemyNothing { get; private set; }
+
+    public bool IsEnemyLast
+    {
+        get
+        {
+            return activeEnemyID >= enemyList.Count -1;
+        }
+    }
 
     public override void Awake()
     {
@@ -147,14 +158,12 @@ public class EnemyManager : Singleton<EnemyManager>
         {
             case State.Start:    //< 待機前処理
 
-                appearanceEffect.Play();
-
                 // サバ―にエネミーを登録,初期化を行う
                 GetActiveEnemyData().SetMyDate();
                 enemyHelthVar.SetMaxLife(GetActiveEnemyData().Life);
 
                 Debugger.Log("登録終了");
-
+                
                 GetActiveEnemyData().StateChange(EnemyData.EnamyState.STAY);
 
                 Debugger.Log(">> GetActiveEnemy State STAY");
@@ -163,10 +172,13 @@ public class EnemyManager : Singleton<EnemyManager>
                 break;
 
             case State.Standby:  //< 待機　出現するかを制御
-                GetActiveEnemyData().StateChange(EnemyData.EnamyState.SPAWN);
 
+                SEPlayer.Instance.Play(Audio.SEID.ENEMYAPPEARANCE);
+                appearanceEffect.Play();
                 StandingSpriteAnimPlay();
 
+                GetActiveEnemyData().StateChange(EnemyData.EnamyState.SPAWN);
+                
                 Debugger.Log(">> GetActiveEnemy State SPAWN");
 
                 state = State.Update;
@@ -197,6 +209,11 @@ public class EnemyManager : Singleton<EnemyManager>
 
                         destroyEffect.transform.position = clientEnemyData.trans.position;
                         destroyEffect.Play();
+
+                        if (!IsEnemyLast)
+                        {
+                            uiNextWaveRenderer.AnimationStart();
+                        }
 
                         Debugger.Log(">> GetActiveEnemy State DEAD");
                         break;
@@ -236,7 +253,6 @@ public class EnemyManager : Singleton<EnemyManager>
         clientEnemyData.gaugeTrans.transform.localPosition = lostPos;
     }
 
-
     void NextWave()
     {
         delayTime -= Time.deltaTime;
@@ -244,16 +260,14 @@ public class EnemyManager : Singleton<EnemyManager>
 
         delayTime = nextWaveTime;
 
-        activeEnemyID++;
-
-        if (activeEnemyID >= enemyList.Count)
+        if (IsEnemyLast)
         {
             IsEnemyNothing = true;
             return;
         }
 
-        SEPlayer.Instance.Play(Audio.SEID.ENEMYAPPEARANCE);
-
+        activeEnemyID++;
+        
         state = State.Start;
         Debugger.Log(">> 次のWaveに遷移する");
     }
