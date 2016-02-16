@@ -2,68 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 
-/// <summary>
-/// http://kidooom.hatenadiary.jp/entry/20140330/1396194258
-/// より。
-/// </summary>
 
 public class CameraShaker : MonoBehaviour
 {
-    /// <summary>
-    /// 振動の減少量
-    /// </summary>
-    [SerializeField]
-    private float shakeDecay = 3f;
-    
     /// <summary>
     /// 振動開始時の振動の大きさ
     /// </summary>
     [SerializeField]
     private float coefShakeIntensity = 50f;
 
-    /// <summary>
-    /// 初期位置
-    /// </summary>
-    private Vector3 originPosition = Vector3.zero;
+    [SerializeField]
+    private float shakeTime = 0.1f;
 
-    /// <summary>
-    /// 現在の振動の大きさ
-    /// </summary>
-    static private float shakeIntensity = 0f;
-
-
-    static private Vector3 randomRate = Vector3.zero;
-
+    uTweenBase[] playList = null;
 
     void Start()
     {
-        Initialize();
-    }
-
-    void Initialize()
-    {
-
-        ///座標の初期値保存
-        originPosition = transform.localPosition;
-
-    }
-
-    void Update()
-    {
-        if (shakeIntensity > 0)
-        {
-            randomRate = Random.insideUnitSphere;
-
-            transform.localPosition = originPosition + randomRate * shakeIntensity;
-
-            shakeIntensity -= shakeDecay;
-        }
-        else
-        {
-            transform.localPosition = originPosition;
-            shakeIntensity = 0f;
-
-        }
+        playList = uTween.GetPlayList("Shake");
     }
 
     /// <summary>
@@ -71,8 +26,23 @@ public class CameraShaker : MonoBehaviour
     /// </summary>
     public void Shake()
     {
-        originPosition = transform.localPosition;
-        shakeIntensity = coefShakeIntensity;
+
+        for (int i = 0; i < playList.Length; i++)
+        {
+            uTweenMove move = playList[i] as uTweenMove;
+
+            if (move.IsPlaying) continue;
+
+            move.tweenTime = shakeTime;
+            move.startPosition = move.cashRectTransform.anchoredPosition3D;
+
+            var randomX = Random.Range(-coefShakeIntensity,coefShakeIntensity);
+            var randomY = Random.Range(-coefShakeIntensity,coefShakeIntensity);
+            var randomZ = Random.Range(-coefShakeIntensity,coefShakeIntensity);
+            move.targetPosition = move.startPosition + new Vector3(randomX, randomY, randomZ);
+
+            move.Play();
+        }
     }
 
 }

@@ -41,7 +41,10 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         base.Update();
 
+#if !UNITY_EDITOR
         if (!ConnectionManager.IsSmartPhone) return;
+#endif
+
         if (!SequenceManager.Instance.IsNowGameScene) return;
 
         Data.Position = GameManager.Instance.GetPlayerData().Position;

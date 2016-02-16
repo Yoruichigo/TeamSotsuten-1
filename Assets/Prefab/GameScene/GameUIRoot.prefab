@@ -282,6 +282,7 @@ GameObject:
   - 224: {fileID: 22410086}
   - 114: {fileID: 11492248}
   - 114: {fileID: 11467402}
+  - 114: {fileID: 11464294}
   m_Layer: 5
   m_Name: UserUI
   m_TagString: Untagged
@@ -954,6 +955,85 @@ MonoBehaviour:
   SLIDER_START_WAIT_TIME: 10
   SLIDER_WEAK_WAIT_TIME: 2
   SLIDER_STRENGTH_WAIT_TIME: 5
+--- !u!114 &11464294
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91bdc76ba949b0447af1be0a8aa53644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: Shake
+  tweenTime: 1
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: .100425877
+      value: .991519332
+      inSlope: -.0649737194
+      outSlope: -.0649737194
+      tangentMode: 0
+    - time: .195710376
+      value: -1.00935507
+      inSlope: .556008875
+      outSlope: .556008875
+      tangentMode: 0
+    - time: .304387897
+      value: .98311919
+      inSlope: -5.49912453
+      outSlope: -5.49912453
+      tangentMode: 0
+    - time: .406978577
+      value: -.974881411
+      inSlope: .219941139
+      outSlope: .219941139
+      tangentMode: 0
+    - time: .497058541
+      value: 1.00100422
+      inSlope: 1.81823969
+      outSlope: 1.81823969
+      tangentMode: 0
+    - time: .606507897
+      value: -.488770485
+      inSlope: 1.11281872
+      outSlope: 1.11281872
+      tangentMode: 0
+    - time: .701745987
+      value: .492059141
+      inSlope: 3.14220786
+      outSlope: 3.14220786
+      tangentMode: 0
+    - time: .79640609
+      value: -.271562368
+      inSlope: -3.85224819
+      outSlope: -3.85224819
+      tangentMode: 0
+    - time: .90398854
+      value: .179320574
+      inSlope: -3.23817134
+      outSlope: -3.23817134
+      tangentMode: 0
+    - time: .992070496
+      value: -.00462950114
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startPosition: {x: 0, y: 0, z: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &11464436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1274,8 +1354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c85a5570a8fdf6f4aad75b0094fd85e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shakeDecay: 3
-  coefShakeIntensity: 50
+  coefShakeIntensity: 200
+  shakeTime: .400000006
 --- !u!114 &11493216
 MonoBehaviour:
   m_ObjectHideFlags: 1
