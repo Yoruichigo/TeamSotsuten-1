@@ -85,7 +85,7 @@ public class AudioSettings : EditorWindow
             {
                 for (int i = 0; i < paramData.SEAudioClipList.Count; i++)
                 {
-                    paramData.SEAudioClipList[i] = EditorGUILayout.ObjectField(paramData.SEAudioClipList[i], typeof(AudioClip)) as AudioClip;
+                    paramData.SEAudioClipList[i] = EditorGUILayout.ObjectField(paramData.SEAudioClipList[i], typeof(AudioClip),false) as AudioClip;
                 }
                 GUILayout.Space(5.0f);
             }
@@ -95,7 +95,7 @@ public class AudioSettings : EditorWindow
             {
                 for (int i = 0; i < paramData.BGMAudioClipList.Count; i++)
                 {
-                    paramData.BGMAudioClipList[i] = EditorGUILayout.ObjectField(paramData.BGMAudioClipList[i], typeof(AudioClip)) as AudioClip;
+                    paramData.BGMAudioClipList[i] = EditorGUILayout.ObjectField(paramData.BGMAudioClipList[i], typeof(AudioClip),false) as AudioClip;
                 }
                 GUILayout.Space(5.0f);
 

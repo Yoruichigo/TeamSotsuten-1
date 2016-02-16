@@ -4,14 +4,6 @@ using UnityEngine.UI;
 
 public class UINextWaveRenderer : MonoBehaviour 
 {
-    [SerializeField]
-    Image textImage = null;
-
-    void Start()
-    {
-
-    }
-
 
     /// <summary>
     /// 有効にするか設定。

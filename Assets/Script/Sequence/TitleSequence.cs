@@ -59,11 +59,14 @@ public class TitleSequence : SequenceBehaviour
             {
                 isStartAnim = false;
 
-#if !UNITY_EDITOR
-                view.RPC("ChangeScene", PhotonTargets.All);
-#else
-                SequenceManager.Instance.ChangeScene(SceneID.GAME);
-#endif
+                if (Global.IsBuidEditor())
+                {
+                    SequenceManager.Instance.ChangeScene(SceneID.GAME);
+                }
+                else
+                {
+                    view.RPC("ChangeScene", PhotonTargets.All);
+                }
             }
         }
 	}

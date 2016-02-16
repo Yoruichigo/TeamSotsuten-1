@@ -17,17 +17,18 @@ public class Debugger : MonoBehaviour
 
     void Awake()
     {
-#if UNITY_EDITOR
         var child = transform.GetComponentInChildren<Canvas>();
 
-        debugText = child.GetComponentInChildren<Text>();
-
-        Reset();
-#else 
-        debugFrame = child.transform.FindChild("DebugFrame").gameObject;
-        debugFrame.SetActive(false);
-#endif
-
+        if (Global.IsBuidEditor())
+        {
+            debugText = child.GetComponentInChildren<Text>();
+            Reset();
+        }
+        else
+        {
+            debugFrame = child.transform.FindChild("DebugFrame").gameObject;
+            debugFrame.SetActive(false);
+        }
 
     }
 
@@ -37,9 +38,9 @@ public class Debugger : MonoBehaviour
     /// </summary>
     public static void Reset()
     {
-#if UNITY_EDITOR
+        if (!Global.IsBuidEditor()) return;
+
         debugText.text = "";
-#endif
     }
 
     /// <summary>
@@ -48,15 +49,16 @@ public class Debugger : MonoBehaviour
     /// <param name="message"></param>
     public static void Log(object message)
     { 
-#if UNITY_EDITOR
+        if (!Global.IsBuidEditor()) return;
+
         Debug.Log(message);
-//#endif
+
         OverLineTextReset();
 
         debugText.text += message + "\n";
 
         messageNum++;
-#endif
+
 
     }
 
@@ -66,16 +68,15 @@ public class Debugger : MonoBehaviour
     /// <param name="message"></param>
     public static void LogError(object message)
     {
-#if UNITY_EDITOR
+        if (!Global.IsBuidEditor()) return;
+
         Debug.LogError(message);
-//#endif
 
         OverLineTextReset();
 
         debugText.text += "<color=red>" + message + "</color>" + "\n";
 
         messageNum++;
-#endif
     }
 
     /// <summary>
@@ -84,21 +85,22 @@ public class Debugger : MonoBehaviour
     /// <param name="message"></param>
     public static void LogWarning(object message)
     {
-#if UNITY_EDITOR
+        if (!Global.IsBuidEditor()) return;
+
         Debug.LogWarning(message);
-//#endif
+
         OverLineTextReset();
 
         debugText.text += "<color=yellow>" + message + "</color>" + "\n";
 
         messageNum++;
-#endif
     }
 
 
     private static void OverLineTextReset()
-    {
-#if UNITY_EDITOR
+    {        
+        if (!Global.IsBuidEditor()) return;
+
         const int MaxLineNum = 25;
 
         if (messageNum >= MaxLineNum)
@@ -107,6 +109,5 @@ public class Debugger : MonoBehaviour
 
             debugText.text = "";
         }
-#endif
     }
 }

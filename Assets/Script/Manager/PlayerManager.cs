@@ -53,7 +53,9 @@ public class PlayerManager : Singleton<PlayerManager>
         if (Data.IsHit)
         {
             cameraShaker.Shake();
+#if UNITY_ANDROID
             Handheld.Vibrate(); // バイブ
+#endif
             SEPlayer.Instance.Play(Audio.SEID.DAMAGE);
             GameManager.Instance.GetPlayerData().IsHit = false;
         }

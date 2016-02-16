@@ -35,8 +35,6 @@ public class HitEffectManager : Singleton<HitEffectManager> {
     int weakPlayIndex = 0;
     int strengthPlayIndex = 0;
 
-    PhotonView view = null;
-
     public override void Awake()
     {
         base.Awake();
@@ -62,9 +60,6 @@ public class HitEffectManager : Singleton<HitEffectManager> {
                 CreateHitEffect(hitEffectTyoe.strength, strengthHitEffectList);
             }
         }
-
-        
-        view = GetComponent<PhotonView>();
     }
 
     /// <summary>
@@ -154,13 +149,4 @@ public class HitEffectManager : Singleton<HitEffectManager> {
         }
     }
 
-    /// <summary>
-    /// 書かないといけない関数
-    /// </summary>
-    /// <param name="stream"></param>
-    /// <param name="info"></param>
-    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-
-    }
 }
