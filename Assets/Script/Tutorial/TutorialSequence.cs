@@ -202,6 +202,12 @@ public class TutorialSequence : MonoBehaviour
                 }
                 break;
             case State.FINISH:
+                var playList = uTween.GetPlayList("UITimeAppearance");
+                for (int i = 0; i < playList.Length; i++)
+                {
+                    playList[i].Play();
+                }
+
                 nowState = State.NULL;
                 break;
         }
