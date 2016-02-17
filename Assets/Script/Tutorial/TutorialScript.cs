@@ -80,7 +80,6 @@ public class TutorialScript : MonoBehaviour
         SliderStartWaitFlag = true;
         SaveTime = TutorialSequence.GetNowTime();
         OldSliderTweenEndTime = TutorialSequence.GetNowTime();
-
     }
 
 
