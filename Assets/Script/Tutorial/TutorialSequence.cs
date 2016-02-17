@@ -150,7 +150,7 @@ public class TutorialSequence : MonoBehaviour
                 }
                 else
                 {
-                    if (MotionManager.MotionSkillType.WEAK == MotionManager.Instance.MotionSkill)
+                    if (MotionManager.MotionSkillType.NONE != MotionManager.Instance.MotionSkill)
                     {
                         PlayerAttackEffectManager.Instance.CheckType(MotionManager.MotionSkillType.WEAK);
                     }
@@ -244,7 +244,7 @@ public class TutorialSequence : MonoBehaviour
     {
         if (!isStartWeakEndTime)
         {
-            if (MotionManager.MotionSkillType.WEAK == MotionManager.Instance.MotionSkill)
+            if (MotionManager.MotionSkillType.NONE != MotionManager.Instance.MotionSkill )
             {
                 isStartWeakEndTime = true;
                 saveTime = GetNowTime();
