@@ -23,6 +23,7 @@ public class UINextWaveRenderer : MonoBehaviour
                 flashPlayList = uTween.GetPlayList("NextWaveFlash");
                 for (int i = 0; i < flashPlayList.Length; i++)
                 {
+                    flashPlayList[i].cashRectTransform.localScale = Vector3.one;
                     flashPlayList[i].Play();
                 }
 
@@ -42,6 +43,8 @@ public class UINextWaveRenderer : MonoBehaviour
                 var playList = uTween.GetPlayList("NextWave");
                 for (int i = 0; i < playList.Length; i++)
                 {
+                    if (playList[i].IsPlaying) continue;
+
                     playList[i].Play();
                 }
 
