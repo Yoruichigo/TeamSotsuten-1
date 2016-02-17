@@ -13,20 +13,24 @@ public class PlayerHealthVar : MonoBehaviour
     {
         lifeMax = GameManager.Instance.GetPlayerData().HelthPoint;
         helthVar.fillAmount = 1;
+        helthVar.enabled = true;
     }
 
     void Update()
     {
-#if !UNITY_EDITOR
-        helthVar.enabled = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
+        if (!Global.IsBuidEditor())
+        {
+            if (helthVar.enabled)
+            {
+                HelthVarUpdate();
+            }
 
-        if (helthVar.enabled)
+            helthVar.enabled = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
+        }
+        else
         {
             HelthVarUpdate();
         }
-#else
-        HelthVarUpdate();
-#endif
 
     }
 
