@@ -126,10 +126,10 @@ GameObject:
   - 224: {fileID: 22413526}
   - 222: {fileID: 22299322}
   - 114: {fileID: 11433318}
-  - 114: {fileID: 11477432}
-  - 114: {fileID: 11482306}
-  - 114: {fileID: 11431926}
-  - 114: {fileID: 11495600}
+  - 114: {fileID: 11408410}
+  - 114: {fileID: 11415708}
+  - 114: {fileID: 11474524}
+  - 114: {fileID: 11400968}
   m_Layer: 5
   m_Name: Tutorial_GoodImage
   m_TagString: Untagged
@@ -325,7 +325,7 @@ GameObject:
   - 222: {fileID: 22269616}
   - 114: {fileID: 11445814}
   - 114: {fileID: 11480314}
-  - 114: {fileID: 11400024}
+  - 114: {fileID: 11423210}
   m_Layer: 5
   m_Name: Time
   m_TagString: TimeText
@@ -445,7 +445,7 @@ GameObject:
   - 224: {fileID: 22413038}
   - 222: {fileID: 22297172}
   - 114: {fileID: 11410132}
-  - 114: {fileID: 11445824}
+  - 114: {fileID: 11443656}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -453,18 +453,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &11400024
+--- !u!114 &11400968
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 161586}
+  m_GameObject: {fileID: 138634}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74be3763c05a75943a13f0f825d941bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenName: UITimeAppearance
+  tweenName: TutorialGoodEnd
   tweenTime: .5
   loopType: 0
   tweenCurve:
@@ -472,8 +472,8 @@ MonoBehaviour:
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
     - time: 1
       value: 1
@@ -485,8 +485,8 @@ MonoBehaviour:
   isAwakePlay: 0
   cashRectTransform: {fileID: 0}
   rate: 0
-  startScale: {x: 0, y: 0, z: 0}
-  targetScale: {x: 1, y: 1, z: 1}
+  startScale: {x: 3, y: 2, z: 0}
+  targetScale: {x: 4.5, y: 3, z: 0}
 --- !u!114 &11403168
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -583,6 +583,42 @@ MonoBehaviour:
   rate: 0
   startPosition: {x: 0, y: -200, z: 0}
   targetPosition: {x: 0, y: -1000, z: 0}
+--- !u!114 &11408410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed24524fa37d6248b603124d699ccec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: TutorialGoodStart
+  tweenTime: .150000006
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startColor: {r: 1, g: 1, b: 1, a: 0}
+  targetColor: {r: 1, g: 1, b: 1, a: 1}
+  cashImage: {fileID: 0}
+  cashSpriteRenderer: {fileID: 0}
 --- !u!114 &11408946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -656,6 +692,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ImageLookAt: {fileID: 196460}
+--- !u!114 &11415708
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74be3763c05a75943a13f0f825d941bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: TutorialGoodStart
+  tweenTime: .100000001
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startScale: {x: 3, y: 2, z: 0}
+  targetScale: {x: 3, y: 2, z: 0}
 --- !u!114 &11418174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -723,27 +793,27 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &11431926
+--- !u!114 &11423210
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138634}
+  m_GameObject: {fileID: 161586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ed24524fa37d6248b603124d699ccec, type: 3}
+  m_Script: {fileID: 11500000, guid: 74be3763c05a75943a13f0f825d941bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenName: TutorialGoodEnd
-  tweenTime: .5
+  tweenName: UITimeAppearance
+  tweenTime: 1
   loopType: 0
   tweenCurve:
     serializedVersion: 2
     m_Curve:
     - time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
     - time: 1
       value: 1
@@ -755,10 +825,8 @@ MonoBehaviour:
   isAwakePlay: 0
   cashRectTransform: {fileID: 0}
   rate: 0
-  startColor: {r: 1, g: 1, b: 1, a: 1}
-  targetColor: {r: 1, g: 1, b: 1, a: 0}
-  cashImage: {fileID: 0}
-  cashSpriteRenderer: {fileID: 0}
+  startScale: {x: 0, y: 0, z: 0}
+  targetScale: {x: 1, y: 1, z: 1}
 --- !u!114 &11433318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -914,6 +982,20 @@ MonoBehaviour:
   rate: 0
   startPosition: {x: 0, y: 800, z: 0}
   targetPosition: {x: 0, y: -200, z: 0}
+--- !u!114 &11443656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9a70a77cce7cc40a4019a678ed0b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Icons:
+  - {fileID: 21300000, guid: c6e94ea190a58ed44812ecba14de6156, type: 3}
+  - {fileID: 21300000, guid: fda9414e8f4447d428ebda6778602506, type: 3}
 --- !u!114 &11445814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -933,20 +1015,6 @@ MonoBehaviour:
   isDecimalPointSmall: 0
   decimalPointJustification: 0
   rightJustified: 1
---- !u!114 &11445824
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd9a70a77cce7cc40a4019a678ed0b90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Icons:
-  - {fileID: 21300000, guid: c6e94ea190a58ed44812ecba14de6156, type: 3}
-  - {fileID: 21300000, guid: fda9414e8f4447d428ebda6778602506, type: 3}
 --- !u!114 &11447278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1342,20 +1410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b611d8f34687a474e901e368cb1ab9b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11477002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 152462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a88304c07c96e044ad08b334a2f0fc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ImageObj: {fileID: 123370}
-  endWaitTweenName: TutorialPleaseAttack_OUT
---- !u!114 &11477432
+--- !u!114 &11474524
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1366,8 +1421,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed24524fa37d6248b603124d699ccec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tweenName: TutorialGoodStart
-  tweenTime: .150000006
+  tweenName: TutorialGoodEnd
+  tweenTime: .5
   loopType: 0
   tweenCurve:
     serializedVersion: 2
@@ -1387,10 +1442,23 @@ MonoBehaviour:
   isAwakePlay: 0
   cashRectTransform: {fileID: 0}
   rate: 0
-  startColor: {r: 1, g: 1, b: 1, a: 0}
-  targetColor: {r: 1, g: 1, b: 1, a: 1}
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  targetColor: {r: 1, g: 1, b: 1, a: 0}
   cashImage: {fileID: 0}
   cashSpriteRenderer: {fileID: 0}
+--- !u!114 &11477002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a88304c07c96e044ad08b334a2f0fc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImageObj: {fileID: 123370}
+  endWaitTweenName: TutorialPleaseAttack_OUT
 --- !u!114 &11477694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1479,40 +1547,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11482306
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74be3763c05a75943a13f0f825d941bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tweenName: TutorialGoodStart
-  tweenTime: .100000001
-  loopType: 0
-  tweenCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  isAwakePlay: 0
-  cashRectTransform: {fileID: 0}
-  rate: 0
-  startScale: {x: 3, y: 2, z: 0}
-  targetScale: {x: 3, y: 2, z: 0}
 --- !u!114 &11484798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1753,40 +1787,6 @@ MonoBehaviour:
   targetColor: {r: 1, g: 1, b: 1, a: 0}
   cashImage: {fileID: 0}
   cashSpriteRenderer: {fileID: 0}
---- !u!114 &11495600
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 138634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74be3763c05a75943a13f0f825d941bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tweenName: TutorialGoodEnd
-  tweenTime: .5
-  loopType: 0
-  tweenCurve:
-    serializedVersion: 2
-    m_Curve:
-    - time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-  isAwakePlay: 0
-  cashRectTransform: {fileID: 0}
-  rate: 0
-  startScale: {x: 3, y: 2, z: 0}
-  targetScale: {x: 4.5, y: 3, z: 0}
 --- !u!114 &11496210
 MonoBehaviour:
   m_ObjectHideFlags: 1
