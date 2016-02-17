@@ -18,24 +18,6 @@ public class PlayerHealthVar : MonoBehaviour
 
     void Update()
     {
-        if (!Global.IsBuidEditor())
-        {
-            if (helthVar.enabled)
-            {
-                HelthVarUpdate();
-            }
-
-            helthVar.enabled = Vuforia.VuforiaBehaviour.IsMarkerLookAt;
-        }
-        else
-        {
-            HelthVarUpdate();
-        }
-
-    }
-
-    void HelthVarUpdate()
-    {
         helthVar.fillAmount = (float)GameManager.Instance.GetPlayerData().HelthPoint / (float)lifeMax;
     }
 
