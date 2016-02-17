@@ -46,6 +46,12 @@ public class EffectMover : MonoBehaviour
 
         transform.position = SequenceManager.Instance.ARCamera.transform.position;
 
+        if (PlayerManager.Instance.IsMagician)
+        {
+            // 右上から生成するようにしている。
+            transform.position += new Vector3(200.0f,200.0f,0);
+        }
+
         var direction = (GameManager.Instance.Enemy.transform.position - transform.position).normalized;
         cashRigidBody.velocity = direction * speed;
 
