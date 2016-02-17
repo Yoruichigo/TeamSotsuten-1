@@ -126,6 +126,10 @@ GameObject:
   - 224: {fileID: 22413526}
   - 222: {fileID: 22299322}
   - 114: {fileID: 11433318}
+  - 114: {fileID: 11477432}
+  - 114: {fileID: 11482306}
+  - 114: {fileID: 11431926}
+  - 114: {fileID: 11495600}
   m_Layer: 5
   m_Name: Tutorial_GoodImage
   m_TagString: Untagged
@@ -440,6 +444,7 @@ GameObject:
   - 224: {fileID: 22413038}
   - 222: {fileID: 22297172}
   - 114: {fileID: 11410132}
+  - 114: {fileID: 11445824}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -683,6 +688,42 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &11431926
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed24524fa37d6248b603124d699ccec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: TutorialGoodEnd
+  tweenTime: .5
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  targetColor: {r: 1, g: 1, b: 1, a: 0}
+  cashImage: {fileID: 0}
+  cashSpriteRenderer: {fileID: 0}
 --- !u!114 &11433318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -702,7 +743,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 638728826d9c56b48a03ae4b3c95fcc3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f66267e8f139903459777938cf0a7086, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -857,6 +898,20 @@ MonoBehaviour:
   isDecimalPointSmall: 0
   decimalPointJustification: 0
   rightJustified: 1
+--- !u!114 &11445824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 197704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9a70a77cce7cc40a4019a678ed0b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Icons:
+  - {fileID: 21300000, guid: c6e94ea190a58ed44812ecba14de6156, type: 3}
+  - {fileID: 21300000, guid: fda9414e8f4447d428ebda6778602506, type: 3}
 --- !u!114 &11447278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1118,7 +1173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: TutorialSlider_IN
-  tweenTime: 3
+  tweenTime: 1.79999995
   loopType: 0
   tweenCurve:
     serializedVersion: 2
@@ -1191,7 +1246,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c9035e698a4762b4abfe4c2fe330d91a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 111f7f75d4627a04e8de49f7f6216324, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1265,6 +1320,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ImageObj: {fileID: 123370}
   endWaitTweenName: TutorialPleaseAttack_OUT
+--- !u!114 &11477432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed24524fa37d6248b603124d699ccec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: TutorialGoodStart
+  tweenTime: .150000006
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startColor: {r: 1, g: 1, b: 1, a: 0}
+  targetColor: {r: 1, g: 1, b: 1, a: 1}
+  cashImage: {fileID: 0}
+  cashSpriteRenderer: {fileID: 0}
 --- !u!114 &11477694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1353,6 +1444,40 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &11482306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74be3763c05a75943a13f0f825d941bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: TutorialGoodStart
+  tweenTime: .100000001
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startScale: {x: 3, y: 2, z: 0}
+  targetScale: {x: 3, y: 2, z: 0}
 --- !u!114 &11484798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1593,6 +1718,40 @@ MonoBehaviour:
   targetColor: {r: 1, g: 1, b: 1, a: 0}
   cashImage: {fileID: 0}
   cashSpriteRenderer: {fileID: 0}
+--- !u!114 &11495600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74be3763c05a75943a13f0f825d941bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenName: TutorialGoodEnd
+  tweenTime: .5
+  loopType: 0
+  tweenCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  isAwakePlay: 0
+  cashRectTransform: {fileID: 0}
+  rate: 0
+  startScale: {x: 3, y: 2, z: 0}
+  targetScale: {x: 4.5, y: 3, z: 0}
 --- !u!114 &11496210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1794,7 +1953,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 658, y: 241}
+  m_SizeDelta: {x: 658, y: 217}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22407550
 RectTransform:
@@ -1877,14 +2036,14 @@ RectTransform:
   m_GameObject: {fileID: 138634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.60000002, y: 1.5, z: 1}
+  m_LocalScale: {x: 3, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 22412432}
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 568, y: 99}
+  m_SizeDelta: {x: 366, y: 96}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22414484
 RectTransform:
