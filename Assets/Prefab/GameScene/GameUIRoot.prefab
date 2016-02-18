@@ -1057,9 +1057,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    fileName: Number
+    fileName: Number3
     parentTrasform: {fileID: 22462842}
-    color: {r: 1, g: 1, b: 1, a: 1}
+    color: {r: 1, g: 0, b: 0, a: 1}
     justification: 0
   isDecimalPointSmall: 0
   decimalPointJustification: 0
@@ -1448,6 +1448,38 @@ MonoBehaviour:
     deltaSecond: 0
     maxSecond: 180
     isTimeOver: 0
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: .648577571
+      value: .0330241397
+      inSlope: .208243728
+      outSlope: .208243728
+      tangentMode: 0
+    - time: .749800026
+      value: .895903707
+      inSlope: 1.34204936
+      outSlope: 1.34204936
+      tangentMode: 0
+    - time: .84655416
+      value: .994291127
+      inSlope: -.0363165438
+      outSlope: -.0363165438
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: -.128491536
+      outSlope: -.128491536
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  startColor: {r: 1, g: 1, b: 1, a: 1}
+  endColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &11470192
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2407,7 +2439,7 @@ RectTransform:
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 100, y: 300}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 120}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22464342
 RectTransform:

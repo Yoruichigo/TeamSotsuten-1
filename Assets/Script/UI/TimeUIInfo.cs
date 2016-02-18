@@ -29,8 +29,20 @@ public class TimeUIInfo : MonoBehaviour
     [SerializeField]
     TimeCounter timeCountData = new TimeCounter();
 
+    [SerializeField]
+    AnimationCurve curve = null;
+
+    [SerializeField]
+    Color startColor = Color.white;
+
+    [SerializeField]
+    Color endColor = Color.white;
+
+    float playTime = 0;
+
     static TimeCounter timeCounter = new TimeCounter();
     static List<NumberImageRenderer> timeRendererList = new List<NumberImageRenderer>();
+    static Color changeColor = Color.white;
 
 	void Start () {
         timeRendererList.Add(GetComponentInChildren<NumberImageRenderer>());
@@ -38,6 +50,16 @@ public class TimeUIInfo : MonoBehaviour
 
         timeCounter.deltaSecond = 0f;
         timeCounter.isTimeOver = false;
+    }
+
+    void Update()
+    { 
+        float rate = timeCounter.deltaSecond / timeCountData.maxSecond;
+        float red = Mathf.Lerp(startColor.r, endColor.r, curve.Evaluate(rate));
+        float green = Mathf.Lerp(startColor.g, endColor.g, curve.Evaluate(rate));
+        float blue = Mathf.Lerp(startColor.b, endColor.b, curve.Evaluate(rate));
+
+        changeColor = new Color(red, green, blue);
     }
 
     //時間の計測
@@ -53,6 +75,7 @@ public class TimeUIInfo : MonoBehaviour
         double time = timeCounter.maxSecond - timeCounter.deltaSecond;
         foreach (var timeRender in timeRendererList)
         {
+            timeRender.ChnageColor(changeColor);
             timeRender.Rendering((int)time);
         }
 

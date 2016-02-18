@@ -29,6 +29,25 @@ public class uTween
     }
 
     /// <summary>
+    /// Valueを取得する。
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static float GetValue(string name)
+    {
+        for (int i = 0; i < tweenList.Count; i++)
+        {
+            if (tweenList[i].tweenName == name)
+            {
+                uTweenValue uTweenValue = tweenList[i] as uTweenValue;
+                return uTweenValue.GetValue();
+            }
+        }
+
+        return 0;
+    }
+
+    /// <summary>
     /// 再生する。
     /// </summary>
     /// <param name="name"></param>
