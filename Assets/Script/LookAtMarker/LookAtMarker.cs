@@ -52,11 +52,13 @@ public class LookAtMarker : MonoBehaviour {
     /// <returns></returns>
     bool DoingUpdate()
     {
+        /*
         //　チュートリアル中なら無視
         if (TutorialSequence.IsTutorial)
         {
             return false;
         }
+        */
 
         return true;
     }

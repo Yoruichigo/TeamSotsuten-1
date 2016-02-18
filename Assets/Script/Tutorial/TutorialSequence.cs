@@ -31,6 +31,21 @@ public class TutorialSequence : MonoBehaviour
     [SerializeField]
     int FinishWaitTime = 10;
 
+    [SerializeField]
+    GameObject PlayerObject = null;
+
+    [SerializeField]
+    GameObject EnemyAttackEffectObject = null;
+
+    [SerializeField]
+    float AttackEffectSpeed = 1.0f;
+
+    [SerializeField]
+    int AttackIntervalTime = 10;
+
+    [SerializeField]
+    GameObject MarkerObject = null;
+
     /// <summary>
     /// Good画像を表示し、次の状態へ行きます。
     /// </summary>
@@ -42,6 +57,11 @@ public class TutorialSequence : MonoBehaviour
     }
 
 
+    static bool dodgeFrag = false;
+    static public void PlayerDodge()
+    {
+        dodgeFrag = true;
+    }
 
 
     public enum State
@@ -57,6 +77,9 @@ public class TutorialSequence : MonoBehaviour
         ON_STRENGTH,
         STRENGTH,
         OUT_STRENGTH,
+        ON_DODGE,
+        DODGE,
+        OUT_DODGE,
         ON_FINISH_GUID,
         FINISH_GUID,
         OUT_FINISH_GUID,
@@ -179,6 +202,23 @@ public class TutorialSequence : MonoBehaviour
                 }
                 break;
             case State.OUT_STRENGTH:
+                nowState = State.ON_DODGE;
+                break;
+            case State.ON_DODGE:
+                {
+                    saveTime = GetNowTime();
+                    EnemyAttackManager.Instance.Create(EnemyAttackEffectObject,AttackEffectSpeed);
+                    nowState = State.DODGE;
+                }
+                break;
+            case State.DODGE:
+                if(DodgeEndCheck()){
+                    nowState = State.OUT_DODGE;
+                } else {
+                    DodgeUpdate();
+                }
+                break;
+            case State.OUT_DODGE:
                 nowState = State.ON_FINISH_GUID;
                 break;
             case State.ON_FINISH_GUID:
@@ -288,6 +328,44 @@ public class TutorialSequence : MonoBehaviour
 
         return false;
     }
+
+
+
+    bool DodgeEndCheck()
+    {
+        if (dodgeFrag)
+        {
+            switch (nowGoodState)
+            {
+                case GoodState.NULL:
+                    MakeGood();
+                    break;
+                case GoodState.OFF:
+                    return true;
+                    break;
+            }
+        }
+
+
+        return false;
+    }
+
+
+
+    void DodgeUpdate()
+    {
+#if !UNITY_EDITOR
+        if (GameManager.Instance.GetLookState() == GameManager.LookMarkerState.Look)
+#endif
+        {
+            if (GetNowTime() > (saveTime + AttackIntervalTime))
+            {
+                EnemyAttackManager.Instance.CreateAttack(MarkerObject.transform.position, 0);
+                saveTime = GetNowTime();
+            }
+        }
+    }
+
 
 
     bool FinishGuidEndCheck()
