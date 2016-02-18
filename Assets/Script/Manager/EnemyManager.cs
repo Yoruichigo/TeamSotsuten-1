@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class EnemyManager : Singleton<EnemyManager>
 {
-    class ClientEnemyData
+    public class ClientEnemyData
     {
         public Transform trans = null;
         public SpriteRenderer sprite = null;
@@ -87,8 +87,6 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         base.Awake();
         delayTime = nextWaveTime;
-
-
     }
 
     public override void Start()
@@ -270,6 +268,12 @@ public class EnemyManager : Singleton<EnemyManager>
         
         state = State.Start;
         Debugger.Log(">> 次のWaveに遷移する");
+    }
+
+
+    public ClientEnemyData GetClientEnemyData()
+    {
+        return clientEnemyData;
     }
 
     // --------------------------------------------------------------------

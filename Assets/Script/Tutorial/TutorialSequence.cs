@@ -32,9 +32,6 @@ public class TutorialSequence : MonoBehaviour
     int FinishWaitTime = 10;
 
     [SerializeField]
-    GameObject PlayerObject = null;
-
-    [SerializeField]
     GameObject EnemyAttackEffectObject = null;
 
     [SerializeField]
@@ -42,27 +39,6 @@ public class TutorialSequence : MonoBehaviour
 
     [SerializeField]
     int AttackIntervalTime = 10;
-
-    [SerializeField]
-    GameObject MarkerObject = null;
-
-    /// <summary>
-    /// Good画像を表示し、次の状態へ行きます。
-    /// </summary>
-    static void MakeGood()
-    {
-        if (GoodState.NULL == nowGoodState) {
-            nowGoodState = GoodState.SETUP;
-        }
-    }
-
-
-    static bool dodgeFrag = false;
-    static public void PlayerDodge()
-    {
-        dodgeFrag = true;
-    }
-
 
     public enum State
     {
@@ -102,23 +78,48 @@ public class TutorialSequence : MonoBehaviour
     static GoodState nowGoodState = GoodState.NULL;
 
     //チュートリアルかどうか(true = チュート中, false = チュート終了)
-    static public bool IsTutorial {
-        get {
+    static public bool IsTutorial
+    {
+        get
+        {
             if (nowState != State.NULL) return true;
             return false;
         }
     }
 
     static public State GetNowState() { return nowState; }
-
     static public GoodState GetNowGoodState() { return nowGoodState; }
 
-
-
-    int saveTime = 0;
+    static bool isDodgeAttack = false;
+    static bool dodgeFrag = false;
+    static int saveTime = 0;
 
     bool isStartWeakEndTime;
     bool isStartStrengthEndTime;
+
+    /// <summary>
+    /// Good画像を表示し、次の状態へ行きます。
+    /// </summary>
+    static void MakeGood()
+    {
+        if (GoodState.NULL == nowGoodState) {
+            nowGoodState = GoodState.SETUP;
+        }
+    }
+
+    static public void PlayerDodge()
+    {
+        dodgeFrag = true;
+    }
+
+    // リセット
+    static public void ResetDodge()
+    {
+        isDodgeAttack = false;
+        dodgeFrag = false;
+        saveTime = GetNowTime();
+    }
+
 
     // Use this for initialization
     //毎回の初期化処理
@@ -342,7 +343,6 @@ public class TutorialSequence : MonoBehaviour
                     break;
                 case GoodState.OFF:
                     return true;
-                    break;
             }
         }
 
@@ -355,14 +355,17 @@ public class TutorialSequence : MonoBehaviour
     void DodgeUpdate()
     {
 #if !UNITY_EDITOR
-        if (GameManager.Instance.GetLookState() == GameManager.LookMarkerState.Look)
+        if (GameManager.Instance.GetLookState() != GameManager.LookMarkerState.Look) return;
 #endif
+        // 攻撃中なら処理しない
+        if (isDodgeAttack) return;
+
+        if (GetNowTime() > saveTime + AttackIntervalTime)
         {
-            if (GetNowTime() > (saveTime + AttackIntervalTime))
-            {
-                EnemyAttackManager.Instance.CreateAttack(MarkerObject.transform.position, 0);
-                saveTime = GetNowTime();
-            }
+            var target = EnemyManager.Instance.GetClientEnemyData().trans;
+            EnemyAttackManager.Instance.CreateAttack(target.transform.position, 0);
+            isDodgeAttack = true;
+            saveTime = GetNowTime();
         }
     }
 
