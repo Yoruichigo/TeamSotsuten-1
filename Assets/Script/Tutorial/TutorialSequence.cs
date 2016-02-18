@@ -43,6 +43,8 @@ public class TutorialSequence : MonoBehaviour
     [SerializeField]
     int AttackIntervalTime = 10;
 
+    [SerializeField]
+    GameObject MarkerObject = null;
 
     /// <summary>
     /// Good画像を表示し、次の状態へ行きます。
@@ -352,12 +354,16 @@ public class TutorialSequence : MonoBehaviour
 
     void DodgeUpdate()
     {
-        if (GetNowTime() > (saveTime + AttackIntervalTime))
+#if !UNITY_EDITOR
+        if (GameManager.Instance.GetLookState() == GameManager.LookMarkerState.Look)
+#endif
         {
-            EnemyAttackManager.Instance.CreateAttack(new Vector3(0,0,0), 0);
-            saveTime = GetNowTime();
+            if (GetNowTime() > (saveTime + AttackIntervalTime))
+            {
+                EnemyAttackManager.Instance.CreateAttack(MarkerObject.transform.position, 0);
+                saveTime = GetNowTime();
+            }
         }
-
     }
 
 
