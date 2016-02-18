@@ -59,6 +59,11 @@ public class NumberImageRenderer : MonoBehaviour
         startPosition = data.parentTrasform.GetComponent<RectTransform>().anchoredPosition3D;
     }
 
+    void OnValidate()
+    {
+        ChnageColor(data.color);
+    }
+
     CreateData Create(Sprite sprite)
     {
         var instance = new GameObject();
