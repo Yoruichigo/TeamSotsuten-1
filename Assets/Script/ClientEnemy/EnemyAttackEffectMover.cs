@@ -34,24 +34,28 @@ public class EnemyAttackEffectMover : MonoBehaviour {
         {
             gameObject.SetActive(false);
             GameManager.Instance.SendPlayerHit(true, hitPower);
+            
+            if (TutorialSequence.IsTutorial)
+            {
+#if UNITY_EDITOR
+                TutorialSequence.PlayerDodge();
+#else
+                TutorialSequence.ResetDodge();
+#endif
+            }
+
+
+            return;
         }
 
         //チュートリアル用、プレイヤーが避けた処理
         if (TutorialSequence.IsTutorial)
         {
-#if UNITY_EDITOR
-            if (transform.position.z < (SequenceManager.Instance.ARCamera.transform.position.z + HIT_RANGE))
-            {
-                gameObject.SetActive(false);
-                TutorialSequence.PlayerDodge();
-            }
-#else
             if (transform.position.z < (SequenceManager.Instance.ARCamera.transform.position.z - HIT_RANGE))
             {
                 gameObject.SetActive(false);
                 TutorialSequence.PlayerDodge();
             }
-#endif
         }
 
 

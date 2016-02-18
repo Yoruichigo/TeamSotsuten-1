@@ -873,7 +873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52db2343cd90a89498b694da87804730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImageObj: {fileID: 0}
+  ImageObj: {fileID: 115346}
   TweenNameStart: TutorialDodgeStart
   TweenNameEnd: TutorialDodgeEnd
 --- !u!114 &11433318
