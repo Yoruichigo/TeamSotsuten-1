@@ -257,6 +257,7 @@ public class TutorialSequence : MonoBehaviour
         {
             case GoodState.SETUP:
                 nowGoodState = GoodState.ON;
+                SEPlayer.Instance.Play(Audio.SEID.DECISION);    // クリアSE
                 break;
             case GoodState.ON:
                 saveTime = GetNowTime();

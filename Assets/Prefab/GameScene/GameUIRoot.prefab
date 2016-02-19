@@ -840,7 +840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: UITimeAppearance
-  tweenTime: 1
+  tweenTime: .5
   loopType: 0
   tweenCurve:
     serializedVersion: 2
@@ -860,7 +860,7 @@ MonoBehaviour:
   isAwakePlay: 0
   cashRectTransform: {fileID: 0}
   rate: 0
-  startScale: {x: 0, y: 0, z: 0}
+  startScale: {x: 1, y: 0, z: 1}
   targetScale: {x: 1, y: 1, z: 1}
 --- !u!114 &11432576
 MonoBehaviour:
@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: NextWave
-  tweenTime: 1
+  tweenTime: .5
   loopType: 0
   tweenCurve:
     serializedVersion: 2
@@ -1478,7 +1478,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  startColor: {r: 1, g: 1, b: 1, a: 1}
+  startColor: {r: .432048619, g: 1, b: .411764681, a: 1}
   endColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &11470192
 MonoBehaviour:
@@ -1808,7 +1808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenName: NextWave
-  tweenTime: 1
+  tweenTime: .5
   loopType: 0
   tweenCurve:
     serializedVersion: 2
