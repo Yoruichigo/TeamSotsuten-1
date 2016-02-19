@@ -41,7 +41,7 @@ public class BGMPlayer : Singleton<BGMPlayer>
     }
 
     const float minVolume = 0;
-    const float maxVolume = 0.7f;
+    const float maxVolume = 0.3f;
     const float startFadeInVolume = 0.005f;
 
     AudioSource source = null;
