@@ -51,6 +51,16 @@ public class EnemyAttackEffectMover : MonoBehaviour {
         //チュートリアル用、プレイヤーが避けた処理
         if (TutorialSequence.IsTutorial)
         {
+#if !UNITY_EDITOR
+            if (Vector3.Distance(transform.position, SequenceManager.Instance.ARCamera.transform.position) <= HIT_RANGE*2)
+            {
+                if (GameManager.Instance.GetLookState() == GameManager.LookMarkerState.NonLook)
+                {
+                    TutorialSequence.PlayerDodge();
+                }
+            }
+#endif
+
             if (transform.position.z < (SequenceManager.Instance.ARCamera.transform.position.z - HIT_RANGE))
             {
                 gameObject.SetActive(false);

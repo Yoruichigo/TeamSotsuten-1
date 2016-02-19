@@ -355,9 +355,20 @@ public class TutorialSequence : MonoBehaviour
 
     void DodgeUpdate()
     {
+        // 見た瞬間にリセットさせる。
+        if (GameManager.Instance.IsOnLook && !dodgeFrag)
+        {
+            ResetDodge();
+            return;
+        }
+
+
+
 #if !UNITY_EDITOR
         if (GameManager.Instance.GetLookState() != GameManager.LookMarkerState.Look) return;
 #endif
+
+
         // 攻撃中なら処理しない
         if (isDodgeAttack) return;
 
