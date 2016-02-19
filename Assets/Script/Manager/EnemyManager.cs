@@ -247,8 +247,8 @@ public class EnemyManager : Singleton<EnemyManager>
     void EnemyShowEnable(bool isEnable)
     {
         var lostPos = isEnable ? Vector3.zero : new Vector3(5000, 0, 0);
-        clientEnemyData.sprite.transform.position = lostPos;
-        clientEnemyData.gaugeTrans.transform.position = lostPos;
+        clientEnemyData.sprite.transform.localPosition = lostPos;
+        clientEnemyData.gaugeTrans.transform.localPosition = lostPos;
     }
 
     void NextWave()
