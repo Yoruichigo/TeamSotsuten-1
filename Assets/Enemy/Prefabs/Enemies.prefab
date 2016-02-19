@@ -157,11 +157,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc77be0e885c0d4a9f3fbdf5d29f8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 200
+  life: 300
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
   state: 0
-  attackEffect: {fileID: 144438, guid: b926ec8a1b123c940a488ac790a64ae0, type: 2}
+  attackEffect: {fileID: 192992, guid: 1205be14e36882d49b1bca95ffcb3254, type: 2}
   attackSpeed: 1200
   attackTiming: 3
   attackPower: 10
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeSpriteAnimTime: .200000003
-  nextWaveTime: 5
+  nextWaveTime: 4
   clientEnemy: {fileID: 0}
   enemyHelthVar: {fileID: 0}
   appearanceEffectRoot: {fileID: 0}
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc77be0e885c0d4a9f3fbdf5d29f8de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 300
+  life: 400
   Position: {x: 0, y: 0, z: 0}
   Rotation: {x: 0, y: 0, z: 0}
   state: 0

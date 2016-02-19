@@ -94,7 +94,7 @@ public class ClientEnemyOperator : MonoBehaviour
 
                     var enemyData = EnemyManager.Instance.GetActiveEnemyData();
 
-                    EnemyAttackManager.Instance.CreateAttack(transform.position - new Vector3(0, 200, 0), enemyData.AttackPower);
+                    EnemyAttackManager.Instance.CreateAttack(transform.position, enemyData.AttackPower);
                     enemyData.StateChange(EnemyData.EnamyState.ACTIVE);
 
                     AttackSoundPlay();

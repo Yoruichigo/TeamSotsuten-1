@@ -51,7 +51,7 @@ MonoBehaviour:
     behaviour: {fileID: 0}
   - scene: 4
     behaviour: {fileID: 0}
-  nowScene: 0
+  nowScene: 1
   isBuildWatch: 0
   singleCamera: {fileID: 0}
   arCamera: {fileID: 0}
