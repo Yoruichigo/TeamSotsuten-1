@@ -362,14 +362,7 @@ public class TutorialSequence : MonoBehaviour
             return;
         }
 
-        if (isDodgeAttack)
-        {
-            if (GameManager.Instance.GetLookState() == GameManager.LookMarkerState.NonLook)
-            {
-                PlayerDodge();
-                return;
-            }
-        }
+
 
 #if !UNITY_EDITOR
         if (GameManager.Instance.GetLookState() != GameManager.LookMarkerState.Look) return;
